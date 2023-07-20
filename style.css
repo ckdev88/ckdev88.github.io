@@ -28,16 +28,16 @@ html {
 	src: url("./font/Outfit.woff2") format("woff2");
 	/* font-display: optional; */
 }
-#theme-backdrop{
-	transition:opacity .5s ease-in-out, background-color .5 ease-in-out;
+#theme-backdrop {
+	transition: opacity 0.5s ease-in-out, background-color 0.5 ease-in-out;
 }
 html[data-theme="dark"] #theme-backdrop {
-		transition: background-color .5 ease-in-out;
+		transition: background-color 0.5 ease-in-out;
 		background-color: #190d0a;
-		opacity:1;
+		opacity: 1;
 	}
-html[data-theme="dark"] body{
-		background:black
+html[data-theme="dark"] body {
+		background: black;
 	}
 html[data-theme="dark"] #sun-svg {
 		opacity: 0;
@@ -63,30 +63,31 @@ html[data-theme="dark"] h1,
 	html[data-theme="dark"] li {
 		text-shadow: rgba(0, 0, 0, 0.5) 0 0 1px;
 	}
-/* #container{
-		background: linear-gradient(
-			180deg,
-			rgba(18, 43, 26, 0.2) 0%,
-			rgba(18, 43, 26, 0.2) 80%,
-			rgba(7, 37, 16, 0.2) 100%
-		);
-	} */
 html[data-theme="dark"] #header-page {
-		background: #190D0A; 
-		border-bottom:2px dashed #f2e2e6;
+		background: #190d0a;
+		border-bottom: 2px dashed #f2e2e6;
 	}
 html[data-theme="dark"] #header-page {
 		animation-name: mymove;
 		animation-duration: 1s;
-		animation-delay: .6s;
+		animation-delay: 0.6s;
 	}
 html[data-theme="dark"] {
 	@keyframes mymove {
-		0% {background-color: transparent;}
-		50% {background-color:transparent;}
-		100% {background-color: #190D0A;}
+		0% {
+			background-color: transparent;
+		}
+		50% {
+			background-color: transparent;
+		}
+		100% {
+			background-color: #190d0a;
+		}
 	}
 }
+html[data-theme="dark"] #Hi .logo {
+			filter: invert(0.3);
+		}
 html[data-theme="dark"] #Hi {
 		background: linear-gradient(
 			180deg,
@@ -95,8 +96,8 @@ html[data-theme="dark"] #Hi {
 			rgba(0, 0, 0, 0.4) 100%
 		);
 	}
-html[data-theme="dark"] #Hi .logo{
-			opacity:0.05
+html[data-theme="dark"] #Hi .logo {
+			opacity: 0.05;
 		}
 html[data-theme="dark"] #Past {
 		background: linear-gradient(
@@ -110,12 +111,11 @@ html[data-theme="dark"] #Skills {
 		background: linear-gradient(
 			180deg,
 			transparent 0%,
-			transparent 80%
-			rgba(0, 0, 0, 0.4) 100%,
+			transparent 80% rgba(0, 0, 0, 0.4) 100%
 		);
 	}
-html[data-theme="dark"] #skilltree .arrow-guide path{
-		fill:#e35508;
+html[data-theme="dark"] #skilltree .arrow-guide path {
+		fill: #e35508;
 	}
 html[data-theme="dark"] #nav-top a {
 		text-shadow: rgba(255, 255, 255, 0.5) 0 0 1px;
@@ -131,20 +131,21 @@ html[data-theme="dark"] #pages a:hover,
 	html[data-theme="dark"] #page .active {
 		border-color: #fafafa;
 	}
-html[data-theme="dark"] #homelink img.dark{
-		display:none;
-		opacity:0;
+html[data-theme="dark"] #homelink img.dark {
+		display: none;
+		opacity: 0;
 	}
-html[data-theme="dark"] #homelink img.light{
-		display:block;
-		opacity:1
+html[data-theme="dark"] #homelink img.light {
+		display: block;
+		opacity: 1;
 	}
-html[data-theme="dark"] footer a {
-		color:#f36547;
+html[data-theme="dark"] footer a,
+	html[data-theme="dark"] #Contact a {
+		color: #f36547;
 		text-shadow: 0 0 1px black;
 	}
 html[data-theme="dark"] #skilltree .li-level-2 h4 {
-				color:#817875
+				color: #817875;
 			}
 #theme-backdrop {
 	transition: opacity 0.5s ease-in-out, background-color 0.5 ease-in-out;
@@ -181,14 +182,6 @@ html[data-theme="light"] h1,
 	html[data-theme="light"] li {
 		text-shadow: rgba(255, 255, 255, 0.5) 0 0 1px;
 	}
-/* #container{
-		background: linear-gradient(
-			180deg,
-			rgba(118, 143, 126, 0.2) 0%,
-			rgba(118, 143, 126, 0.2) 80%,
-			rgba(107, 137, 116, 0.2) 100%
-		);
-	} */
 html[data-theme="light"] #header-page {
 		background: #d9d2d1;
 		border-bottom: 2px dashed #252525;
@@ -211,6 +204,9 @@ html[data-theme="light"] {
 		}
 	}
 }
+html[data-theme="light"] #Hi .logo {
+			filter: invert(0.5) saturate(1);
+		}
 html[data-theme="light"] #Hi,
 	html[data-theme="light"] #Skills {
 		background: linear-gradient(
@@ -221,7 +217,7 @@ html[data-theme="light"] #Hi,
 		);
 	}
 html[data-theme="light"] #Past,
-	html[data-theme="light"] footer {
+	html[data-theme="light"] #Contact {
 		background: linear-gradient(
 			180deg,
 			rgba(0, 0, 0, 0.05) 0%,
@@ -254,7 +250,8 @@ html[data-theme="light"] #homelink img.light {
 		display: none;
 		opacity: 0;
 	}
-html[data-theme="light"] footer a {
+html[data-theme="light"] footer a,
+	html[data-theme="light"] #Contact a {
 		text-shadow: 0 0 1px white;
 	}
 html[data-theme="light"] #skilltree .li-level-2 h4 {
@@ -356,6 +353,7 @@ h1 sub {
 		display: block;
 		font-size: 0.7em;
 		opacity: 0.4;
+		line-height:1em;
 	}
 h2 {
 	font-size: 2.4rem;
@@ -405,7 +403,8 @@ a {
 	-webkit-text-decoration: none;
 	text-decoration: none;
 }
-footer a {
+footer a,
+#Contact a {
 	-webkit-text-decoration: underline;
 	text-decoration: underline;
 	color: #b22406;
@@ -430,10 +429,6 @@ article,
 article > div {
 	vertical-align: middle;
 }
-/* 
-section {
-	padding: 1rem 0;
-} */
 main {
 	max-width: 100%;
 	overflow-x: hidden;
@@ -500,10 +495,7 @@ main {
 	max-width: 100%;
 }
 @media (max-width: 991.98px) {
-	#nav-container {
-		padding-left: 1rem;
-		padding-right: 1rem;
-	}
+	
 	#homelink img {
 		height: 24px !important;
 	}
@@ -525,7 +517,13 @@ main {
 	display: flex;
 	font-weight: 500;
 	align-items: center;
+	width:100%;
 }
+@media (min-width: 1199.99px) {
+#nav-top {
+		width:600px;
+}
+	}
 @media (max-width: 767.98px) {
 #nav-top #pages {
 			display: none;
@@ -756,6 +754,9 @@ article.grid-container .past-article-intro {
 			padding-right: 2rem;
 	}
 		}
+article.grid-container .past-article-intro p {
+			padding-bottom: 1rem;
+		}
 @media (max-width: 1199.98px) {
 article.grid-container .past-article-intro p {
 				padding-right: 3rem;
@@ -764,7 +765,6 @@ article.grid-container .past-article-intro p {
 @media (max-width: 991.98px) {
 article.grid-container .past-article-intro p {
 				padding-right: 0;
-				padding-bottom: 1rem;
 		}
 			}
 article.grid-container .thumbs {
@@ -1246,15 +1246,43 @@ li.fundamentals {
 	padding-top: 2rem;
 }
 section {
+	border-bottom-width: 2px;
+	border-bottom-style: dashed;
+	border-bottom-color: #302623;
+	padding-top: 3rem;
+	padding-bottom: 3rem;
+}
+section,
+footer,
+#nav-container {
 	padding-left: 1rem;
 	padding-right: 1rem;
 }
+@media (max-width: 991.98px) {
+section,
+footer,
+#nav-container {
+		padding-left: 0.5rem;
+		padding-right: 0.5rem;
+		padding-top: 0.5rem;
+		padding-bottom: 0.5rem;
+}
+	}
+#Hi {
+	padding-top: 5rem;
+	padding-bottom: 5rem;
+}
+@media (max-width: 575.98px){
+#Hi {
+		padding-top:3rem;
+		padding-bottom:3rem;
+}
+	}
 #Hi .container {
 		display: grid;
-		grid-template-columns: 50% 50%;
-		height: 24rem;
+		grid-template-columns: 5fr 3fr;
 	}
-@media (max-width: 991.98px) {
+@media (max-width: 1199.98px) {
 #Hi .container {
 			grid-template-columns: 2fr 1fr;
 	}
@@ -1281,28 +1309,51 @@ section {
 		opacity: 0.1;
 		margin-left: 3rem;
 	}
-@media (max-width: 991.98px) {
-#Hi .logo {
-			margin-right: -2rem;
-	}
-		}
 @media (max-width: 767.98px) {
 #Hi .logo {
 			position: absolute;
 			opacity: 0.2;
 			top: 5rem;
 			z-index: 1;
+			margin-left: 0;
+			width: var(--container-width);
+			min-width: 320px;
 	}
 		}
-#Hi .logo svg {
-			max-height: 370px;
-			height: 300px;
-			width: auto;
+#Hi .logo #logo-ck-big {
 			max-width: 100%;
 		}
+@media (min-width: 1199.99px) {
+#Hi .logo #logo-ck-big {
+				width:244px;
+				height:313px;
+		}
+			}
+@media (max-width: 1199.98px) {
+#Hi .logo #logo-ck-big {
+		}
+			}
+@media (max-width: 991.98px) {
+#Hi .logo #logo-ck-big {
+				width:263px;
+		}
+			}
+@media (max-width: 767.98px) {
+#Hi .logo #logo-ck-big {
+				width:256px;
+				height:328px;
+				opacity:.7;
+		}				
+			}
+@media (max-width: 575.98px){
+#Hi .logo #logo-ck-big {
+				min-width:auto;
+				max-width:none;
+				max-width:initial;
+		}
+			}
 #Past {
-	padding-bottom: 0;
-	
+	padding-bottom: 5rem;
 }
 #Past .container {
 		padding-top: 2rem;
@@ -1349,6 +1400,7 @@ section {
 	padding-bottom: 1rem;
 	padding-left: 0.5rem;
 	padding-right: 0.5rem;
+	min-width:320px;
 }
 @media (max-width: 991.98px) {
 .container {
@@ -1359,11 +1411,6 @@ section {
 /* responsive overrides */
 @media (max-width: 1199.98px) {
 	aside .grid-container {
-	}
-}
-@media (max-width: 767.98px) {
-	#hi .logo img {
-		height: 220px;
 	}
 }
 @media (max-width: 575.98px) {

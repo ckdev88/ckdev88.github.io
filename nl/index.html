@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html id="html" lang="nl" data-theme="dark">
+	<head>
+		<meta charset="utf-8">
+		<link rel="icon" type="image/svg+xml" href="/img/ck-logo-13.svg">
+		<link rel="stylesheet" href="../style.css">
+		<meta name="viewport" content="width=device-width">
+		<meta name="description" content="Portfolio van CK Dev">
+		<title>Cors Kester, Front-end Developer.</title>
+		<link rel="manifest" href="/manifest.json">
+		<meta name="theme-color" content="#3367D6">
+	<script type="module">const l=document.querySelector(".scroll-line");function d(){const e=window.innerHeight,o=document.getElementById("container").clientHeight,r=window.scrollY/(o-e)*100;l.style.width=r+"%"}window.addEventListener("scroll",d);document.addEventListener("DOMContentLoaded",function(e){document.querySelector("#st-html")?.addEventListener("mouseover",()=>{document.querySelector("#st-html")?.classList.add("active"),document.querySelector("#st-css")?.classList.remove("active"),document.querySelector("#st-javascript")?.classList.remove("active"),document.querySelector("#tools-html")?.classList.remove("hidden"),document.querySelector("#tools-css")?.classList.add("hidden"),document.querySelector("#tools-javascript")?.classList.add("hidden")}),document.querySelector("#st-css")?.addEventListener("mouseover",()=>{document.querySelector("#st-html")?.classList.remove("active"),document.querySelector("#st-css")?.classList.add("active"),document.querySelector("#st-javascript")?.classList.remove("active"),document.querySelector("#tools-css")?.classList.remove("hidden"),document.querySelector("#tools-html")?.classList.add("hidden"),document.querySelector("#tools-javascript")?.classList.add("hidden")}),document.querySelector("#st-javascript")?.addEventListener("mouseover",()=>{document.querySelector("#st-html")?.classList.remove("active"),document.querySelector("#st-css")?.classList.remove("active"),document.querySelector("#st-javascript")?.classList.add("active"),document.querySelector("#tools-javascript")?.classList.remove("hidden"),document.querySelector("#tools-html")?.classList.add("hidden"),document.querySelector("#tools-css")?.classList.add("hidden")})});const n=localStorage.getItem("theme");function i(){return n||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")}let t=i();function s(){localStorage.setItem("theme",t),c()}function c(){let e=document.getElementById("html");e!==null&&(e.setAttribute("data-theme",t),document.querySelector("#theme-btn")?.setAttribute("aria-label",t))}c(),window.onload=()=>{c(),document.querySelector("#theme-btn")?.addEventListener("click",()=>{t=t==="light"?"dark":"light",s()})},window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change",({matches:e})=>{t=e?"dark":"light",s()});
+</script></head>
+	<body>
+		<div id="theme-backdrop"></div>
+		
+	<div id="container">
+		<header id="header-page">
+	<div class="scroll-line"></div>
+	<div class="container" id="nav-container">
+		<nav id="nav-top" role="navigation" aria-label="Hoofdmenu">
+	<a href="./" title="Terug naar de homepage" id="homelink">
+		<img src="../img/ckdev-logo.svg" alt="CK, Front-end developer" height="32" class="dark">
+		<img src="../img/ckdev-logo-light.svg" alt="CK, Front-end developer" height="32" class="light">
+	</a>
+	<ul id="pages">
+		<li><a href="/#Hi" title="Spring naar Hi">Hi</a></li>
+		<li><a href="/#Toekomst" title="Spring naar Toekomst">Toekomst</a></li>
+		<li><a href="/#Verleden" title="Spring naar Verleden">Verleden</a></li>
+		<li><a href="/#Vaardigheden" title="Spring naar Vaardigheden">Vaardigheden</a></li>
+		<li><a href="/#Tools" title="Spring naar Tools">Tools</a></li>
+		<li><a href="/#Contact" title="Spring naar Contact">Contact</a></li>
+	</ul>
+</nav>
+		<nav id="nav-accessibility" role="navigation" aria-label="Toegankelijkheid">
+	<button aria-label="light" aria-live="polite" id="theme-btn" title="Toggles light & dark">
+	<div class="nav-accessibility-light_mode">
+		<svg id="sun-svg" width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="nav-accessibility-light_mode light"><path d="M12.979 9C14.6319 9 15.9843 10.35 15.9843 12C15.9843 13.65 14.6319 15 12.979 15C11.3261 15 9.97368 13.65 9.97368 12C9.97368 10.35 11.3261 9 12.979 9ZM12.979 7C10.2141 7 7.97013 9.24 7.97013 12C7.97013 14.76 10.2141 17 12.979 17C15.7439 17 17.9879 14.76 17.9879 12C17.9879 9.24 15.7439 7 12.979 7ZM2.96125 13H4.9648C5.51578 13 5.96658 12.55 5.96658 12C5.96658 11.45 5.51578 11 4.9648 11H2.96125C2.41027 11 1.95947 11.45 1.95947 12C1.95947 12.55 2.41027 13 2.96125 13ZM20.9932 13H22.9968C23.5478 13 23.9985 12.55 23.9985 12C23.9985 11.45 23.5478 11 22.9968 11H20.9932C20.4422 11 19.9914 11.45 19.9914 12C19.9914 12.55 20.4422 13 20.9932 13ZM11.9772 2V4C11.9772 4.55 12.428 5 12.979 5C13.53 5 13.9808 4.55 13.9808 4V2C13.9808 1.45 13.53 1 12.979 1C12.428 1 11.9772 1.45 11.9772 2ZM11.9772 20V22C11.9772 22.55 12.428 23 12.979 23C13.53 23 13.9808 22.55 13.9808 22V20C13.9808 19.45 13.53 19 12.979 19C12.428 19 11.9772 19.45 11.9772 20ZM6.95834 4.58C6.56764 4.19 5.92651 4.19 5.54583 4.58C5.15514 4.97 5.15514 5.61 5.54583 5.99L6.60771 7.05C6.99841 7.44 7.63954 7.44 8.02022 7.05C8.40089 6.66 8.41091 6.02 8.02022 5.64L6.95834 4.58ZM19.3503 16.95C18.9596 16.56 18.3185 16.56 17.9378 16.95C17.5471 17.34 17.5471 17.98 17.9378 18.36L18.9997 19.42C19.3904 19.81 20.0315 19.81 20.4122 19.42C20.8029 19.03 20.8029 18.39 20.4122 18.01L19.3503 16.95ZM20.4122 5.99C20.8029 5.6 20.8029 4.96 20.4122 4.58C20.0215 4.19 19.3804 4.19 18.9997 4.58L17.9378 5.64C17.5471 6.03 17.5471 6.67 17.9378 7.05C18.3285 7.43 18.9696 7.44 19.3503 7.05L20.4122 5.99ZM8.02022 18.36C8.41091 17.97 8.41091 17.33 8.02022 16.95C7.62953 16.56 6.98839 16.56 6.60771 16.95L5.54583 18.01C5.15514 18.4 5.15514 19.04 5.54583 19.42C5.93652 19.8 6.57766 19.81 6.95834 19.42L8.02022 18.36Z"></path></svg>
+		<svg id="moon-svg" width="25" height="24" viewBox="0 0 25 24" fill="red" xmlns="http://www.w3.org/2000/svg" class="nav-accessibility-dark_mode light"><path d="M10.3442 5.51C10.1639 6.15 10.0737 6.82 10.0737 7.5C10.0737 11.58 13.3996 14.9 17.4869 14.9C18.1681 14.9 18.8393 14.81 19.4804 14.63C18.4386 17.19 15.9141 19 12.9789 19C9.11202 19 5.96644 15.86 5.96644 12C5.96644 9.07 7.77966 6.55 10.3442 5.51ZM12.9789 3C8.00005 3 3.96289 7.03 3.96289 12C3.96289 16.97 8.00005 21 12.9789 21C17.9577 21 21.9949 16.97 21.9949 12C21.9949 11.54 21.9548 11.08 21.8947 10.64C20.9129 12.01 19.3101 12.9 17.4869 12.9C14.5016 12.9 12.0773 10.48 12.0773 7.5C12.0773 5.69 12.9689 4.08 14.3413 3.1C13.9005 3.04 13.4397 3 12.9789 3Z"></path></svg>
+	</div>
+</button>
+</nav>
+	</div>
+</header>
+		<main>
+			<section id="Hi">
+	<a name="Hi"></a>
+	<div class="container">
+		<div class="grid-item intro">
+			<h1>Ola, I'm Cors,<sub>Front-end web developer.</sub></h1>
+			<p>
+				More than 15 years of professional experience building products
+				for businesses ranging from simple promotional websites, to
+				enterprise webshops.<br>
+				Specialized in accessibility and ease of use, making sure a nice
+				experience always go first.
+			</p>
+		</div>
+		<div class="grid-item logo">
+			<img src="../img/ckdev-logo-light.svg" alt="CK, Front-end developer" id="logo-ck-big">
+		</div>
+	</div>
+</section>
+			<section id="Future">
+	<div class="container" id="Toekomst">
+		<h2>As Front-end developer</h2>
+		<p>
+			Ik ben Frontend developer, Clang professional, online marketeer, SEO
+			specialist, maar bovenal liefhebber van mooie, duidelijke en
+			correcte websites. Mijn eerste en mijn huidige bureau zijn met mij
+			klein begonnen en inmiddels opgegroeid en volwassen. Hierdoor heb ik
+			mij altijd met alle facetten van het maken van een
+			website/webomgeving bezig gehouden. Om deze reden zal deze portfolio
+			gevarieerd zijn. Voor mijzelf vind ik het echter nu tijd om mij
+			verder te specialiseren op mindere facetten tegelijk.
+		</p>
+		<p>
+			Ik houd me graag bezig met de nieuwste ontwikkelingen en vind het
+			een enorm leuke uitdaging om deze nieuwe ontwikkelingen steeds weer
+			toe te passen. Hierdoor hoop ik mee te helpen aan het steeds beter
+			en leuker worden van websites in het algemeen. Zo wordt ons web
+			steeds aangenamer.Speciaal voor de geïnteresseerde is deze
+			portfolio-website opgezet, kijk gerust eens rond en neem contact met
+			me op, of niet :)
+		</p>
+	</div>
+</section>
+			<!-- <SectionPast /> -->
+			<section id="Vaardigheden">
+	<div class="container">
+		<div class="intro">
+	<div class="container">
+		<h2>Skill stack</h2>
+		Over the years, many skills have come and partially gone, these are the ones
+		that stayed.
+	</div>
+</div>
+<div id="skilltree-wrapper" class="skills-container">
+	<ul id="skilltree" class="grid-item">
+		<li id="st-html" class="li-level-1 active">
+			<h3 class="tool-item-wrapper">
+				<div class="tool-item">
+					<img src="../img/html5-logo.png" alt="HTML 5" width="102" height="115">
+				</div>
+			</h3>
+			<ul class="ul-level-2">
+				<li class="fundamentals li-level-2">
+					<h4>Fundamentals</h4>
+					<ul class="ul-level-3">
+						<li class="level-3 Semantic HTML">Semantic HTML</li>
+						<li class="level-3 Accessibility">Accessibility</li>
+						<li class="level-3 Organic SEO">Organic SEO</li>
+					</ul>
+				</li>
+				<li class="preprocessors li-level-2">
+					<h4>Processors</h4>
+					<ul class="ul-level-3">
+						<li class="level-3 PHP">PHP</li>
+						<li class="level-3 WordPress">WordPress</li>
+					</ul>
+				</li>
+				<li class="email li-level-2">
+					<h4>E-mail</h4>
+					<ul class="ul-level-3">
+						<li class="level-3 Responsive">Responsive</li>
+						<li class="level-3 Deliverability">Deliverability</li>
+						<li class="level-3 Targeting campaigns">Targeting campaigns</li>
+					</ul>
+				</li>
+			</ul>
+			<svg version="1.1" xmlns="http://www.w3.org/2000/svg" class="arrow-guide">
+				<path d="M 0 0 L 0 12 L 9 6 z" stroke="colourname" fill="url(#fill)"></path>
+			</svg>
+		</li>
+		<li id="st-css" class="li-level-1">
+			<h3 class="tool-item-wrapper">
+	<div class="tool-item">
+		<img src="../img/css3-shield.svg" alt="CSS" width="102" height="115">
+	</div>
+</h3>
+			<ul class="ul-level-2">
+				<li class="fundamentals li-level-2">
+					<h4>Fundamentals</h4>
+					<ul class="ul-level-3">
+						<li class="level-3 CSS 3">CSS 3</li>
+						<li class="level-3 Responsive">Responsive</li>
+					</ul>
+				</li>
+				<li class="preprocessors li-level-2">
+					<h4>Processors</h4>
+					<ul class="ul-level-3">
+						<li class="level-3 SASS">SASS</li>
+						<li class="level-3 PostCSS">PostCSS</li>
+					</ul>
+				</li>
+				<li class="frameworks li-level-2">
+					<h4>Frameworks</h4>
+					<ul class="ul-level-3">
+						<li class="level-3 Bootstrap">Bootstrap</li>
+						<li class="level-3 Semantic-UI">Semantic-UI</li>
+						<li class="level-3 Tailwind">Tailwind</li>
+					</ul>
+				</li>
+			</ul>
+			<svg version="1.1" xmlns="http://www.w3.org/2000/svg" class="arrow-guide">
+				<path d="M 0 0 L 0 12 L 9 6 z" stroke="colourname" fill="url(#fill)"></path>
+			</svg>
+		</li>
+		<li id="st-javascript" class="li-level-1">
+			<h3 class="tool-item-wrapper">
+	<div class="tool-item">
+		<img src="../img/javascript-logo.svg" alt="JavaScript" width="102" height="115">
+	</div>
+</h3>
+			<ul class="ul-level-2">
+				<li class="fundamentals li-level-2">
+					<h4>Fundamentals</h4>
+					<ul class="ul-level-3">
+						<li class="level-3 EcmaScript 6">EcmaScript 6</li>
+						<li class="level-3 TypeScript">TypeScript</li>
+					</ul>
+				</li>
+				<li class="task-runners li-level-2">
+					<h4>Tasks &amp; Testing</h4>
+					<ul class="ul-level-3">
+						<li class="level-3 Node">Node</li>
+						<li class="level-3 Gulp">Gulp</li>
+						<li class="level-3 Jest">Jest</li>
+					</ul>
+				</li>
+				<li class="framework li-level-2">
+					<h4>Frameworks</h4>
+					<ul class="ul-level-3">
+						<li class="level-3 Astro">Astro</li>
+						<li class="level-3 Vue">Vue</li>
+						<li class="level-3 React">React</li>
+						<li class="level-3 Svelte">Svelte</li>
+					</ul>
+				</li>
+			</ul>
+			<svg version="1.1" xmlns="http://www.w3.org/2000/svg" class="arrow-guide">
+				<path d="M 0 0 L 0 12 L 9 6 z" stroke="colourname" fill="url(#fill)"></path>
+			</svg>
+		</li>
+	</ul>
+	<div class="grid-item tools">
+		<div id="Tools">
+	<div class="tools-grid" id="tools-html">
+		<div class="tool-item-wrapper">
+	<div class="tool-item">
+		<img src="../img/photoshop-logo.svg" alt="Photoshop" width="62" height="64">
+	</div>
+</div>
+		<div class="tool-item-wrapper">
+	<div class="tool-item">
+		<img src="../img/html5-logo.png" alt="HTML 5" width="57" height="64">
+	</div>
+</div>
+		<div class="tool-item-wrapper">
+	<div class="tool-item">
+		<img src="../img/figma-logo.svg" alt="Figma" width="64" height="43">
+	</div>
+</div>
+		<div class="tool-item-wrapper">
+	<div class="tool-item">
+		<img src="../img/xd-logo.svg" alt="Adobe XD" width="64" height="64">
+	</div>
+</div>
+		<div class="tool-item-wrapper">
+	<div class="tool-item">
+		<img src="../img/w3c-logo.svg" alt="W3C Validator" width="64" height="43">
+	</div>
+</div>
+		<div class="tool-item-wrapper">
+	<div class="tool-item">
+		<img src="../img/wcag2.1AA-v-logo.svg" alt="WCAG 2.1" width="64" height="23">
+	</div>
+</div>
+		<div class="tool-item-wrapper">
+	<div class="tool-item">
+		<img src="../img/astro-logo.svg" alt="Astro" width="51" height="64">
+	</div>
+</div>
+		<div class="tool-item-wrapper">
+	<div class="tool-item">
+		<img src="../img/github-logo.svg" alt="Github" width="64" height="64">
+	</div>
+</div>
+		<div class="tool-item-wrapper">
+	<div class="tool-item">
+		<img src="../img/wordpress-logo.png" alt="WordPress" width="64" height="64">
+	</div>
+</div>
+		<div class="tool-item-wrapper">
+	<div class="tool-item">
+		<img src="../img/Bootstrap.svg" alt="Bootstrap" width="64" height="64">
+	</div>
+</div>
+		<div class="tool-item-wrapper">
+	<div class="tool-item">
+		<img src="../img/litmus-logo.svg" alt="Litmus" width="64" height="24">
+	</div>
+</div>
+		<div class="tool-item-wrapper">
+	<div class="tool-item">
+		<img src="../img/smarty-logo.png" alt="Smarty" width="64" height="28">
+	</div>
+</div>
+		<div class="tool-item-wrapper">
+	<div class="tool-item">
+		<img src="../img/mailchimp-logo.svg" alt="Mailchimp" width="56" height="64">
+	</div>
+</div>
+		<div class="tool-item-wrapper">
+	<div class="tool-item">
+		<img src="../img/deployteq-logo.svg" alt="Deployteq" width="64" height="13">
+	</div>
+</div>
+		<div class="tool-item-wrapper">
+	<div class="tool-item">
+		<img src="../img/activecampaign-logo.svg" alt="ActiveCampaign" width="42" height="64">
+	</div>
+</div>
+	</div>
+	<div class="tools-grid hidden" id="tools-css">
+		<div class="tool-item-wrapper">
+	<div class="tool-item">
+		<img src="../img/Bootstrap.svg" alt="Bootstrap" width="64" height="64">
+	</div>
+</div>
+		<div class="tool-item-wrapper">
+	<div class="tool-item">
+		<img src="../img/css3-logo.svg" alt="CSS 3" width="64" height="64">
+	</div>
+</div>
+		<div class="tool-item-wrapper">
+	<div class="tool-item">
+		<img src="../img/github-logo.svg" alt="Github" width="64" height="64">
+	</div>
+</div>
+		<div class="tool-item-wrapper">
+	<div class="tool-item">
+		<img src="../img/sass-logo.svg" alt="Sass" width="64" height="48">
+	</div>
+</div>
+		<div class="tool-item-wrapper">
+	<div class="tool-item">
+		<img src="../img/postcss-logo.svg" alt="Post CSS" width="64" height="64">
+	</div>
+</div>
+		<div class="tool-item-wrapper">
+	<div class="tool-item">
+		<img src="../img/tailwind-css-logo.svg" alt="Tailwind CSS" width="64" height="64">
+	</div>
+</div>
+	</div>
+	<div class="tools-grid hidden" id="tools-javascript">
+		<div class="tool-item-wrapper">
+	<div class="tool-item">
+		<img src="../img/es6-logo.png" alt="EcmaScript 6" width="64" height="64">
+	</div>
+</div>
+		<div class="tool-item-wrapper">
+	<div class="tool-item">
+		<img src="../img/javascript-logo.svg" alt="Javascript" width="56" height="64">
+	</div>
+</div>
+		<div class="tool-item-wrapper">
+	<div class="tool-item">
+		<img src="../img/typescript-logo.svg" alt="TypeScript" width="64" height="64">
+	</div>
+</div>
+		<div class="tool-item-wrapper">
+	<div class="tool-item">
+		<img src="../img/astro-logo.svg" alt="Astro" width="51" height="64">
+	</div>
+</div>
+		<div class="tool-item-wrapper">
+	<div class="tool-item">
+		<img src="../img/nodejs-logo.svg" alt="Node" width="64" height="39">
+	</div>
+</div>
+		<div class="tool-item-wrapper">
+	<div class="tool-item">
+		<img src="../img/gulp-logo.svg" alt="GULP" width="29" height="64">
+	</div>
+</div>
+		<div class="tool-item-wrapper">
+	<div class="tool-item">
+		<img src="../img/webpack-logo.svg" alt="WebPack" width="57" height="64">
+	</div>
+</div>
+		<div class="tool-item-wrapper">
+	<div class="tool-item">
+		<img src="../img/reactjs-logo.svg" alt="React" width="64" height="57">
+	</div>
+</div>
+		<div class="tool-item-wrapper">
+	<div class="tool-item">
+		<img src="../img/vuejs-logo.svg" alt="Vue JS" width="64" height="55">
+	</div>
+</div>
+		<div class="tool-item-wrapper">
+	<div class="tool-item">
+		<img src="../img/svelte-logo.svg" alt="Svelte" width="53" height="64">
+	</div>
+</div>
+	</div>
+</div>
+	</div>
+</div>
+	</div>
+</section>
+			<!-- <Tools />			 -->
+		</main>
+		<footer id="page-footer">
+	<div class="container">&copy; CK Dev 2023</div>
+</footer>
+	</div>
+
+		
+	</body>
+</html>
