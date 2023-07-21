@@ -9,7 +9,6 @@
 		<title>Cors Kester, Front-end Developer.</title>
 		<link rel="manifest" href="/manifest.json">
 		<meta name="theme-color" content="#3367D6">
-		<meta http-equiv="Cache-control" content="public">
 	<script type="module">const l=document.querySelector(".scroll-line");function d(){const e=window.innerHeight,o=document.getElementById("container").clientHeight,r=window.scrollY/(o-e)*100;l.style.width=r+"%"}window.addEventListener("scroll",d);document.addEventListener("DOMContentLoaded",function(e){document.querySelector("#st-html")?.addEventListener("mouseover",()=>{document.querySelector("#st-html")?.classList.add("active"),document.querySelector("#st-css")?.classList.remove("active"),document.querySelector("#st-javascript")?.classList.remove("active"),document.querySelector("#tools-html")?.classList.remove("hidden"),document.querySelector("#tools-css")?.classList.add("hidden"),document.querySelector("#tools-javascript")?.classList.add("hidden")}),document.querySelector("#st-css")?.addEventListener("mouseover",()=>{document.querySelector("#st-html")?.classList.remove("active"),document.querySelector("#st-css")?.classList.add("active"),document.querySelector("#st-javascript")?.classList.remove("active"),document.querySelector("#tools-css")?.classList.remove("hidden"),document.querySelector("#tools-html")?.classList.add("hidden"),document.querySelector("#tools-javascript")?.classList.add("hidden")}),document.querySelector("#st-javascript")?.addEventListener("mouseover",()=>{document.querySelector("#st-html")?.classList.remove("active"),document.querySelector("#st-css")?.classList.remove("active"),document.querySelector("#st-javascript")?.classList.add("active"),document.querySelector("#tools-javascript")?.classList.remove("hidden"),document.querySelector("#tools-html")?.classList.add("hidden"),document.querySelector("#tools-css")?.classList.add("hidden")})});const n=localStorage.getItem("theme");function i(){return n||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")}let t=i();function s(){localStorage.setItem("theme",t),c()}function c(){let e=document.getElementById("html");e!==null&&(e.setAttribute("data-theme",t),document.querySelector("#theme-btn")?.setAttribute("aria-label",t))}c(),window.onload=()=>{c(),document.querySelector("#theme-btn")?.addEventListener("click",()=>{t=t==="light"?"dark":"light",s()})},window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change",({matches:e})=>{t=e?"dark":"light",s()});
 </script></head>
 	<body>
@@ -24,11 +23,9 @@
 		<img src="../img/ckdev-logo-light.svg" alt="CK, Front-end developer" height="32">
 	</a>
 	<ul id="pages">
-		<li><a href="/#Hi" title="Jump to Hi">Hi</a></li>
-		<li><a href="/#Future" title="Jump to Future">Future</a></li>
+		<li><a href="/#Ola" title="Jump to Ola">Ola</a></li>
 		<li><a href="/#Past" title="Jump to Past">Past</a></li>
 		<li><a href="/#Skills" title="Jump to Skills">Skills</a></li>
-		<li><a href="/#Tools" title="Jump to Tools">Tools</a></li>
 		<li><a href="/#Contact" title="Jump to Contact">Contact</a></li>
 	</ul>
 </nav>
@@ -44,7 +41,7 @@
 </header>
 		<main>
 			<section id="Hi">
-	<a name="Hi"></a>
+	<a name="Ola"></a>
 	<div class="container">
 		<div class="grid-item intro">
 			<h1>Ola, I'm Cors,<sub>Front-end web developer.</sub></h1>

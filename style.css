@@ -514,9 +514,9 @@ main {
 		width:600px;
 }
 	}
-@media (max-width: 767.98px) {
+@media (max-width: 575.98px) {
 #nav-top #pages {
-			display: none;
+			/* display: none; */
 	}
 		}
 #homelink {
@@ -1302,7 +1302,7 @@ footer,
 			top: 5rem;
 			z-index: 1;
 			margin-left: 0;
-			width: var(--container-width);
+			width: calc(var(--container-width) - 1rem);
 			min-width: 320px;
 	}
 		}
