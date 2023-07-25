@@ -1,564 +1,1047 @@
 <!DOCTYPE html>
 <html id="html" lang="en" data-theme="dark">
 	<head>
-		<meta charset="utf-8">
-		<link rel="icon" type="image/svg+xml" href="/img/ckdev-logo-light.svg">
-		<link rel="stylesheet" href="../style.css">
-		<meta name="viewport" content="width=device-width">
-		<meta name="description" content="The portfolio of Cors Kester, Front-end web developer.">
-		<title>Cors Kester, Front-end Developer.</title>
-		<link rel="manifest" href="/manifest.json">
-		<meta name="theme-color" content="#3367D6">
-		<meta property="og:site_name" content="Cors, Front-end web developer.">
-		<meta property="og:url" content="https://ckdev88.github.io">
-		<meta property="og:type" content="website">
-		<meta property="og:title" content="Cors Kester | Frontend Developer & Accessibility specialist">
-		<meta property="og:description" content="I believe the web should be as inclusive as possible, which means performance, ease of use and readability should always be prioritized.">
-		<meta property="og:image" content="https://ckdev88.github.io/img/ckdev-logo-bright.webp">
-		<meta property="og:url" content="https://ckdev88.github.io">
-	<script type="module">const l=document.querySelector(".scroll-line");function d(){const e=window.innerHeight,o=document.getElementById("container").clientHeight,r=window.scrollY/(o-e)*100;l.style.width=r+"%"}window.addEventListener("scroll",d);document.addEventListener("DOMContentLoaded",function(e){document.querySelector("#st-html")?.addEventListener("mouseover",()=>{document.querySelector("#st-html")?.classList.add("active"),document.querySelector("#st-css")?.classList.remove("active"),document.querySelector("#st-javascript")?.classList.remove("active"),document.querySelector("#tools-html")?.classList.remove("hidden"),document.querySelector("#tools-css")?.classList.add("hidden"),document.querySelector("#tools-javascript")?.classList.add("hidden")}),document.querySelector("#st-css")?.addEventListener("mouseover",()=>{document.querySelector("#st-html")?.classList.remove("active"),document.querySelector("#st-css")?.classList.add("active"),document.querySelector("#st-javascript")?.classList.remove("active"),document.querySelector("#tools-css")?.classList.remove("hidden"),document.querySelector("#tools-html")?.classList.add("hidden"),document.querySelector("#tools-javascript")?.classList.add("hidden")}),document.querySelector("#st-javascript")?.addEventListener("mouseover",()=>{document.querySelector("#st-html")?.classList.remove("active"),document.querySelector("#st-css")?.classList.remove("active"),document.querySelector("#st-javascript")?.classList.add("active"),document.querySelector("#tools-javascript")?.classList.remove("hidden"),document.querySelector("#tools-html")?.classList.add("hidden"),document.querySelector("#tools-css")?.classList.add("hidden")})});const n=localStorage.getItem("theme");function i(){return n||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")}let t=i();function s(){localStorage.setItem("theme",t),c()}function c(){let e=document.getElementById("html");e!==null&&(e.setAttribute("data-theme",t),document.querySelector("#theme-btn")?.setAttribute("aria-label",t))}c(),window.onload=()=>{c(),document.querySelector("#theme-btn")?.addEventListener("click",()=>{t=t==="light"?"dark":"light",s()})},window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change",({matches:e})=>{t=e?"dark":"light",s()});
-</script></head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/img/ckdev-logo-light.svg" />
+		<link rel="stylesheet" href="../style.css" />
+		<meta name="viewport" content="width=device-width" />
+		<meta
+			name="description"
+			content="The portfolio of CK, Front-end web developer."
+		/>
+		<title>CK, Front-end Developer.</title>
+		<link rel="manifest" href="/manifest.json" />
+		<meta name="theme-color" content="#3367D6" />
+		<meta property="og:site_name" content="CK, Front-end web developer." />
+		<meta property="og:url" content="https://ckdev88.github.io" />
+		<meta property="og:type" content="website" />
+		<meta
+			property="og:title"
+			content="CK | Frontend Developer & Accessibility specialist"
+		/>
+		<meta
+			property="og:description"
+			content="I believe the web should be as inclusive as possible, which means performance, ease of use and readability should always be prioritized."
+		/>
+		<meta
+			property="og:image"
+			content="https://ckdev88.github.io/img/ckdev-logo-bright.webp"
+		/>
+		<meta property="og:url" content="https://ckdev88.github.io" />
+		<script type="module">
+			const d = document.querySelector(".scroll-line");
+			function a() {
+				const e = window.innerHeight,
+					c = document.getElementById("container").clientHeight,
+					r = (window.scrollY / (c - e)) * 100;
+				d.style.width = r + "%";
+			}
+			window.addEventListener("scroll", a);
+			document.addEventListener("DOMContentLoaded", function (e) {
+				document
+					.querySelector("#st-html")
+					?.addEventListener("mouseover", () => {
+						document.querySelector("#st-html")?.classList.add("active"),
+							document.querySelector("#st-css")?.classList.remove("active"),
+							document
+								.querySelector("#st-javascript")
+								?.classList.remove("active"),
+							document.querySelector("#tools-html")?.classList.remove("hidden"),
+							document.querySelector("#tools-css")?.classList.add("hidden"),
+							document
+								.querySelector("#tools-javascript")
+								?.classList.add("hidden");
+					}),
+					document
+						.querySelector("#st-css")
+						?.addEventListener("mouseover", () => {
+							document.querySelector("#st-html")?.classList.remove("active"),
+								document.querySelector("#st-css")?.classList.add("active"),
+								document
+									.querySelector("#st-javascript")
+									?.classList.remove("active"),
+								document
+									.querySelector("#tools-css")
+									?.classList.remove("hidden"),
+								document.querySelector("#tools-html")?.classList.add("hidden"),
+								document
+									.querySelector("#tools-javascript")
+									?.classList.add("hidden");
+						}),
+					document
+						.querySelector("#st-javascript")
+						?.addEventListener("mouseover", () => {
+							document.querySelector("#st-html")?.classList.remove("active"),
+								document.querySelector("#st-css")?.classList.remove("active"),
+								document
+									.querySelector("#st-javascript")
+									?.classList.add("active"),
+								document
+									.querySelector("#tools-javascript")
+									?.classList.remove("hidden"),
+								document.querySelector("#tools-html")?.classList.add("hidden"),
+								document.querySelector("#tools-css")?.classList.add("hidden");
+						});
+			});
+			const i = localStorage.getItem("theme");
+			function u() {
+				return (
+					i ||
+					(window.matchMedia("(prefers-color-scheme: dark)").matches
+						? "dark"
+						: "light")
+				);
+			}
+			let t = u();
+			function l() {
+				localStorage.setItem("theme", t), o();
+			}
+			function o() {
+				let e = document.getElementById("html");
+				e !== null &&
+					(e.setAttribute("data-theme", t),
+					document.querySelector("#theme-btn")?.setAttribute("aria-label", t));
+			}
+			o(),
+				(window.onload = () => {
+					o(),
+						document
+							.querySelector("#theme-btn")
+							?.addEventListener("click", () => {
+								(t = t === "light" ? "dark" : "light"), l();
+							});
+				}),
+				window
+					.matchMedia("(prefers-color-scheme: dark)")
+					.addEventListener("change", ({ matches: e }) => {
+						(t = e ? "dark" : "light"), l();
+					});
+			window.location.pathname.substring(1, 3);
+			let n = document.getElementById("nav-languages");
+			n !== null &&
+				(n.onchange = function (e) {
+					const c = e.target;
+					if (c !== null) {
+						let s = c.value;
+						window.location.pathname = `${s}/`;
+					}
+				});
+		</script>
+	</head>
 	<body>
 		<div id="theme-backdrop"></div>
-		
-	<div id="container">
-		<header id="header-page">
-	<div class="scroll-line"></div>
-	<div class="container" id="nav-container">
-		<nav id="nav-top" role="navigation" aria-label="Hoofdmenu">
-	<a href="./" title="Terug naar de homepage" id="homelink">
-		<img src="../img/ckdev-logo-light.svg" alt="CK, Front-end developer" height="32" id="homelink-img">
-	</a>
-	<ul id="pages">
-		<li><a href="/#Ola" title="Jump to Ola">Ola</a></li>
-		<li><a href="/#Past" title="Jump to Past">Past</a></li>
-		<li><a href="/#Skills" title="Jump to Skills">Skills</a></li>
-		<li><a href="/#Contact" title="Jump to Contact">Contact</a></li>
-	</ul>
-	<nav id="nav-accessibility" role="navigation" aria-label="Accessibility">
-	<button aria-label="light" aria-live="polite" id="theme-btn" title="Toggles light & dark">
-	<div class="nav-accessibility-light_mode">
-		<svg id="sun-svg" width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="nav-accessibility-light_mode light"><path d="M12.979 9C14.6319 9 15.9843 10.35 15.9843 12C15.9843 13.65 14.6319 15 12.979 15C11.3261 15 9.97368 13.65 9.97368 12C9.97368 10.35 11.3261 9 12.979 9ZM12.979 7C10.2141 7 7.97013 9.24 7.97013 12C7.97013 14.76 10.2141 17 12.979 17C15.7439 17 17.9879 14.76 17.9879 12C17.9879 9.24 15.7439 7 12.979 7ZM2.96125 13H4.9648C5.51578 13 5.96658 12.55 5.96658 12C5.96658 11.45 5.51578 11 4.9648 11H2.96125C2.41027 11 1.95947 11.45 1.95947 12C1.95947 12.55 2.41027 13 2.96125 13ZM20.9932 13H22.9968C23.5478 13 23.9985 12.55 23.9985 12C23.9985 11.45 23.5478 11 22.9968 11H20.9932C20.4422 11 19.9914 11.45 19.9914 12C19.9914 12.55 20.4422 13 20.9932 13ZM11.9772 2V4C11.9772 4.55 12.428 5 12.979 5C13.53 5 13.9808 4.55 13.9808 4V2C13.9808 1.45 13.53 1 12.979 1C12.428 1 11.9772 1.45 11.9772 2ZM11.9772 20V22C11.9772 22.55 12.428 23 12.979 23C13.53 23 13.9808 22.55 13.9808 22V20C13.9808 19.45 13.53 19 12.979 19C12.428 19 11.9772 19.45 11.9772 20ZM6.95834 4.58C6.56764 4.19 5.92651 4.19 5.54583 4.58C5.15514 4.97 5.15514 5.61 5.54583 5.99L6.60771 7.05C6.99841 7.44 7.63954 7.44 8.02022 7.05C8.40089 6.66 8.41091 6.02 8.02022 5.64L6.95834 4.58ZM19.3503 16.95C18.9596 16.56 18.3185 16.56 17.9378 16.95C17.5471 17.34 17.5471 17.98 17.9378 18.36L18.9997 19.42C19.3904 19.81 20.0315 19.81 20.4122 19.42C20.8029 19.03 20.8029 18.39 20.4122 18.01L19.3503 16.95ZM20.4122 5.99C20.8029 5.6 20.8029 4.96 20.4122 4.58C20.0215 4.19 19.3804 4.19 18.9997 4.58L17.9378 5.64C17.5471 6.03 17.5471 6.67 17.9378 7.05C18.3285 7.43 18.9696 7.44 19.3503 7.05L20.4122 5.99ZM8.02022 18.36C8.41091 17.97 8.41091 17.33 8.02022 16.95C7.62953 16.56 6.98839 16.56 6.60771 16.95L5.54583 18.01C5.15514 18.4 5.15514 19.04 5.54583 19.42C5.93652 19.8 6.57766 19.81 6.95834 19.42L8.02022 18.36Z"></path></svg>
-		<svg id="moon-svg" width="25" height="24" viewBox="0 0 25 24" fill="red" xmlns="http://www.w3.org/2000/svg" class="nav-accessibility-dark_mode light"><path d="M10.3442 5.51C10.1639 6.15 10.0737 6.82 10.0737 7.5C10.0737 11.58 13.3996 14.9 17.4869 14.9C18.1681 14.9 18.8393 14.81 19.4804 14.63C18.4386 17.19 15.9141 19 12.9789 19C9.11202 19 5.96644 15.86 5.96644 12C5.96644 9.07 7.77966 6.55 10.3442 5.51ZM12.9789 3C8.00005 3 3.96289 7.03 3.96289 12C3.96289 16.97 8.00005 21 12.9789 21C17.9577 21 21.9949 16.97 21.9949 12C21.9949 11.54 21.9548 11.08 21.8947 10.64C20.9129 12.01 19.3101 12.9 17.4869 12.9C14.5016 12.9 12.0773 10.48 12.0773 7.5C12.0773 5.69 12.9689 4.08 14.3413 3.1C13.9005 3.04 13.4397 3 12.9789 3Z"></path></svg>
-	</div>
-</button>
-</nav>
-</nav>
-	</div>
-</header>
-		<main>
-			<section id="section-hi">
-	<span id="Ola" class="section-anchor t-0"></span>
-	<div class="container">
-		<div class="grid-item intro">
-			<h1>Ola, I'm Cors,<sub>Front-end web developer.</sub></h1>
-			<p>
-				More than 15 years of professional experience building products
-				for businesses ranging from simple promotional websites to
-				enterprise webshops.<br>
-				Specialized in front-end development, with accessibility, performance
-				and ease of use as priorities, so the end result is as inclusive
-				as possible.
-			</p>
-		</div>
-		<div class="grid-item logo">
-			<img src="../img/ckdev-logo-light.svg" alt="CK, Front-end developer" id="logo-ck-big">
-		</div>
-	</div>
-</section>
-			<section id="section-past">
-	<span id="Past" class="section-anchor"></span>
-	<div class="intro">
-		<div class="container">
-			<h2>Some of my work.</h2>
-			Below you can see a selection of some of my employers, jobs, projects
-			and applied skills.
-		</div>
-	</div>
 
-	<div id="past-1">
-		<div class="container">
-			<article aria-labelledby="past-header" class="grid-container reverse">
-				<div class="past-article-intro">
-					<h3>Self employed<sub>2022 - current</sub></h3>
-					<p>
-						Took some time to take on various private projects,
-						while doing some small projects on the side, using a
-						variety of frameworks and techniques.
-					</p>
-					<span class="badge">Vue</span>
-					<span class="badge">React</span>
-					<span class="badge">PostCSS</span>
-					<span class="badge">Figma</span>
-					<span class="badge">Python</span>
-					<span class="badge">Astro</span>
-					<span class="badge">WCAG</span>
+		<div id="container">
+			<header id="header-page">
+				<div class="scroll-line"></div>
+				<div class="container" id="nav-container">
+					<nav id="nav-top" role="navigation" aria-label="Hoofdmenu">
+						<a href="./" title="Terug naar de homepage" id="homelink">
+							<img
+								src="../img/ckdev-logo-light.svg"
+								alt="CK, Front-end developer"
+								height="32"
+								id="homelink-img"
+							/>
+						</a>
+						<ul id="pages">
+							<li>
+								<a href="/en/#Hi" title="Jump to Hi"> Hi </a>
+							</li>
+							<li>
+								<a href="/en/#Projects" title="Jump to Projects"> Projects </a>
+							</li>
+							<li>
+								<a href="/en/#Stack" title="Jump to Stack"> Stack </a>
+							</li>
+							<li>
+								<a href="/en/#Contact" title="Jump to Contact"> Contact </a>
+							</li>
+						</ul>
+						<nav
+							id="nav-accessibility"
+							role="navigation"
+							aria-label="Accessibility"
+						>
+							<button
+								aria-label="light"
+								aria-live="polite"
+								id="theme-btn"
+								title="Toggles light & dark"
+							>
+								<div class="nav-accessibility-light_mode">
+									<svg
+										id="sun-svg"
+										width="25"
+										height="24"
+										viewBox="0 0 25 24"
+										fill="none"
+										xmlns="http://www.w3.org/2000/svg"
+										class="nav-accessibility-light_mode light"
+									>
+										<path
+											d="M12.979 9C14.6319 9 15.9843 10.35 15.9843 12C15.9843 13.65 14.6319 15 12.979 15C11.3261 15 9.97368 13.65 9.97368 12C9.97368 10.35 11.3261 9 12.979 9ZM12.979 7C10.2141 7 7.97013 9.24 7.97013 12C7.97013 14.76 10.2141 17 12.979 17C15.7439 17 17.9879 14.76 17.9879 12C17.9879 9.24 15.7439 7 12.979 7ZM2.96125 13H4.9648C5.51578 13 5.96658 12.55 5.96658 12C5.96658 11.45 5.51578 11 4.9648 11H2.96125C2.41027 11 1.95947 11.45 1.95947 12C1.95947 12.55 2.41027 13 2.96125 13ZM20.9932 13H22.9968C23.5478 13 23.9985 12.55 23.9985 12C23.9985 11.45 23.5478 11 22.9968 11H20.9932C20.4422 11 19.9914 11.45 19.9914 12C19.9914 12.55 20.4422 13 20.9932 13ZM11.9772 2V4C11.9772 4.55 12.428 5 12.979 5C13.53 5 13.9808 4.55 13.9808 4V2C13.9808 1.45 13.53 1 12.979 1C12.428 1 11.9772 1.45 11.9772 2ZM11.9772 20V22C11.9772 22.55 12.428 23 12.979 23C13.53 23 13.9808 22.55 13.9808 22V20C13.9808 19.45 13.53 19 12.979 19C12.428 19 11.9772 19.45 11.9772 20ZM6.95834 4.58C6.56764 4.19 5.92651 4.19 5.54583 4.58C5.15514 4.97 5.15514 5.61 5.54583 5.99L6.60771 7.05C6.99841 7.44 7.63954 7.44 8.02022 7.05C8.40089 6.66 8.41091 6.02 8.02022 5.64L6.95834 4.58ZM19.3503 16.95C18.9596 16.56 18.3185 16.56 17.9378 16.95C17.5471 17.34 17.5471 17.98 17.9378 18.36L18.9997 19.42C19.3904 19.81 20.0315 19.81 20.4122 19.42C20.8029 19.03 20.8029 18.39 20.4122 18.01L19.3503 16.95ZM20.4122 5.99C20.8029 5.6 20.8029 4.96 20.4122 4.58C20.0215 4.19 19.3804 4.19 18.9997 4.58L17.9378 5.64C17.5471 6.03 17.5471 6.67 17.9378 7.05C18.3285 7.43 18.9696 7.44 19.3503 7.05L20.4122 5.99ZM8.02022 18.36C8.41091 17.97 8.41091 17.33 8.02022 16.95C7.62953 16.56 6.98839 16.56 6.60771 16.95L5.54583 18.01C5.15514 18.4 5.15514 19.04 5.54583 19.42C5.93652 19.8 6.57766 19.81 6.95834 19.42L8.02022 18.36Z"
+										></path>
+									</svg>
+									<svg
+										id="moon-svg"
+										width="25"
+										height="24"
+										viewBox="0 0 25 24"
+										fill="red"
+										xmlns="http://www.w3.org/2000/svg"
+										class="nav-accessibility-dark_mode light"
+									>
+										<path
+											d="M10.3442 5.51C10.1639 6.15 10.0737 6.82 10.0737 7.5C10.0737 11.58 13.3996 14.9 17.4869 14.9C18.1681 14.9 18.8393 14.81 19.4804 14.63C18.4386 17.19 15.9141 19 12.9789 19C9.11202 19 5.96644 15.86 5.96644 12C5.96644 9.07 7.77966 6.55 10.3442 5.51ZM12.9789 3C8.00005 3 3.96289 7.03 3.96289 12C3.96289 16.97 8.00005 21 12.9789 21C17.9577 21 21.9949 16.97 21.9949 12C21.9949 11.54 21.9548 11.08 21.8947 10.64C20.9129 12.01 19.3101 12.9 17.4869 12.9C14.5016 12.9 12.0773 10.48 12.0773 7.5C12.0773 5.69 12.9689 4.08 14.3413 3.1C13.9005 3.04 13.4397 3 12.9789 3Z"
+										></path>
+									</svg>
+								</div>
+							</button>
+							<div id="nav-accessibility-language">
+								<svg
+									width="25"
+									height="24"
+									viewBox="0 0 25 24"
+									fill="none"
+									xmlns="http://www.w3.org/2000/svg"
+								>
+									<path
+										d="M12.7875 2C7.25773 2 2.77979 6.48 2.77979 12C2.77979 17.52 7.25773 22 12.7875 22C18.3274 22 22.8153 17.52 22.8153 12C22.8153 6.48 18.3274 2 12.7875 2ZM19.7298 8H16.7746C16.454 6.75 15.9932 5.55 15.3921 4.44C17.2354 5.07 18.7681 6.35 19.7298 8ZM12.7975 4.04C13.629 5.24 14.2802 6.57 14.7109 8H10.8842C11.3149 6.57 11.9661 5.24 12.7975 4.04ZM5.0438 14C4.88352 13.36 4.78334 12.69 4.78334 12C4.78334 11.31 4.88352 10.64 5.0438 10H8.4298C8.34966 10.66 8.28956 11.32 8.28956 12C8.28956 12.68 8.34966 13.34 8.4298 14H5.0438ZM5.86526 16H8.8205C9.14106 17.25 9.60188 18.45 10.2029 19.56C8.35968 18.93 6.82696 17.66 5.86526 16ZM8.8205 8H5.86526C6.82696 6.34 8.35968 5.07 10.2029 4.44C9.60188 5.55 9.14106 6.75 8.8205 8ZM12.7975 19.96C11.9661 18.76 11.3149 17.43 10.8842 16H14.7109C14.2802 17.43 13.629 18.76 12.7975 19.96ZM15.1417 14H10.4534C10.3632 13.34 10.2931 12.68 10.2931 12C10.2931 11.32 10.3632 10.65 10.4534 10H15.1417C15.2319 10.65 15.302 11.32 15.302 12C15.302 12.68 15.2319 13.34 15.1417 14ZM15.3921 19.56C15.9932 18.45 16.454 17.25 16.7746 16H19.7298C18.7681 17.65 17.2354 18.93 15.3921 19.56ZM17.1653 14C17.2454 13.34 17.3055 12.68 17.3055 12C17.3055 11.32 17.2454 10.66 17.1653 10H20.5513C20.7116 10.64 20.8118 11.31 20.8118 12C20.8118 12.69 20.7116 13.36 20.5513 14H17.1653Z"
+										fill="white"
+									></path>
+								</svg>
+								<select
+									id="nav-languages"
+									class="header-button language-select"
+									value="en"
+								>
+									<option value="nl">NL</option>
+									<option value="en" selected>EN</option>
+								</select>
+							</div>
+						</nav>
+					</nav>
 				</div>
-				<aside class="thumbs" aria-hidden="true">
-					<div class="grid-container">
-						<div class="grid-item">
-	<img src="../img/dagindeling-logo.avif" class="thumbIMG" alt="Dagindeling" width="108" height="41">
-</div>
-						<div class="grid-item">
-	<img src="../img/python-stocks-logo.avif" class="thumbIMG" alt="Python Stocks" width="108" height="86">
-</div>
-						<div class="grid-item">
-	<img src="../img/ckdev-logo.svg" class="thumbIMG" alt="PlusPort" width="57" height="72">
-</div>
+			</header>
+			<main>
+				<section id="section-hi">
+					<span id="Hi" class="section-anchor t-0"></span>
+					<div class="container">
+						<div class="grid-item intro">
+							<h1>Hi, I&#39;m CK,<sub>Front-end web developer.</sub></h1>
+							<p>
+								More than 15 years of professional experience building products
+								for businesses ranging from simple promotional websites to
+								enterprise webshops.<br />
+								Specialized in front-end development, with accessibility,
+								performance and ease of use as priorities, so the end result is
+								as inclusive as possible.
+							</p>
+						</div>
+						<div class="grid-item logo">
+							<img
+								src="../img/ckdev-logo-light.svg"
+								alt="CK, Front-end developer"
+								id="logo-ck-big"
+							/>
+						</div>
 					</div>
-				</aside>
-			</article>
-		</div>
-	</div>
-	<div id="past-2">
-		<div class="container">
-			<article aria-labelledby="past-header" class="grid-container">
-				<div class="past-article-intro">
-					<h3>Visma PlusPort<sub>2017 - 2021</sub></h3>
-					<p>
-						Leading a small team responsible for the front-end and
-						accessibility (WCAG 2.1) of our main product: PlusPort
-						LMS, as well as our own websites and other web services.
-					</p>
-					<span class="badge">Bootstrap</span>
-					<span class="badge">WCAG</span>
-					<span class="badge">React</span>
-					<span class="badge">XD</span>
-					<span class="badge">ActiveCampaign</span>
-					<span class="badge">WordPress</span>
-					<span class="badge">PHP</span>
-				</div>
-				<aside class="thumbs" aria-hidden="true">
-					<div class="grid-container">
-						<div class="grid-item">
-	<img src="../img/logo-plusport.svg" class="thumbIMG" alt="PlusPort" width="144" height="42">
-</div>
-						<div class="grid-item">
-	<img src="../img/plusport-lms-logo.webp" class="thumbIMG" alt="PlusPort LMS" width="144" height="86">
-</div>
-						<div class="grid-item">
-	<img src="../img/logo-plusport-direct.png" class="thumbIMG" alt="PlusPort Direct" width="144" height="41">
-</div>
-						<div class="grid-item">
-	<img src="../img/opleiders-direct-logo.svg" class="thumbIMG" alt="Opleiders direct" width="144" height="41">
-</div>
+				</section>
+				<section id="section-past">
+					<span id="Projects" class="section-anchor"></span>
+					<div class="intro">
+						<div class="container">
+							<h2>Some of my work.</h2>
+							<p>
+								Below you can see a selection of some of my employers, jobs,
+								projects and applied skills.
+							</p>
+						</div>
 					</div>
-				</aside>
-			</article>
-		</div>
-	</div>
 
-	<div id="past-3">
-		<div class="container">
-			<article aria-labelledby="past-header2" class="grid-container reverse">
-				<div class="past-article-intro">
-					<h3>Clever Strategy<sub>2011 - 2017</sub></h3>
-					<p>
-						Working as front-end developer and campaign manager,
-						specialized in accountable marketing. Directly in
-						contact with many clients, to fine tune the
-						communication in running campaigns, where we made
-						several flows to target and retarget the (potential)
-						customers, to keep them engaged. The campaigns were a
-						mix of physical and virtual, webshops,
-						campaign-websites, e-mails and physical mail.
-					</p>
-					<span class="badge">JavaScript</span>
-					<span class="badge">Bootstrap</span>
-					<span class="badge">Photoshop</span>
-					<span class="badge">WordPress</span>
-					<span class="badge">Clang / Deploytec</span>
-					<span class="badge">Smarty</span>
-				</div>
-				<aside class="thumbs" aria-hidden="true">
-					<div class="grid-container">
-						<div class="grid-item">
-	<img src="../img/kruidvat-logo.svg" class="thumbIMG" alt="Kruidvat" width="144" height="66">
-</div>
-						<div class="grid-item">
-	<img src="../img/hema-logo.svg" class="thumbIMG" alt="HEMA" width="96" height="96">
-</div>
-						<div class="grid-item">
-	<img src="../img/bruynzeel-keukens-logo.png" class="thumbIMG" alt="Bruynzeel Keukens" width="144" height="144">
-</div>
-						<div class="grid-item">
-	<img src="../img/lucardi-logo.webp" class="thumbIMG" alt="Lucardi" width="144" height="43">
-</div>
-						<div class="grid-item">
-	<img src="../img/optitrade-logo.svg" class="thumbIMG" alt="Optitrade" width="144" height="43">
-</div>
-						<div class="grid-item">
-	<img src="../img/total-logo.png" class="thumbIMG" alt="Total" width="144" height="144">
-</div>
-					</div>
-				</aside>
-			</article>
-		</div>
-	</div>
+					<div id="past-1">
+						<div class="container">
+							<article
+								aria-labelledby="past-header1"
+								class="grid-container reverse"
+							>
+								<div class="past-article-intro">
+									<h3>Self employed<sub>2022 - current</sub></h3>
+									<p>
+										Took some time to take on various private projects, while
+										doing some small projects on the side, using a variety of
+										frameworks and techniques.
+									</p>
 
-	<div id="past-4">
-		<div class="container">
-			<article aria-labelledby="past-header4" class="grid-container">
-				<div class="past-article-intro">
-					<h3>Fair Products Plaza <sub>2011 - 2016</sub></h3>
-					<p>
-						Co-founded and created a webshop to sell fair products.
-						Which meant all products were completely fair trade,
-						organic, free of animal testing and environment
-						friendly, really, not the greenwashed versions of it.
-						<br>Sadly we had to pull the plug on the project in
-						2016.
-					</p>
-					<span class="badge">Magento</span>
-					<span class="badge">SEO</span>
-					<span class="badge">Mailchimp</span>
-					<span class="badge">JavaScript</span>
-					<span class="badge">PHP</span>
-					<span class="badge">MySQL</span>
-				</div>
-				<aside class="thumbs" aria-hidden="true">
-					<div class="grid-container">
-						<div class="grid-item">
-	<img src="../img/fairpp-logo.avif" class="thumbIMG" alt="Fair Products Plaza" width="120" height="120">
-</div>
+									<span class="badge">Vue</span>
+									<span class="badge">React</span>
+									<span class="badge">PostCSS</span>
+									<span class="badge">Figma</span>
+									<span class="badge">Python</span>
+									<span class="badge">Astro</span>
+									<span class="badge">WCAG</span>
+								</div>
+								<aside class="thumbs" aria-hidden="true">
+									<div class="grid-container">
+										<div class="grid-item">
+											<img
+												src="../img/dagindeling-logo.avif"
+												class="thumbIMG"
+												alt="Dagindeling"
+												width="108"
+												height="41"
+											/>
+										</div>
+										<div class="grid-item">
+											<img
+												src="../img/python-stocks-logo.avif"
+												class="thumbIMG"
+												alt="Python Stocks"
+												width="108"
+												height="86"
+											/>
+										</div>
+										<div class="grid-item">
+											<img
+												src="../img/ckdev-logo.svg"
+												class="thumbIMG"
+												alt="PlusPort"
+												width="57"
+												height="72"
+											/>
+										</div>
+									</div>
+								</aside>
+							</article>
+						</div>
 					</div>
-				</aside>
-			</article>
-		</div>
-	</div>
-
-	<div id="past-5">
-		<div class="container">
-			<article aria-labelledby="past-header3" class="grid-container reverse">
-				<div class="past-article-intro">
-					<h3>Lined <sub>2006 - 2011</sub></h3>
-					<p>
-						Worked on TroubleFree software in the first year, this
-						is a backoffice administration system. After that, I
-						designed tens and developed close to a hundred websites
-						for clients and maintained many, often applying the
-						latest SEO techniques.
-					</p>
-					<span class="badge">PHP</span>
-					<span class="badge">MySQL</span>
-					<span class="badge">SEO</span>
-					<span class="badge">Photoshop</span>
-					<span class="badge">JavaScript</span>
-					<span class="badge">Visual Basic</span>
-				</div>
-				<aside class="thumbs" aria-hidden="true">
-					<div class="grid-container">
-						<div class="grid-item">
-	<img src="../img/lined-logo.svg" class="thumbIMG" alt="Lined" width="144" height="144">
-</div>
-						<div class="grid-item">
-	<img src="../img/troublefree-logo.svg" class="thumbIMG" alt="Total" width="144" height="144">
-</div>
+					<div id="past-2">
+						<div class="container">
+							<article aria-labelledby="past-header2" class="grid-container">
+								<div class="past-article-intro">
+									<h3>Visma PlusPort<sub>2017 - 2021</sub></h3>
+									<p>
+										Lead developer responsible for the front-end and
+										accessibility (WCAG 2.1) of our main product: PlusPort LMS,
+										as well as our own websites and other web services.
+									</p>
+									<span class="badge">Bootstrap</span>
+									<span class="badge">WCAG</span>
+									<span class="badge">React</span>
+									<span class="badge">XD</span>
+									<span class="badge">ActiveCampaign</span>
+									<span class="badge">WordPress</span>
+									<span class="badge">PHP</span>
+								</div>
+								<aside class="thumbs" aria-hidden="true">
+									<div class="grid-container">
+										<div class="grid-item">
+											<img
+												src="../img/logo-plusport.svg"
+												class="thumbIMG"
+												alt="PlusPort"
+												width="144"
+												height="42"
+											/>
+										</div>
+										<div class="grid-item">
+											<img
+												src="../img/plusport-lms-logo.webp"
+												class="thumbIMG"
+												alt="PlusPort LMS"
+												width="144"
+												height="86"
+											/>
+										</div>
+										<div class="grid-item">
+											<img
+												src="../img/logo-plusport-direct.png"
+												class="thumbIMG"
+												alt="PlusPort Direct"
+												width="144"
+												height="41"
+											/>
+										</div>
+										<div class="grid-item">
+											<img
+												src="../img/opleiders-direct-logo.svg"
+												class="thumbIMG"
+												alt="Opleiders direct"
+												width="144"
+												height="41"
+											/>
+										</div>
+									</div>
+								</aside>
+							</article>
+						</div>
 					</div>
-				</aside>
-			</article>
+					<div id="past-3">
+						<div class="container">
+							<article
+								aria-labelledby="past-header3"
+								class="grid-container reverse"
+							>
+								<div class="past-article-intro">
+									<h3>Clever Strategy<sub>2011 - 2017</sub></h3>
+									<p>
+										Working as front-end developer and campaign manager,
+										specialized in accountable marketing. Directly in contact
+										with many clients, to fine tune the communication in running
+										campaigns, where we made several flows to target and
+										retarget the (potential) customers, to keep them engaged.
+										The campaigns were a mix of physical and virtual, webshops,
+										campaign-websites, e-mails and physical mail.
+									</p>
+									<span class="badge">JavaScript</span>
+									<span class="badge">Bootstrap</span>
+									<span class="badge">Photoshop</span>
+									<span class="badge">WordPress</span>
+									<span class="badge">Clang / Deploytec</span>
+									<span class="badge">Smarty</span>
+								</div>
+								<aside class="thumbs" aria-hidden="true">
+									<div class="grid-container">
+										<div class="grid-item">
+											<img
+												src="../img/kruidvat-logo.svg"
+												class="thumbIMG"
+												alt="Kruidvat"
+												width="144"
+												height="66"
+											/>
+										</div>
+										<div class="grid-item">
+											<img
+												src="../img/hema-logo.svg"
+												class="thumbIMG"
+												alt="HEMA"
+												width="96"
+												height="96"
+											/>
+										</div>
+										<div class="grid-item">
+											<img
+												src="../img/bruynzeel-keukens-logo.png"
+												class="thumbIMG"
+												alt="Bruynzeel Keukens"
+												width="144"
+												height="144"
+											/>
+										</div>
+										<div class="grid-item">
+											<img
+												src="../img/lucardi-logo.webp"
+												class="thumbIMG"
+												alt="Lucardi"
+												width="144"
+												height="43"
+											/>
+										</div>
+										<div class="grid-item">
+											<img
+												src="../img/optitrade-logo.svg"
+												class="thumbIMG"
+												alt="Optitrade"
+												width="144"
+												height="43"
+											/>
+										</div>
+										<div class="grid-item">
+											<img
+												src="../img/total-logo.png"
+												class="thumbIMG"
+												alt="Total"
+												width="144"
+												height="144"
+											/>
+										</div>
+									</div>
+								</aside>
+							</article>
+						</div>
+					</div>
+					<div id="past-4">
+						<div class="container">
+							<article aria-labelledby="past-header4" class="grid-container">
+								<div class="past-article-intro">
+									<h3>Fair Products Plaza <sub>2011 - 2016</sub></h3>
+									<p>
+										Co-founded and created a webshop to sell fair products.
+										Which meant all products were completely fair trade,
+										organic, free of animal testing and environment friendly,
+										really, not the greenwashed versions of it.
+										<br />
+										Sadly we had to pull the plug on the project in 2016.
+									</p>
+									<span class="badge">Magento</span>
+									<span class="badge">SEO</span>
+									<span class="badge">Mailchimp</span>
+									<span class="badge">JavaScript</span>
+									<span class="badge">PHP</span>
+									<span class="badge">MySQL</span>
+								</div>
+								<aside class="thumbs" aria-hidden="true">
+									<div class="grid-container">
+										<div class="grid-item">
+											<img
+												src="../img/fairpp-logo.avif"
+												class="thumbIMG"
+												alt="Fair Products Plaza"
+												width="120"
+												height="120"
+											/>
+										</div>
+									</div>
+								</aside>
+							</article>
+						</div>
+					</div>
+					<div id="past-5">
+						<div class="container">
+							<article
+								aria-labelledby="past-header5"
+								class="grid-container reverse"
+							>
+								<div class="past-article-intro">
+									<h3>Lined <sub>2006 - 2011</sub></h3>
+									<p>
+										Worked on TroubleFree software in the first year, this is a
+										backoffice administration system. After that, I designed
+										tens and developed close to a hundred websites for clients
+										and maintained many, often applying the latest SEO
+										techniques.
+									</p>
+									<span class="badge">PHP</span>
+									<span class="badge">MySQL</span>
+									<span class="badge">SEO</span>
+									<span class="badge">Photoshop</span>
+									<span class="badge">JavaScript</span>
+									<span class="badge">Visual Basic</span>
+								</div>
+								<aside class="thumbs" aria-hidden="true">
+									<div class="grid-container">
+										<div class="grid-item">
+											<img
+												src="../img/lined-logo.svg"
+												class="thumbIMG"
+												alt="Lined"
+												width="144"
+												height="144"
+											/>
+										</div>
+										<div class="grid-item">
+											<img
+												src="../img/troublefree-logo.svg"
+												class="thumbIMG"
+												alt="Total"
+												width="144"
+												height="144"
+											/>
+										</div>
+									</div>
+								</aside>
+							</article>
+						</div>
+					</div>
+				</section>
+				<section id="section-skills">
+					<span id="Stack" class="section-anchor"></span>
+					<div class="container">
+						<div class="intro">
+							<div class="container">
+								<h2>Skill stack</h2>
+								<p>
+									Over the years, many skills have come and partially gone,
+									these are the ones that stayed.
+								</p>
+							</div>
+						</div>
+						<div id="skilltree-wrapper" class="skills-container">
+							<ul id="skilltree" class="grid-item">
+								<li id="st-html" class="li-level-1 active">
+									<h3 class="tool-item-wrapper">
+										<div class="tool-item">
+											<img
+												src="../img/html5-shield.svg"
+												alt="HTML 5"
+												width="102"
+												height="115"
+											/>
+										</div>
+									</h3>
+									<ul class="ul-level-2">
+										<li class="fundamentals li-level-2">
+											<h4>Fundamentals</h4>
+											<ul class="ul-level-3">
+												<li class="level-3 Semantic HTML">Semantic HTML</li>
+												<li class="level-3 Accessibility">Accessibility</li>
+												<li class="level-3 Organic SEO">Organic SEO</li>
+											</ul>
+										</li>
+										<li class="preprocessors li-level-2">
+											<h4>Processors</h4>
+											<ul class="ul-level-3">
+												<li class="level-3 PHP">PHP</li>
+												<li class="level-3 WordPress">WordPress</li>
+											</ul>
+										</li>
+										<li class="email li-level-2">
+											<h4>E-mail</h4>
+											<ul class="ul-level-3">
+												<li class="level-3 Responsive">Responsive</li>
+												<li class="level-3 Deliverability">Deliverability</li>
+												<li class="level-3 Journeys">Journeys</li>
+											</ul>
+										</li>
+									</ul>
+									<svg
+										version="1.1"
+										xmlns="http://www.w3.org/2000/svg"
+										class="arrow-guide"
+									>
+										<path
+											d="M 0 0 L 0 12 L 9 6 z"
+											stroke="colourname"
+											fill="url(#fill)"
+										></path>
+									</svg>
+								</li>
+								<li id="st-css" class="li-level-1">
+									<h3 class="tool-item-wrapper">
+										<div class="tool-item">
+											<img
+												src="../img/css3-shield.svg"
+												alt="CSS"
+												width="102"
+												height="115"
+											/>
+										</div>
+									</h3>
+									<ul class="ul-level-2">
+										<li class="fundamentals li-level-2">
+											<h4>Fundamentals</h4>
+											<ul class="ul-level-3">
+												<li class="level-3 CSS 3">CSS 3</li>
+												<li class="level-3 Responsive">Responsive</li>
+											</ul>
+										</li>
+										<li class="preprocessors li-level-2">
+											<h4>Processors</h4>
+											<ul class="ul-level-3">
+												<li class="level-3 SASS">SASS</li>
+												<li class="level-3 PostCSS">PostCSS</li>
+											</ul>
+										</li>
+										<li class="frameworks li-level-2">
+											<h4>Frameworks</h4>
+											<ul class="ul-level-3">
+												<li class="level-3 Bootstrap">Bootstrap</li>
+												<li class="level-3 Semantic-UI">Semantic-UI</li>
+												<li class="level-3 Tailwind">Tailwind</li>
+											</ul>
+										</li>
+									</ul>
+									<svg
+										version="1.1"
+										xmlns="http://www.w3.org/2000/svg"
+										class="arrow-guide"
+									>
+										<path
+											d="M 0 0 L 0 12 L 9 6 z"
+											stroke="colourname"
+											fill="url(#fill)"
+										></path>
+									</svg>
+								</li>
+								<li id="st-javascript" class="li-level-1">
+									<h3 class="tool-item-wrapper">
+										<div class="tool-item">
+											<img
+												src="../img/javascript-logo.svg"
+												alt="JavaScript"
+												width="102"
+												height="115"
+											/>
+										</div>
+									</h3>
+									<ul class="ul-level-2">
+										<li class="fundamentals li-level-2">
+											<h4>Fundamentals</h4>
+											<ul class="ul-level-3">
+												<li class="level-3 EcmaScript 6">EcmaScript 6</li>
+												<li class="level-3 TypeScript">TypeScript</li>
+											</ul>
+										</li>
+										<li class="task-runners li-level-2">
+											<h4>Tasks &amp; Testing</h4>
+											<ul class="ul-level-3">
+												<li class="level-3 Node">Node</li>
+												<li class="level-3 Gulp">Gulp</li>
+												<li class="level-3 Jest">Jest</li>
+											</ul>
+										</li>
+										<li class="framework li-level-2">
+											<h4>Frameworks</h4>
+											<ul class="ul-level-3">
+												<li class="level-3 Astro">Astro</li>
+												<li class="level-3 Vue">Vue</li>
+												<li class="level-3 React">React</li>
+												<li class="level-3 Svelte">Svelte</li>
+											</ul>
+										</li>
+									</ul>
+									<svg
+										version="1.1"
+										xmlns="http://www.w3.org/2000/svg"
+										class="arrow-guide"
+									>
+										<path
+											d="M 0 0 L 0 12 L 9 6 z"
+											stroke="colourname"
+											fill="url(#fill)"
+										></path>
+									</svg>
+								</li>
+							</ul>
+							<div class="grid-item tools">
+								<div id="Tools">
+									<div class="tools-grid" id="tools-html">
+										<div class="tool-item-wrapper">
+											<div class="tool-item">
+												<img
+													src="../img/photoshop-logo.svg"
+													alt="Photoshop"
+													width="62"
+													height="54"
+												/>
+											</div>
+										</div>
+										<div class="tool-item-wrapper">
+											<div class="tool-item">
+												<img
+													src="../img/html5-shield.svg"
+													alt="HTML 5"
+													width="57"
+													height="54"
+												/>
+											</div>
+										</div>
+										<div class="tool-item-wrapper">
+											<div class="tool-item">
+												<img
+													src="../img/figma-logo.svg"
+													alt="Figma"
+													width="54"
+													height="43"
+												/>
+											</div>
+										</div>
+										<div class="tool-item-wrapper">
+											<div class="tool-item">
+												<img
+													src="../img/xd-logo.svg"
+													alt="Adobe XD"
+													width="54"
+													height="54"
+												/>
+											</div>
+										</div>
+										<div class="tool-item-wrapper">
+											<div class="tool-item">
+												<img
+													src="../img/w3c-logo.svg"
+													alt="W3C Validator"
+													width="54"
+													height="43"
+												/>
+											</div>
+										</div>
+										<div class="tool-item-wrapper">
+											<div class="tool-item">
+												<img
+													src="../img/wcag2.1AA-v-logo.svg"
+													alt="WCAG 2.1"
+													width="54"
+													height="23"
+												/>
+											</div>
+										</div>
+										<div class="tool-item-wrapper">
+											<div class="tool-item">
+												<img
+													src="../img/astro-logo.svg"
+													alt="Astro"
+													width="51"
+													height="54"
+												/>
+											</div>
+										</div>
+										<div class="tool-item-wrapper">
+											<div class="tool-item">
+												<img
+													src="../img/github-logo.svg"
+													alt="Github"
+													width="54"
+													height="54"
+												/>
+											</div>
+										</div>
+										<div class="tool-item-wrapper">
+											<div class="tool-item">
+												<img
+													src="../img/wordpress-logo.webp"
+													alt="WordPress"
+													width="54"
+													height="54"
+												/>
+											</div>
+										</div>
+										<div class="tool-item-wrapper">
+											<div class="tool-item">
+												<img
+													src="../img/Bootstrap.svg"
+													alt="Bootstrap"
+													width="54"
+													height="54"
+												/>
+											</div>
+										</div>
+										<div class="tool-item-wrapper">
+											<div class="tool-item">
+												<img
+													src="../img/litmus-logo.svg"
+													alt="Litmus"
+													width="54"
+													height="24"
+												/>
+											</div>
+										</div>
+										<div class="tool-item-wrapper">
+											<div class="tool-item">
+												<img
+													src="../img/smarty-logo.webp"
+													alt="Smarty"
+													width="54"
+													height="23"
+												/>
+											</div>
+										</div>
+										<div class="tool-item-wrapper">
+											<div class="tool-item">
+												<img
+													src="../img/mailchimp-logo.svg"
+													alt="Mailchimp"
+													width="56"
+													height="54"
+												/>
+											</div>
+										</div>
+										<div class="tool-item-wrapper">
+											<div class="tool-item">
+												<img
+													src="../img/deployteq-logo.svg"
+													alt="Deployteq"
+													width="54"
+													height="13"
+												/>
+											</div>
+										</div>
+										<div class="tool-item-wrapper">
+											<div class="tool-item">
+												<img
+													src="../img/activecampaign-logo.svg"
+													alt="ActiveCampaign"
+													width="42"
+													height="54"
+												/>
+											</div>
+										</div>
+									</div>
+									<div class="tools-grid hidden" id="tools-css">
+										<div class="tool-item-wrapper">
+											<div class="tool-item">
+												<img
+													src="../img/Bootstrap.svg"
+													alt="Bootstrap"
+													width="54"
+													height="54"
+												/>
+											</div>
+										</div>
+										<div class="tool-item-wrapper">
+											<div class="tool-item">
+												<img
+													src="../img/css3-logo.svg"
+													alt="CSS 3"
+													width="54"
+													height="54"
+												/>
+											</div>
+										</div>
+										<div class="tool-item-wrapper">
+											<div class="tool-item">
+												<img
+													src="../img/github-logo.svg"
+													alt="Github"
+													width="54"
+													height="54"
+												/>
+											</div>
+										</div>
+										<div class="tool-item-wrapper">
+											<div class="tool-item">
+												<img
+													src="../img/sass-logo.svg"
+													alt="Sass"
+													width="54"
+													height="48"
+												/>
+											</div>
+										</div>
+										<div class="tool-item-wrapper">
+											<div class="tool-item">
+												<img
+													src="../img/postcss-logo.svg"
+													alt="Post CSS"
+													width="54"
+													height="54"
+												/>
+											</div>
+										</div>
+										<div class="tool-item-wrapper">
+											<div class="tool-item">
+												<img
+													src="../img/tailwind-css-logo.svg"
+													alt="Tailwind CSS"
+													width="54"
+													height="54"
+												/>
+											</div>
+										</div>
+									</div>
+									<div class="tools-grid hidden" id="tools-javascript">
+										<div class="tool-item-wrapper">
+											<div class="tool-item">
+												<img
+													src="../img/es6-logo.webp"
+													alt="EcmaScript 6"
+													width="54"
+													height="54"
+												/>
+											</div>
+										</div>
+										<div class="tool-item-wrapper">
+											<div class="tool-item">
+												<img
+													src="../img/javascript-logo.svg"
+													alt="Javascript"
+													width="56"
+													height="54"
+												/>
+											</div>
+										</div>
+										<div class="tool-item-wrapper">
+											<div class="tool-item">
+												<img
+													src="../img/typescript-logo.svg"
+													alt="TypeScript"
+													width="54"
+													height="54"
+												/>
+											</div>
+										</div>
+										<div class="tool-item-wrapper">
+											<div class="tool-item">
+												<img
+													src="../img/astro-logo.svg"
+													alt="Astro"
+													width="51"
+													height="54"
+												/>
+											</div>
+										</div>
+										<div class="tool-item-wrapper">
+											<div class="tool-item">
+												<img
+													src="../img/nodejs-logo.svg"
+													alt="Node"
+													width="54"
+													height="39"
+												/>
+											</div>
+										</div>
+										<div class="tool-item-wrapper">
+											<div class="tool-item">
+												<img
+													src="../img/gulp-logo.svg"
+													alt="GULP"
+													width="29"
+													height="54"
+												/>
+											</div>
+										</div>
+										<div class="tool-item-wrapper">
+											<div class="tool-item">
+												<img
+													src="../img/webpack-logo.svg"
+													alt="WebPack"
+													width="57"
+													height="54"
+												/>
+											</div>
+										</div>
+										<div class="tool-item-wrapper">
+											<div class="tool-item">
+												<img
+													src="../img/reactjs-logo.svg"
+													alt="React"
+													width="54"
+													height="57"
+												/>
+											</div>
+										</div>
+										<div class="tool-item-wrapper">
+											<div class="tool-item">
+												<img
+													src="../img/vuejs-logo.svg"
+													alt="Vue JS"
+													width="54"
+													height="55"
+												/>
+											</div>
+										</div>
+										<div class="tool-item-wrapper">
+											<div class="tool-item">
+												<img
+													src="../img/svelte-logo.svg"
+													alt="Svelte"
+													width="53"
+													height="54"
+												/>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+				<section id="section-contact">
+					<span id="Contact" class="section-anchor"></span>
+					<div class="container">
+						<h2>Get in touch?</h2>
+						<p>
+							You can e-mail me at:
+							<a href="mailto:ckdev88@outlook.com">ckdev88@outlook.com</a>.
+						</p>
+					</div>
+				</section>
+			</main>
+			<footer id="page-footer">
+				<div class="container">&copy; CK Dev 2023</div>
+			</footer>
 		</div>
-	</div>
-</section>
-			<section id="section-skills">
-	<span id="Skills" class="section-anchor"></span>
-	<div class="container">
-		<div class="intro">
-	<div class="container">
-		<h2>Skill stack</h2>
-		Over the years, many skills have come and partially gone, these are the ones
-		that stayed.
-	</div>
-</div>
-<div id="skilltree-wrapper" class="skills-container">
-	<ul id="skilltree" class="grid-item">
-		<li id="st-html" class="li-level-1 active">
-			<h3 class="tool-item-wrapper">
-				<div class="tool-item">
-					<img src="../img/html5-shield.svg" alt="HTML 5" width="102" height="115">
-				</div>
-			</h3>
-			<ul class="ul-level-2">
-				<li class="fundamentals li-level-2">
-					<h4>Fundamentals</h4>
-					<ul class="ul-level-3">
-						<li class="level-3 Semantic HTML">Semantic HTML</li>
-						<li class="level-3 Accessibility">Accessibility</li>
-						<li class="level-3 Organic SEO">Organic SEO</li>
-					</ul>
-				</li>
-				<li class="preprocessors li-level-2">
-					<h4>Processors</h4>
-					<ul class="ul-level-3">
-						<li class="level-3 PHP">PHP</li>
-						<li class="level-3 WordPress">WordPress</li>
-					</ul>
-				</li>
-				<li class="email li-level-2">
-					<h4>E-mail</h4>
-					<ul class="ul-level-3">
-						<li class="level-3 Responsive">Responsive</li>
-						<li class="level-3 Deliverability">Deliverability</li>
-						<li class="level-3 Journeys">Journeys</li>
-					</ul>
-				</li>
-			</ul>
-			<svg version="1.1" xmlns="http://www.w3.org/2000/svg" class="arrow-guide">
-				<path d="M 0 0 L 0 12 L 9 6 z" stroke="colourname" fill="url(#fill)"></path>
-			</svg>
-		</li>
-		<li id="st-css" class="li-level-1">
-			<h3 class="tool-item-wrapper">
-	<div class="tool-item">
-		<img src="../img/css3-shield.svg" alt="CSS" width="102" height="115">
-	</div>
-</h3>
-			<ul class="ul-level-2">
-				<li class="fundamentals li-level-2">
-					<h4>Fundamentals</h4>
-					<ul class="ul-level-3">
-						<li class="level-3 CSS 3">CSS 3</li>
-						<li class="level-3 Responsive">Responsive</li>
-					</ul>
-				</li>
-				<li class="preprocessors li-level-2">
-					<h4>Processors</h4>
-					<ul class="ul-level-3">
-						<li class="level-3 SASS">SASS</li>
-						<li class="level-3 PostCSS">PostCSS</li>
-					</ul>
-				</li>
-				<li class="frameworks li-level-2">
-					<h4>Frameworks</h4>
-					<ul class="ul-level-3">
-						<li class="level-3 Bootstrap">Bootstrap</li>
-						<li class="level-3 Semantic-UI">Semantic-UI</li>
-						<li class="level-3 Tailwind">Tailwind</li>
-					</ul>
-				</li>
-			</ul>
-			<svg version="1.1" xmlns="http://www.w3.org/2000/svg" class="arrow-guide">
-				<path d="M 0 0 L 0 12 L 9 6 z" stroke="colourname" fill="url(#fill)"></path>
-			</svg>
-		</li>
-		<li id="st-javascript" class="li-level-1">
-			<h3 class="tool-item-wrapper">
-	<div class="tool-item">
-		<img src="../img/javascript-logo.svg" alt="JavaScript" width="102" height="115">
-	</div>
-</h3>
-			<ul class="ul-level-2">
-				<li class="fundamentals li-level-2">
-					<h4>Fundamentals</h4>
-					<ul class="ul-level-3">
-						<li class="level-3 EcmaScript 6">EcmaScript 6</li>
-						<li class="level-3 TypeScript">TypeScript</li>
-					</ul>
-				</li>
-				<li class="task-runners li-level-2">
-					<h4>Tasks &amp; Testing</h4>
-					<ul class="ul-level-3">
-						<li class="level-3 Node">Node</li>
-						<li class="level-3 Gulp">Gulp</li>
-						<li class="level-3 Jest">Jest</li>
-					</ul>
-				</li>
-				<li class="framework li-level-2">
-					<h4>Frameworks</h4>
-					<ul class="ul-level-3">
-						<li class="level-3 Astro">Astro</li>
-						<li class="level-3 Vue">Vue</li>
-						<li class="level-3 React">React</li>
-						<li class="level-3 Svelte">Svelte</li>
-					</ul>
-				</li>
-			</ul>
-			<svg version="1.1" xmlns="http://www.w3.org/2000/svg" class="arrow-guide">
-				<path d="M 0 0 L 0 12 L 9 6 z" stroke="colourname" fill="url(#fill)"></path>
-			</svg>
-		</li>
-	</ul>
-	<div class="grid-item tools">
-		<div id="Tools">
-	<div class="tools-grid" id="tools-html">
-		<div class="tool-item-wrapper">
-	<div class="tool-item">
-		<img src="../img/photoshop-logo.svg" alt="Photoshop" width="62" height="54">
-	</div>
-</div>
-		<div class="tool-item-wrapper">
-	<div class="tool-item">
-		<img src="../img/html5-shield.svg" alt="HTML 5" width="57" height="54">
-	</div>
-</div>
-		<div class="tool-item-wrapper">
-	<div class="tool-item">
-		<img src="../img/figma-logo.svg" alt="Figma" width="54" height="43">
-	</div>
-</div>
-		<div class="tool-item-wrapper">
-	<div class="tool-item">
-		<img src="../img/xd-logo.svg" alt="Adobe XD" width="54" height="54">
-	</div>
-</div>
-		<div class="tool-item-wrapper">
-	<div class="tool-item">
-		<img src="../img/w3c-logo.svg" alt="W3C Validator" width="54" height="43">
-	</div>
-</div>
-		<div class="tool-item-wrapper">
-	<div class="tool-item">
-		<img src="../img/wcag2.1AA-v-logo.svg" alt="WCAG 2.1" width="54" height="23">
-	</div>
-</div>
-		<div class="tool-item-wrapper">
-	<div class="tool-item">
-		<img src="../img/astro-logo.svg" alt="Astro" width="51" height="54">
-	</div>
-</div>
-		<div class="tool-item-wrapper">
-	<div class="tool-item">
-		<img src="../img/github-logo.svg" alt="Github" width="54" height="54">
-	</div>
-</div>
-		<div class="tool-item-wrapper">
-	<div class="tool-item">
-		<img src="../img/wordpress-logo.webp" alt="WordPress" width="54" height="54">
-	</div>
-</div>
-		<div class="tool-item-wrapper">
-	<div class="tool-item">
-		<img src="../img/Bootstrap.svg" alt="Bootstrap" width="54" height="54">
-	</div>
-</div>
-		<div class="tool-item-wrapper">
-	<div class="tool-item">
-		<img src="../img/litmus-logo.svg" alt="Litmus" width="54" height="24">
-	</div>
-</div>
-		<div class="tool-item-wrapper">
-	<div class="tool-item">
-		<img src="../img/smarty-logo.webp" alt="Smarty" width="54" height="23">
-	</div>
-</div>
-		<div class="tool-item-wrapper">
-	<div class="tool-item">
-		<img src="../img/mailchimp-logo.svg" alt="Mailchimp" width="56" height="54">
-	</div>
-</div>
-		<div class="tool-item-wrapper">
-	<div class="tool-item">
-		<img src="../img/deployteq-logo.svg" alt="Deployteq" width="54" height="13">
-	</div>
-</div>
-		<div class="tool-item-wrapper">
-	<div class="tool-item">
-		<img src="../img/activecampaign-logo.svg" alt="ActiveCampaign" width="42" height="54">
-	</div>
-</div>
-	</div>
-	<div class="tools-grid hidden" id="tools-css">
-		<div class="tool-item-wrapper">
-	<div class="tool-item">
-		<img src="../img/Bootstrap.svg" alt="Bootstrap" width="54" height="54">
-	</div>
-</div>
-		<div class="tool-item-wrapper">
-	<div class="tool-item">
-		<img src="../img/css3-logo.svg" alt="CSS 3" width="54" height="54">
-	</div>
-</div>
-		<div class="tool-item-wrapper">
-	<div class="tool-item">
-		<img src="../img/github-logo.svg" alt="Github" width="54" height="54">
-	</div>
-</div>
-		<div class="tool-item-wrapper">
-	<div class="tool-item">
-		<img src="../img/sass-logo.svg" alt="Sass" width="54" height="48">
-	</div>
-</div>
-		<div class="tool-item-wrapper">
-	<div class="tool-item">
-		<img src="../img/postcss-logo.svg" alt="Post CSS" width="54" height="54">
-	</div>
-</div>
-		<div class="tool-item-wrapper">
-	<div class="tool-item">
-		<img src="../img/tailwind-css-logo.svg" alt="Tailwind CSS" width="54" height="54">
-	</div>
-</div>
-	</div>
-	<div class="tools-grid hidden" id="tools-javascript">
-		<div class="tool-item-wrapper">
-	<div class="tool-item">
-		<img src="../img/es6-logo.webp" alt="EcmaScript 6" width="54" height="54">
-	</div>
-</div>
-		<div class="tool-item-wrapper">
-	<div class="tool-item">
-		<img src="../img/javascript-logo.svg" alt="Javascript" width="56" height="54">
-	</div>
-</div>
-		<div class="tool-item-wrapper">
-	<div class="tool-item">
-		<img src="../img/typescript-logo.svg" alt="TypeScript" width="54" height="54">
-	</div>
-</div>
-		<div class="tool-item-wrapper">
-	<div class="tool-item">
-		<img src="../img/astro-logo.svg" alt="Astro" width="51" height="54">
-	</div>
-</div>
-		<div class="tool-item-wrapper">
-	<div class="tool-item">
-		<img src="../img/nodejs-logo.svg" alt="Node" width="54" height="39">
-	</div>
-</div>
-		<div class="tool-item-wrapper">
-	<div class="tool-item">
-		<img src="../img/gulp-logo.svg" alt="GULP" width="29" height="54">
-	</div>
-</div>
-		<div class="tool-item-wrapper">
-	<div class="tool-item">
-		<img src="../img/webpack-logo.svg" alt="WebPack" width="57" height="54">
-	</div>
-</div>
-		<div class="tool-item-wrapper">
-	<div class="tool-item">
-		<img src="../img/reactjs-logo.svg" alt="React" width="54" height="57">
-	</div>
-</div>
-		<div class="tool-item-wrapper">
-	<div class="tool-item">
-		<img src="../img/vuejs-logo.svg" alt="Vue JS" width="54" height="55">
-	</div>
-</div>
-		<div class="tool-item-wrapper">
-	<div class="tool-item">
-		<img src="../img/svelte-logo.svg" alt="Svelte" width="53" height="54">
-	</div>
-</div>
-	</div>
-</div>
-	</div>
-</div>
-	</div>
-</section>
-			<section id="section-contact">
-	<span id="Contact" class="section-anchor"></span>
-	<div class="container">
-		<h2>Get in touch?</h2>
-		You can e-mail me at <a href="mailto:ckdev88@outlook.com">ckdev88@outlook.com</a>.
-	</div>
-</section>
-		</main>
-		<footer id="page-footer">
-	<div class="container">&copy; CK Dev 2023</div>
-</footer>
-	</div>
-
-		
 	</body>
 </html>
