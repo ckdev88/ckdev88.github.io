@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html id="html" lang="en" data-theme="dark">
 	<head>
+		<!-- Google tag (gtag.js) -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-Q0WGNPP51H"></script>
+		
+
 		<meta charset="utf-8">
 		<link rel="icon" type="image/svg+xml" href="/img/ckdev-logo-light.svg">
 		<link rel="stylesheet" href="../style.css">
@@ -16,7 +20,7 @@
 		<meta property="og:description" content="I believe the web should be as inclusive as possible, which means performance, ease of use and readability should always be prioritized.">
 		<meta property="og:image" content="https://ckdev88.github.io/img/ckdev-logo-bright.webp">
 		<meta property="og:url" content="https://ckdev88.github.io">
-	<script type="module">const d=document.querySelector(".scroll-line");function a(){const e=window.innerHeight,c=document.getElementById("container").clientHeight,r=window.scrollY/(c-e)*100;d.style.width=r+"%"}window.addEventListener("scroll",a);document.addEventListener("DOMContentLoaded",function(e){document.querySelector("#st-html")?.addEventListener("mouseover",()=>{document.querySelector("#st-html")?.classList.add("active"),document.querySelector("#st-css")?.classList.remove("active"),document.querySelector("#st-javascript")?.classList.remove("active"),document.querySelector("#tools-html")?.classList.remove("hidden"),document.querySelector("#tools-css")?.classList.add("hidden"),document.querySelector("#tools-javascript")?.classList.add("hidden")}),document.querySelector("#st-css")?.addEventListener("mouseover",()=>{document.querySelector("#st-html")?.classList.remove("active"),document.querySelector("#st-css")?.classList.add("active"),document.querySelector("#st-javascript")?.classList.remove("active"),document.querySelector("#tools-css")?.classList.remove("hidden"),document.querySelector("#tools-html")?.classList.add("hidden"),document.querySelector("#tools-javascript")?.classList.add("hidden")}),document.querySelector("#st-javascript")?.addEventListener("mouseover",()=>{document.querySelector("#st-html")?.classList.remove("active"),document.querySelector("#st-css")?.classList.remove("active"),document.querySelector("#st-javascript")?.classList.add("active"),document.querySelector("#tools-javascript")?.classList.remove("hidden"),document.querySelector("#tools-html")?.classList.add("hidden"),document.querySelector("#tools-css")?.classList.add("hidden")})});const i=localStorage.getItem("theme");function u(){return i||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")}let t=u();function l(){localStorage.setItem("theme",t),o()}function o(){let e=document.getElementById("html");e!==null&&(e.setAttribute("data-theme",t),document.querySelector("#theme-btn")?.setAttribute("aria-label",t))}o(),window.onload=()=>{o(),document.querySelector("#theme-btn")?.addEventListener("click",()=>{t=t==="light"?"dark":"light",l()})},window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change",({matches:e})=>{t=e?"dark":"light",l()});window.location.pathname.substring(1,3);let n=document.getElementById("nav-languages");n!==null&&(n.onchange=function(e){const c=e.target;if(c!==null){let s=c.value;window.location.pathname=`${s}/`}});
+	<script type="module">const d=document.querySelector(".scroll-line");function i(){const e=window.innerHeight,c=document.getElementById("container").clientHeight,a=window.scrollY/(c-e)*100;d.style.width=a+"%"}window.addEventListener("scroll",i);window.dataLayer=window.dataLayer||[];function l(){dataLayer.push(arguments)}l("js",new Date);l("config","G-Q0WGNPP51H");document.addEventListener("DOMContentLoaded",function(e){document.querySelector("#st-html")?.addEventListener("mouseover",()=>{document.querySelector("#st-html")?.classList.add("active"),document.querySelector("#st-css")?.classList.remove("active"),document.querySelector("#st-javascript")?.classList.remove("active"),document.querySelector("#tools-html")?.classList.remove("hidden"),document.querySelector("#tools-css")?.classList.add("hidden"),document.querySelector("#tools-javascript")?.classList.add("hidden")}),document.querySelector("#st-css")?.addEventListener("mouseover",()=>{document.querySelector("#st-html")?.classList.remove("active"),document.querySelector("#st-css")?.classList.add("active"),document.querySelector("#st-javascript")?.classList.remove("active"),document.querySelector("#tools-css")?.classList.remove("hidden"),document.querySelector("#tools-html")?.classList.add("hidden"),document.querySelector("#tools-javascript")?.classList.add("hidden")}),document.querySelector("#st-javascript")?.addEventListener("mouseover",()=>{document.querySelector("#st-html")?.classList.remove("active"),document.querySelector("#st-css")?.classList.remove("active"),document.querySelector("#st-javascript")?.classList.add("active"),document.querySelector("#tools-javascript")?.classList.remove("hidden"),document.querySelector("#tools-html")?.classList.add("hidden"),document.querySelector("#tools-css")?.classList.add("hidden")})});const u=localStorage.getItem("theme");function m(){return u||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")}let t=m();function n(){localStorage.setItem("theme",t),o()}function o(){let e=document.getElementById("html");e!==null&&(e.setAttribute("data-theme",t),document.querySelector("#theme-btn")?.setAttribute("aria-label",t))}o(),window.onload=()=>{o(),document.querySelector("#theme-btn")?.addEventListener("click",()=>{t=t==="light"?"dark":"light",n()})},window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change",({matches:e})=>{t=e?"dark":"light",n()});window.location.pathname.substring(1,3);let r=document.getElementById("nav-languages");r!==null&&(r.onchange=function(e){const c=e.target;if(c!==null){let s=c.value;window.location.pathname=`${s}/`}});
 </script></head>
 	<body>
 		<div id="theme-backdrop"></div>
@@ -30,11 +34,6 @@
 		<img src="../img/ckdev-logo-light.svg" alt="CK, Front-end developer" height="32" id="homelink-img">
 	</a>
 	<ul id="pages">
-		<li>
-	<a href="/en/#Hi" title="Jump to Hi">
-		Hi
-	</a>
-</li>
 		<li>
 	<a href="/en/#Projects" title="Jump to Projects">
 		Projects
@@ -51,7 +50,8 @@
 	</a>
 </li>
 	</ul>
-	<nav id="nav-accessibility" role="navigation" aria-label="Accessibility">
+</nav>
+<nav id="nav-accessibility" role="navigation" aria-label="Accessibility">
 	<button aria-label="light" aria-live="polite" id="theme-btn" title="Toggles light & dark">
 	<div class="nav-accessibility-light_mode">
 		<svg id="sun-svg" width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="nav-accessibility-light_mode light"><path d="M12.979 9C14.6319 9 15.9843 10.35 15.9843 12C15.9843 13.65 14.6319 15 12.979 15C11.3261 15 9.97368 13.65 9.97368 12C9.97368 10.35 11.3261 9 12.979 9ZM12.979 7C10.2141 7 7.97013 9.24 7.97013 12C7.97013 14.76 10.2141 17 12.979 17C15.7439 17 17.9879 14.76 17.9879 12C17.9879 9.24 15.7439 7 12.979 7ZM2.96125 13H4.9648C5.51578 13 5.96658 12.55 5.96658 12C5.96658 11.45 5.51578 11 4.9648 11H2.96125C2.41027 11 1.95947 11.45 1.95947 12C1.95947 12.55 2.41027 13 2.96125 13ZM20.9932 13H22.9968C23.5478 13 23.9985 12.55 23.9985 12C23.9985 11.45 23.5478 11 22.9968 11H20.9932C20.4422 11 19.9914 11.45 19.9914 12C19.9914 12.55 20.4422 13 20.9932 13ZM11.9772 2V4C11.9772 4.55 12.428 5 12.979 5C13.53 5 13.9808 4.55 13.9808 4V2C13.9808 1.45 13.53 1 12.979 1C12.428 1 11.9772 1.45 11.9772 2ZM11.9772 20V22C11.9772 22.55 12.428 23 12.979 23C13.53 23 13.9808 22.55 13.9808 22V20C13.9808 19.45 13.53 19 12.979 19C12.428 19 11.9772 19.45 11.9772 20ZM6.95834 4.58C6.56764 4.19 5.92651 4.19 5.54583 4.58C5.15514 4.97 5.15514 5.61 5.54583 5.99L6.60771 7.05C6.99841 7.44 7.63954 7.44 8.02022 7.05C8.40089 6.66 8.41091 6.02 8.02022 5.64L6.95834 4.58ZM19.3503 16.95C18.9596 16.56 18.3185 16.56 17.9378 16.95C17.5471 17.34 17.5471 17.98 17.9378 18.36L18.9997 19.42C19.3904 19.81 20.0315 19.81 20.4122 19.42C20.8029 19.03 20.8029 18.39 20.4122 18.01L19.3503 16.95ZM20.4122 5.99C20.8029 5.6 20.8029 4.96 20.4122 4.58C20.0215 4.19 19.3804 4.19 18.9997 4.58L17.9378 5.64C17.5471 6.03 17.5471 6.67 17.9378 7.05C18.3285 7.43 18.9696 7.44 19.3503 7.05L20.4122 5.99ZM8.02022 18.36C8.41091 17.97 8.41091 17.33 8.02022 16.95C7.62953 16.56 6.98839 16.56 6.60771 16.95L5.54583 18.01C5.15514 18.4 5.15514 19.04 5.54583 19.42C5.93652 19.8 6.57766 19.81 6.95834 19.42L8.02022 18.36Z"></path></svg>
@@ -66,7 +66,6 @@
 					</option>
 	</select>
 </div>
-</nav>
 </nav>
 	</div>
 </header>

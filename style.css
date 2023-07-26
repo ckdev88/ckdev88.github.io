@@ -533,7 +533,6 @@ main {
 @media (max-width: 991.98px) {
 #nav-top {
 		font-weight: 600;
-		justify-content: space-between;
 }
 	}
 @media (max-width: 575.98px) {
@@ -614,7 +613,7 @@ main {
 		width: auto;
 }
 	}
-@media (max-width: 767.98px) {
+@media (max-width: 575.98px) {
 #pages {
 		padding-left: 0;
 }
