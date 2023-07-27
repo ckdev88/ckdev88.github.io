@@ -22,6 +22,6 @@
 	"lang": "en-US",
 	"background_color": "#3367D6",
 	"display": "standalone",
-	"scope": "/",
-	"start_url": "https://ckdev88.github.io/"
+	"scope": "/"
+	// "start_url": "https://ckdev88.github.io/"
 }
