@@ -47,7 +47,6 @@ function addTask(name, description, interval) {
 			description: description,
 			interval: interval,
 			timepast: 0,
-			task: "task-" + name.replaceAll(' ', ''),
 		});
 
 		updateTasks(timerArr);
@@ -75,7 +74,7 @@ const checkTasksEmpty = () => {
 		return false;
 	}
 }
-if (checkTasksEmpty() === true) task_new_form.className = "dblock";
+// if (checkTasksEmpty() === true) task_new_form.className = "dblock";
 
 function renderTasks(arr) {
 	task_container.innerHTML = "";
@@ -94,6 +93,7 @@ function renderTask(i, key) {
 	el.appendChild(renderTaskElement("div", "task-countdown-total", i.interval));
 	el.appendChild(renderTaskElement('div', 'task-countdown-current', countdownTimer(i.interval, key, 'countdown-task-' + key), 'countdown-' + el.id));
 	el.appendChild(removeTaskLink(key));
+	// el.appendChild(resetTaskLink(key));
 	return el;
 }
 
@@ -114,7 +114,6 @@ function addQuickTask() {
 		description: "Quick timer",
 		interval: 35,
 		timepast: 0,
-		// task: "task-Stretch",
 	});
 
 	// set item timerTasks
@@ -126,7 +125,7 @@ function addQuickTask() {
 function removeTaskLink(key) {
 	let el = document.createElement("button");
 	el.innerHTML = "remove task";
-	el.className = "text";
+	el.className = "text ctacolor2";
 	el.id = 'del-' + key;
 	el.addEventListener("click", () => {
 		removeTask(key);
@@ -145,21 +144,47 @@ function removeTask(key) {
 			description: arr[i].description,
 			interval: arr[i].interval,
 			timepast: arr[i].timepast,
-			// task: "task-" + arr[i].name.replaceAll(' ', ''),
 		});
 	}
 	updateTasks(newarr);
 	renderTasks(newarr);
 }
+function resetTaskLink(key) {
+	let el = document.createElement('button');
+	el.innerHTML = 'reset';
+	el.className = 'text';
+	el.id = 'reset-' + key;
+	el.addEventListener('click', () => {
+		resetTask(key);
+	});
+	return el;
+}
+function resetTask(key) {
+	let arr = getTasks();
+	arr[key].timepast = 0;
+	arr[key].finished = false;
+	updateTasks(arr);
+	renderTasks(arr);
+}
+
+function addResetTaskLink(key) {
+	el = resetTaskLink(key);
+	document.getElementById('task-' + key).appendChild(el);
+}
+
 function countdownTimer(limit, key, id) {
 	const lb = setInterval((max = limit, id2 = id) => {
 		if (document.getElementById(id)) {
 			let arr = getTasks();
-			if (arr[key].timepast > max) stopit();
+			if (arr[key].timepast === max) {
+				stopit();
+				addResetTaskLink(key);
+			}
 			document.getElementById(id2).innerHTML = arr[key].timepast;
 		}
 	}, 1000);
 	function stopit() {
+		console.log('run stopit()')
 		clearInterval(lb);
 	}
 }
@@ -168,13 +193,23 @@ function countdownAll() {
 	setInterval(() => {
 		let arr = getTasks();
 		for (let i = 0; i < arr.length; i++) {
-			if (arr[i].timepast < arr[i].interval) arr[i].timepast++;
+			if (arr[i].timepast < arr[i].interval) {
+				arr[i].timepast++;
+				if (arr[i].timepast == arr[i].interval) playSound();
+			}
+			else arr[i].finished = true;
 		}
 		updateTasks(arr);
 	}, 1000)
 
 }
 countdownAll();
+
+function playSound() {
+	const siren = new Audio('siren1.wav');
+	siren.play();
+	console.log('play sound');
+}
 
 
 // TODO: organize whatever is below this line
