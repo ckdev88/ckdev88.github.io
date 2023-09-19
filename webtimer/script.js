@@ -1,30 +1,115 @@
-// build a timer, tasks and later a sort of agenda function for the day, connected with times, all using local storage, not needing any deployment server, just the html, js & css maybe even all in one html-file, so it's super easy to use.
+// abstract for loading speed & less code
+const d = document;
+//build a timer, tasks and later a sort of agenda function for the day, connected with times, all using local storage, not needing any deployment server, just the html, js & css maybe even all in one html-file, so it's super easy to use.
 
-// HMTL Elements
-const task_new_btn = document.getElementById("task_new_btn");
-const task_new_form = document.getElementById("task_new_form");
-const task_new_quick = document.getElementById("task_new_quick");
-const task_container = document.getElementById("task_container");
-const settings = {
-	intervalTime: 60000, // in ms
-	countDown: true, // true: show time remaining, false: show time passed
-};
+// TODO: make intervalUnit, intervalUnitName a task-specific thing
+
 /*
 html element id's:
 task_new_form
 task_id
 new_task_name
-new_task_description
+new_task_descr
 new_task_interval
 task_start_now
 task_new_quick
 task_container
 */
 
+// HMTL Elements
+const task_new_btn = d.getElementById("task_new_btn");
+const task_new_form = d.getElementById("task_new_form");
+const task_new_quick = d.getElementById("task_new_quick");
+const task_container = d.getElementById("task_container");
+const settings_btn = d.getElementById('settings_btn');
+const settings_form = d.getElementById('settings_form');
+
+// ------------- define settings ---------------
+const settings_d = {
+	intervalUnit: 1, // in seconds
+	intervalUnitName: '',
+	countDown: true, // true: show time remaining, false: show time passed
+	quickTaskInterval: 35 * 1, // totals value multiplied by value of settings.intervalUnit
+	quickTaskName: 'Stretch',
+	quickTaskDescr: 'Eat, walk, pushup, drink, some or all.',
+};
+if (settings_d.intervalUnit === 60) settings_d.intervalUnitName = 'minute(s)';
+else if (settings_d.intervalUnit === 1) settings_d.intervalUnitName = 'second(s)';
+
+if (localStorage.getItem('settings') === null) {
+	localStorage.setItem('settings', []);
+	localStorage.setItem('settings', JSON.stringify(settings_d))
+}
+const getSettings = () => JSON.parse(localStorage.getItem('settings'));
+const settings = getSettings();
+
+// ------------- /define settings --------------
+
+function viewSettings() {
+	settings_btn.addEventListener('click', () => {
+		settings_form.className == 'dblock' ? settingsForm('collapse') : settingsForm('expand');
+	});
+	function settingsForm(what) {
+		if (what == 'expand') {
+			settings_btn.classList.replace('collapsed', 'expanded')
+			settings_form.className = 'dblock';
+		}
+		if (what == 'collapse') {
+			settings_btn.classList.replace('expanded', 'collapsed')
+			settings_form.className = 'dnone';
+		}
+	}
+	function settingsFormDefaults() {
+		d.getElementById('settings_form_quickTaskName').setAttribute('value', settings.quickTaskName);
+		d.getElementById('settings_form_quickTaskDescr').innerText = settings.quickTaskDescr;
+		d.getElementById('settings_form_quickTaskInterval').setAttribute('value', settings.quickTaskInterval);
+		selectOption(d.getElementById('settings_form_intervalUnit'), settings.intervalUnit);
+		selectOption(d.getElementById('settings_form_countDown'), String(settings.countDown));
+	}
+	settingsFormDefaults();
+}
+viewSettings();
+
+settings_form.addEventListener("submit", (e) => {
+	e.preventDefault();
+	let data = new FormData(settings_form);
+	settingsFormSubmit(data);
+});
+
+function settingsFormSubmit(data) {
+	let settings = {
+		intervalUnit: Number(data.get('settings_form_intervalUnit')),
+		intervalUnitName: '',
+		countDown: Boolean(data.get('settings_form_countDown')), // true: time remaining, false: show time passed
+		quickTaskInterval:
+			Number(data.get("settings_form_quickTaskInterval"))
+			* Number(data.get('settings_form_intervalUnit')),
+		quickTaskName: data.get("settings_form_quickTaskName"),
+		quickTaskDescr: data.get("settings_form_quickTaskDescr"),
+	};
+	if (settings.intervalUnit === 60) settings.intervalUnitName = 'minute(s)';
+	else if (settings.intervalUnit === 1) settings.intervalUnitName = 'second(s)';
+	localStorage.setItem('settings', JSON.stringify(settings));
+
+	// TODO: re-render page & variables
+}
+
+function selectOption(el, option) {
+	option = option.toString();
+	for (let i = 0; i < el.options.length; i++) {
+		if (el.options[i].getAttribute('value') == option) {
+			el.options[i].setAttribute('selected', 'selected');
+		}
+	}
+}
+function updateSettings(arr) { localStorage.setItem('settings', JSON.stringify(arr)); }
+// ---------------------- /settings form
+
+
+// ---------------------- new task form
 task_new_btn.addEventListener("click", () => {
 	task_new_form.className == 'dblock' ? ecForm('collapse') : ecForm('expand');
 });
-
 function ecForm(what) {
 	if (what == 'expand') {
 		task_new_btn.classList.replace('collapsed', 'expanded');
@@ -36,34 +121,37 @@ function ecForm(what) {
 	}
 }
 
-const getTasks = () => { return JSON.parse(localStorage.getItem('timerTasks')); }
-const updateTasks = (arr) => { localStorage.setItem('timerTasks', JSON.stringify(arr)); }
+function getTasks() { return JSON.parse(localStorage.getItem('timerTasks')) }
+function updateTasks(arr) { localStorage.setItem('timerTasks', JSON.stringify(arr)) }
 if (getTasks() === null) updateTasks([]);
 
+// TODO: split newTaskSubmit in 3 functions...
+// TODO: ... 1 with listener ...
+// TODO: ... the other with adding the task ...
+// TODO: ... (and one to empty form fields (& place focus on first field?))
 function newTaskSubmit() {
 	task_new_form.addEventListener("submit", (e) => {
 		e.preventDefault();
-		var data = new FormData(document.getElementById("task_new_form"));
+		var data = new FormData(task_new_form);
 		addTask(
 			data.get("task_name"),
-			data.get("task_description"),
+			data.get("task_descr"),
 			data.get("task_interval"),
 		);
-
-		document.getElementById("new_task_name").value = "";
-		document.getElementById("new_task_description").value = "";
-		document.getElementById("new_task_interval").value = "";
+		d.getElementById("new_task_name").value = "";
+		d.getElementById("new_task_descr").value = "";
+		d.getElementById("new_task_interval").value = "";
 	});
 }
-newTaskSubmit();
 
-function addTask(name, description, interval) {
+function addTask(name, descr, interval) {
 	if (name) {
 		let timerArr = getTasks();
 
+		// TODO: add task specific intervalUnit (& intervalUnitName)
 		timerArr.push({
 			name: name,
-			description: description,
+			descr: descr,
 			interval: interval,
 			timepast: 0,
 		});
@@ -74,23 +162,12 @@ function addTask(name, description, interval) {
 	}
 }
 
-// use quick add function so have a base setup, using all basic fields and characteristics
+// use quick add function for base setup, using all basic characteristics
 task_new_quick.addEventListener("click", () => {
 	addQuickTask();
 });
 
 let getTimerTasksArr = getTasks();
-
-// Show New task-form if tasks array is empty
-const checkTasksEmpty = () => {
-	if (!getTasks()) updateTasks([]); // if array doesnt exist at all, create it
-	if (getTasks().length === 0) {
-		return true;
-	} else {
-		return false;
-	}
-}
-// if (checkTasksEmpty() === true) task_new_form.className = "dblock";
 
 function renderTasks(arr) {
 	task_container.innerHTML = "";
@@ -101,49 +178,76 @@ function renderTasks(arr) {
 renderTasks(getTasks());
 
 function renderTask(i, key) {
-	let el = document.createElement("div");
+	let settings = getSettings();// nodig?
+	let el = d.createElement("div");
 	el.className = "task"
 	el.id = 'task-' + key;
 	el.appendChild(renderTaskElement("h3", "task-name", i.name));
-	el.appendChild(renderTaskElement("div", "task-description", i.description));
-	el.appendChild(renderTaskElement("div", "task-countdown-total", 'Interval: ' + i.interval));
+	el.appendChild(renderTaskElement("div", "task-descr", i.descr));
+	el.appendChild(renderTaskElement(
+		"div",
+		"task-countdown-total",
+		(i.interval / i.intervalUnit),
+		'',
+		'',
+		'Interval: ',
+		i.intervalUnitName
+	));
 	el.appendChild(renderTaskElement(
 		'div',
 		'task-countdown-current',
 		countdownTimer(
-			i.interval,
 			key,
 			'countdown-task-' + key,
-			// i.timepast, 
 			settings.countDown
 		),
 		'countdown-' + el.id, key,
-		(settings.countDown ? 'Time left: ' : 'Time passed: ')
+		(settings.countDown === true ? 'Time left: ' : 'Time passed: '),
+		(settings.intervalUnitName)
 	));
 	el.appendChild(removeTaskLink(key));
 	if (i.finished === true) el.appendChild(resetTaskLink(key));
 	return el;
 }
 
-function renderTaskElement(node = "div", className, content, id = undefined, key, contentPrefix = '') {
-	let taskEl = document.createElement(node);
+function renderTaskElement(
+	node = "div",
+	className,
+	content,
+	id = undefined,
+	key,
+	contentPrefix = '',
+	contentSuffix = ''
+) {
+	let taskEl = d.createElement(node);
 	taskEl.className = className;
-	if (content === undefined) content = (settings.countDown === true ? (getTasks()[key].interval - getTasks()[key].timepast) : getTasks()[key].timepast)
-	taskEl.innerHTML = contentPrefix + content;
+
+	// TODO: make this hack neat, this hack only applies to the countdown div field
+	if (content === undefined) {
+		content = (
+			settings.countDown === true ?
+				(getTasks()[key].interval - getTasks()[key].timepast)
+				:
+				getTasks()[key].timepast
+		)
+	}
+
+	taskEl.innerHTML = contentPrefix + content + ' ' + contentSuffix;
 	id !== undefined ? taskEl.id = id : '';
 	return taskEl;
 }
 
-
 function addQuickTask() {
+	let settings = getSettings();
 	let arr = [];
 	arr = getTasks();
-
 	arr.push({
-		name: "Stretch",
-		description: "Quick timer",
-		interval: 35,
+		name: settings.quickTaskName,
+		interval: settings.quickTaskInterval,
+		intervalUnit: settings.intervalUnit,
+		intervalUnitName: settings.intervalUnitName,
 		timepast: 0,
+		descr: settings.quickTaskDescr,
 	});
 
 	updateTasks(arr);
@@ -152,7 +256,7 @@ function addQuickTask() {
 }
 
 function removeTaskLink(key) {
-	let el = document.createElement("button");
+	let el = d.createElement("button");
 	el.innerHTML = "remove task";
 	el.className = "text ctacolor2";
 	el.id = 'del-' + key;
@@ -170,16 +274,20 @@ function removeTask(key) {
 		if (i === key) continue;
 		newarr.push({
 			name: arr[i].name,
-			description: arr[i].description,
+			descr: arr[i].descr,
 			interval: arr[i].interval,
 			timepast: arr[i].timepast,
+			intervalUnit: arr[i].intervalUnit,
+			intervalUnitName: arr[i].intervalUnitName
 		});
 	}
 	updateTasks(newarr);
+	if (newarr.length === 0) d.body.style.backgroundColor = 'black';
 	renderTasks(newarr);
 }
+
 function resetTaskLink(key) {
-	let el = document.createElement('button');
+	let el = d.createElement('button');
 	el.innerHTML = 'reset';
 	el.className = 'text';
 	el.id = 'reset-' + key;
@@ -188,33 +296,49 @@ function resetTaskLink(key) {
 	});
 	return el;
 }
+
 function resetTask(key) {
 	let arr = getTasks();
 	arr[key].timepast = 0;
 	arr[key].finished = false;
-	document.body.style.backgroundColor = 'black';
+	if (!detectFinished(arr)) d.body.style.backgroundColor = 'black';
 	updateTasks(arr);
 	renderTasks(arr);
 }
 
-function addResetTaskLink(key) {
-	el = resetTaskLink(key);
-	document.getElementById('task-' + key).appendChild(el);
+function detectFinished(arr) {
+	for (i of arr) {
+		if (i.finished) return true;
+	}
 }
 
-function countdownTimer(limit, key, id) {
-	if (settings.countDown) contentPrefix = 'Time left: ';
-	else contentPrefix = 'Time passed: ';
-	const lb = setInterval((max = limit, id2 = id) => {
-		if (document.getElementById(id)) {
+function addResetTaskLink(key) {
+	el = resetTaskLink(key);
+	d.getElementById('task-' + key).appendChild(el);
+}
+
+function countdownTimer(key, id) { // individual per task
+	let settings = getSettings();
+	if (settings.countDown) cPrefix = 'Time left: ';
+	else cPrefix = 'Time passed: ';
+	const lb = setInterval((idtmp = id) => {
+		if (d.getElementById(id)) {
+			let c = d.getElementById(id);
 			let arr = getTasks();
-			if (arr[key].timepast === max) {
+			if (arr[key].timepast === arr[key].interval) {
 				stopit();
 			}
-			if (settings.countDown) document.getElementById(id2).innerHTML = contentPrefix + (max - arr[key].timepast);
-			else document.getElementById(id2).innerHTML = contentPrefix + arr[key].timepast;
+			if (settings.countDown) {
+				let timeleft = Math.round((arr[key].interval - arr[key].timepast) / arr[key].intervalUnit);
+				c.innerHTML = cPrefix + timeleft + ' ' + arr[key].intervalUnitName;
+				;
+			}
+			else {
+				let timepast = Math.round(arr[key].timepast / arr[key].intervalUnit);
+				c.innerHTML = cPrefix + timepast + ' ' + arr[key].intervalUnitName
+			}
 		}
-	}, settings.intervalTime);
+	}, 1000); // run every second/1000ms
 	function stopit() {
 		clearInterval(lb);
 	}
@@ -230,14 +354,14 @@ function countdownAll() {
 			if (arr[i].timepast == arr[i].interval && arr[i].finished !== true) {
 				playSound();
 				arr[i].finished = true;
-				document.body.style.backgroundColor = 'red';
+				d.body.style.backgroundColor = 'red';
 			}
-			if (arr[i].finished == true && !document.getElementById('reset-' + i)) {
+			if (arr[i].finished == true && !d.getElementById('reset-' + i)) {
 				addResetTaskLink(i);
 			}
 			updateTasks(arr);
 		}
-	}, settings.intervalTime);
+	}, 1000); // run every second/1000ms
 }
 countdownAll();
 
@@ -245,11 +369,3 @@ function playSound() {
 	const siren = new Audio('siren1.wav');
 	siren.play();
 }
-
-
-// TODO: organize whatever is below this line
-// -------------------------------------------------------------------------------------
-
-// - Countdown timer
-// - Button: if interval==false: DONE, if interval==true: RESET
-
