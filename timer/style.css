@@ -1,0 +1,358 @@
+:root {
+	--black: black;
+	--alert: firebrick;
+	--pause: #222;
+	--remove-fg: orangered;
+}
+
+* {
+	box-sizing: border-box;
+}
+html,
+body {
+	padding: 0;
+	margin: 0;
+	height: 100%;
+}
+html {
+	background: #000;
+	color: #fafafa;
+	font-size: 14px;
+}
+body {
+	min-width: calc(320px + 1rem);
+}
+.form-name {
+	font-weight: 800;
+	margin-top: 0;
+	margin-bottom: 0;
+	font-size: 1.2em;
+}
+#backdrop {
+	background-attachment: fixed;
+	height: 100vh;
+	width: 100vw;
+	position: fixed;
+}
+#backdrop.default {
+	background-color: var(--black);
+}
+#backdrop.backdrop-alert {
+	background-color: var(--alert);
+}
+#backdrop.backdrop-pause {
+	background-color: var(--pause);
+}
+#timer_new_btn:after {
+	color: dodgerblue;
+}
+#timer_new_quick {
+	display: block;
+}
+#timer_new_quick::before {
+	/*★ ☆ */
+	content: '⚡';
+	color: white;
+	display: block;
+	float: left;
+	width: 1em;
+	height: auto;
+}
+#settings_btn {
+	color: greenyellow;
+}
+#settings_form {
+	padding-right: 0.6rem;
+	border-width: 0 2px 0 0;
+	border-color: greenyellow;
+}
+#settings_form .form-name {
+	color: lightsteelblue;
+}
+.timer {
+	padding: 1rem;
+	margin: -1rem;
+}
+.timer-name {
+	margin: 0;
+	padding: 0;
+	font-weight: 800;
+}
+body,
+input,
+textarea,
+button,
+select {
+	font-family:
+		system-ui,
+		-apple-system,
+		BlinkMacSystemFont,
+		'Segoe UI',
+		Roboto,
+		Oxygen,
+		Ubuntu,
+		Cantarell,
+		'Open Sans',
+		'Helvetica Neue',
+		sans-serif;
+}
+button,
+a.btn,
+input[type='submit'] {
+	cursor: pointer;
+	background: greenyellow;
+	color: black;
+	font-weight: bold;
+}
+label {
+	cursor: pointer;
+}
+/* --------------------------- FORM & INPUT */
+input[type='text'],
+textarea,
+input[type='number'],
+input[type='submit'],
+button,
+.btn,
+select {
+	padding: 0.4rem 0.6rem;
+	margin: 0.3rem 0;
+	border-radius: 0.1rem;
+	display: block;
+	border: 1px solid #e1e1e1;
+}
+select {
+	padding-top: 0.25rem;
+	padding-bottom: 0.25rem;
+}
+select,
+input[type='text'],
+textarea,
+input[type='number'] {
+	width: 100%;
+	display: block;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+	select {
+		padding-left: 0.4rem;
+		padding-right: 0.4rem;
+	}
+}
+input[type='text'],
+textarea,
+input[type='number'],
+label {
+	font-size: 0.9rem;
+}
+textarea {
+	height: 5em;
+}
+form {
+	height: 0;
+	opacity: 0;
+	visibility: hidden;
+	transition-delay: 0.02s;
+	transition-timing-function: ease;
+	transition-duration: 0.3s;
+	transition-property: opacity;
+	border-style: dashed;
+}
+
+/* --------------------------- form class definitions */
+
+.form-inputs-wrapper {
+	display: flex;
+	justify-content: space-between;
+	margin-top: -0.3rem;
+	margin-bottom: -0.3rem;
+}
+#new_timer_interval,
+#settings_form_quickTimerInterval {
+	max-width: 40%;
+}
+#new_timer_intervalUnit,
+#settings_form_intervalUnit {
+	max-width: calc(60% - 0.3rem);
+}
+
+form.dblock {
+	visibility: visible;
+	opacity: 1;
+	height: 100%;
+}
+/* --------------------------- / FORM & INPUT */
+.timer button {
+	margin-bottom: 0;
+}
+a,
+button.text-btn,
+.btn.text-btn,
+button.icon {
+	color: greenyellow;
+	background: transparent;
+	border: 0;
+}
+button.text-btn,
+.btn.text-btn {
+	margin-left: -0.6rem;
+	margin-right: -0.6rem;
+	display: inline-block;
+}
+button.text-btn:after {
+	font-size: 0.8em;
+}
+button.text-btn.expanded::after,
+button.text-btn.collapsed::after,
+button.text-btn.expanded2::before,
+button.text-btn.collapsed2::before {
+	font-size: 0.6em;
+	display: inline-block;
+}
+button.text-btn.collapsed::after,
+button.text-btn.collapsed2::before {
+	content: '  ▲';
+}
+button.text-btn.expanded::after,
+button.text-btn.expanded2::before {
+	content: '▼  ';
+}
+button.text-btn.expanded:after,
+button.text-btn.collapsed:after {
+	margin-left: 0.6em;
+}
+button.text-btn.collapsed2:before,
+button.text-btn.expanded2:before {
+	margin-right: 0.6em;
+}
+
+/* --------------------------- general class definitions */
+#wrapper {
+	max-width: 320px;
+	min-width: 300px;
+	padding: 0.5rem;
+	margin: 0 auto;
+	position: relative;
+}
+#timer_container {
+	padding-top: 1rem;
+}
+.timer {
+	border-bottom: 1px dashed rgba(255, 255, 255, 0.2);
+	margin-top: 0;
+	margin-bottom: 0;
+}
+.timer.paused {
+	background-color: #333;
+}
+.timer.finished {
+	background-color: transparent;
+	animation: blink-finished 2s infinite;
+}
+@keyframes blink-finished {
+	0% {
+		background-color: transparent;
+	}
+	75% {
+		background-color: black;
+	}
+	100% {
+		background-color: transparent;
+	}
+}
+.timer .buttons {
+	justify-content: flex-start;
+}
+.timer .buttons button {
+	padding: 0;
+	margin-left: 0;
+	margin-right: 1.6rem;
+}
+.timer .buttons .text-btn {
+	display: flex;
+	align-items: center;
+}
+.timer .buttons .text-btn::before {
+	content: '';
+	display: block;
+	float: left;
+	margin-right: 0.2rem;
+	height: 1em;
+	bottom: 0.5em;
+	line-height: 1em;
+}
+.timer .buttons .text-btn.pause {
+	margin-left: -0.1rem;
+}
+.timer .buttons .text-btn.pause::before {
+	content: '=';
+	transform: rotate(90deg);
+	font-weight: 800;
+	font-size: 1.2em;
+	margin-left: -0.15em;
+	padding-right: 0.15em;
+	margin-bottom: -0.2em;
+}
+.timer .buttons .resume::before {
+	background: transparent;
+	content: ' ';
+	width: 0;
+	height: 0;
+	margin-bottom: -0.1rem;
+	margin-right: -0.1em;
+	background-color: transparent;
+	border-right: 0.5em solid transparent;
+	border-bottom: 0.3em solid transparent;
+	border-left: 0.5em solid greenyellow;
+	border-top: 0.3em solid transparent;
+}
+.timer .buttons button.text-btn.reset::before {
+	content: '↺';
+	font-weight: bold;
+}
+.buttons .text-btn:hover {
+	text-decoration: underline;
+}
+.timer .buttons button.text-btn.remove::before {
+	content: 'x';
+	font-size: 0.9em;
+	margin-top: 0.1em;
+	font-weight: 800;
+}
+#timer_new_form {
+	border-width: 0 0 0 2px;
+	border-color: dodgerblue;
+	padding-left: 0.6rem;
+}
+#timer_new_form .form-name {
+	color: lightsteelblue;
+}
+.buttons {
+	display: flex;
+	justify-content: space-between;
+}
+.white,
+a.white,
+button.text-btn.white,
+.btn.text-btn.white {
+	color: white;
+}
+.text-btn.remove {
+	color: var(--remove-fg);
+}
+#backdrop.backdrop-alert + #wrapper .text-btn.remove {
+	color: white;
+}
+#clean_btn {
+	display: none;
+}
+.quicktest #clean_btn {
+	display: block;
+}
+.quicktest h2 {
+	display: none;
+}
+.timer-countdown-current,
+.timer-countdown-total {
+	display: inline-block;
+}
