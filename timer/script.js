@@ -111,9 +111,14 @@ var translationMap = {
 };
 
 // ----------------------------- SETUP DEFAULTS & SETTINGS
+
 if (pageInit === true) {
+	console.log(navigator);
 	var browserLanguage = 'en';
-	if (navigator.language.substring(0, 2) == 'pt') browserLanguage = 'pt';
+	if (navigator.language.substring(0, 2) == 'pt') {
+		browserLanguage = 'pt';
+		setHtmlLang(browserLanguage);
+	}
 	language = browserLanguage;
 }
 
@@ -660,7 +665,12 @@ function setBgStatus(status = 'normal') {
 function tl(langkey, stringkey) {
 	return translationMap[langkey][stringkey];
 }
+function setHtmlLang(lang) {
+	document.documentElement.lang = lang;
+}
+
 function changeLanguage(lang) {
+	setHtmlLang(lang);
 	newTextInElements('pause', tl(lang, 'pause'));
 	newTextInElements('resume', tl(lang, 'resume'));
 	newTextInElements('reset', tl(lang, 'reset'));
