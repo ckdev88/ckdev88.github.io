@@ -1,3 +1,4 @@
+// TODO: put feedlist in seperate json file and import it
 const feedlist = [
 	'https://dmitripavlutin.com/rss.xml',
 	'https://davidwalsh.name/feed',
