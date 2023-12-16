@@ -92,6 +92,7 @@ const loopfeeds = async () => {
 		// 	},
 		// };
 		// await fetch(feed, opts)
+
 		await fetch(feed)
 			.then((response) => response.text())
 			.then((string) => new window.DOMParser().parseFromString(string, 'text/xml'))
