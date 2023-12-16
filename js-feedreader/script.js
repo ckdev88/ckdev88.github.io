@@ -86,14 +86,13 @@ const loopfeeds = async () => {
 	let tmpurl;
 	for (feed of feedlist) {
 		const feedUri = feed;
-		// var opts = {
-		// 	headers: {
-		// 		// mode: 'no-cors',
-		// 	},
-		// };
-		// await fetch(feed, opts)
-
-		await fetch(feed)
+		var opts = {
+			headers: {
+				mode: 'no-cors',
+			},
+		};
+		await fetch(feed, opts)
+			// await fetch(feed)
 			.then((response) => response.text())
 			.then((string) => new window.DOMParser().parseFromString(string, 'text/xml'))
 			.then((data) => {
