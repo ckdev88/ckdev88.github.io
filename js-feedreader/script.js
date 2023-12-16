@@ -78,7 +78,7 @@ function restructDate(datetime) {
 	return `${datetime['year']}/${datetime['month']}/${datetime['day']}`;
 }
 
-const loopfeeds = async () => {
+const loopfeeds = () => {
 	const articleLink = (title, link, date) => {
 		date = restructDate(date);
 		return `<a href="${link}" target="_blank"><span class="pubdate">${date}</span>${title}</a>`;
@@ -91,8 +91,7 @@ const loopfeeds = async () => {
 				mode: 'no-cors',
 			},
 		};
-		await fetch(feed, opts)
-			// await fetch(feed)
+		fetch(feed, opts)
 			.then((response) => response.text())
 			.then((string) => new window.DOMParser().parseFromString(string, 'text/xml'))
 			.then((data) => {
