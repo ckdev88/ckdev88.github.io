@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="74.23587mm"
+   height="82.752472mm"
+   viewBox="0 0 74.23587 82.752472"
+   version="1.1"
+   id="svg5"
+   sodipodi:docname="ck-logo-dark.svg"
+   inkscape:export-filename="ck-logo-1.svg"
+   inkscape:export-xdpi="186.66093"
+   inkscape:export-ydpi="186.66093"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview8"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="1.4265155"
+     inkscape:cx="188.22088"
+     inkscape:cy="43.112046"
+     inkscape:window-width="1878"
+     inkscape:window-height="1051"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg5"
+     showguides="true">
+    <sodipodi:guide
+       position="28.440015,85.189255"
+       orientation="0,-1"
+       id="guide3538"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="32.684721,83.077829"
+       orientation="0,-1"
+       id="guide3540"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="32.504636,-0.24365399"
+       orientation="0,-1"
+       id="guide3542"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="20.325712,41.470499"
+       orientation="1,0"
+       id="guide3550"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="5.2918969,-70.15889"
+       orientation="1,0"
+       id="guide3552"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="19.591003,77.541269"
+       orientation="0,-1"
+       id="guide3596"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="37.751724,5.2929071"
+       orientation="0,-1"
+       id="guide3598"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="-0.34758828,-17.206748"
+       orientation="1,0"
+       id="guide4713"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="26.72461,41.417091"
+       orientation="0,-1"
+       id="guide9909"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="1.75,13.712058"
+       orientation="1,0"
+       id="guide9942"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="11.062533,72.336474"
+       orientation="1,0"
+       id="guide9948"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="62.057921,79.810642"
+       orientation="1,0"
+       id="guide10613"
+       inkscape:locked="false" />
+  </sodipodi:namedview>
+  <defs
+     id="defs2">
+    <linearGradient
+       id="linearGradient6494"
+       inkscape:swatch="solid">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop6492" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient3642"
+       inkscape:swatch="solid">
+      <stop
+         style="stop-color:#ffce00;stop-opacity:1;"
+         offset="0"
+         id="stop3640" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient3514"
+       inkscape:swatch="solid">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop3512" />
+    </linearGradient>
+  </defs>
+  <g
+     aria-label="C"
+     transform="matrix(1.2932735,0,0,0.77323164,-0.34758828,-2.4367819)"
+     id="text755"
+     style="font-weight:bold;font-size:89.0785px;font-family:'Noto Sans Mono CJK TC';-inkscape-font-specification:'Noto Sans Mono CJK TC Bold';display:inline;fill:#ed6900;stroke:#ffffff;stroke-width:4;stroke-dasharray:none;stroke-opacity:1">
+    <path
+       id="path7639"
+       style="display:inline;opacity:1;fill:#8a916f;fill-opacity:1;stroke:#ffffff;stroke-width:5;stroke-linecap:butt;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+       d="m 59.237727,2.5001058 c -2.828921,0 -8.478255,2.8252596 -19.77657,8.4759682 C 28.931417,16.47904 20.376681,20.981665 20.325891,20.981665 V 10.976074 c 0,-5.764863 -17.8257852,-5.7648633 -17.8257852,0 v 30.708721 30.657043 c 0,5.117627 17.8257852,5.117609 17.8257852,-0.65319 v -9.99939 c 0,0 8.622151,5.152878 19.243269,10.65258 20.188832,9.468606 22.252223,10.430786 22.48855,2.899048 V 61.689258 C 39.571375,61.689252 39.561663,61.678084 26.724467,41.335462 39.454095,20.992788 39.463718,20.981671 62.05771,20.981665 V 7.8811728 C 61.953232,4.2980103 61.490423,2.5001058 59.237727,2.5001058 Z"
+       transform="matrix(0.77323166,0,0,1.2932735,0.26876626,3.1514255)" />
+    <path
+       id="path10400"
+       style="display:inline;stroke:#ffffff;stroke-width:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 42.351975,22.44776 c -12.738213,0 -23.962325,10.333386 -23.962325,34.562713 0,24.318406 11.224085,33.760733 23.873219,33.760733 2.786279,0 5.496592,-0.548257 8.036723,-1.658764 V 75.700644 c -1.914827,2.355324 -4.133512,3.668395 -6.789638,3.668395 -6.235489,0 -11.580185,-5.968323 -11.580185,-22.89322 0,-16.568584 5.612139,-22.714779 10.956842,-22.714779 3.117745,0 5.077336,1.603068 7.304296,4.186342 l 0.108685,-0.118961 V 24.196079 C 47.960145,23.113735 45.314025,22.44776 42.351975,22.44776 Z" />
+    <path
+       id="rect1362"
+       style="display:none;fill:#0000ff;fill-rule:evenodd;stroke-width:1.05833"
+       d="m 51.194803,-22.994431 h 52.547257 c 1.62925,0 2.94089,2.058598 2.94089,4.61569 V 128.54541 c 0,2.55709 -1.31164,4.61569 -2.94089,4.61569 H 51.194803 c -1.629253,0 -2.940889,-2.0586 -2.940889,-4.61569 V -18.378741 c 0,-2.557092 1.311636,-4.61569 2.940889,-4.61569 z" />
+  </g>
+</svg>
