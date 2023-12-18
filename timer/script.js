@@ -32,8 +32,17 @@ const getTimers = () => {
 	return timers;
 };
 
-let cachedTimers = getTimers(); // null on clean localstorage
+/**
+ * @type Array - Array of timers, refreshed every second
+ */
+let timerspersec = getTimers();
+setInterval(() => {
+	timerspersec = getTimers();
+}, 1000);
 
+/**
+ * @param {Array<any>} arr - state of localStorage.timerTimers
+ */
 function updateTimers(arr) {
 	localStorage.setItem('timerTimers', JSON.stringify(arr));
 	if (
@@ -93,8 +102,8 @@ var translationMap = {
 		Seconds: 'Segundos',
 		seconds: 'segundos',
 		Minutes: 'Minutos',
-		minutes: 'minutos',
 		Create_timer: 'Criar timer',
+		minutes: 'minutos',
 		General_settings: 'Configurações gerais',
 		Count_down: 'Contagem regressiva até zero',
 		Count_up: 'Contagem a partir do zero',
@@ -264,10 +273,16 @@ function expandCollapseForm(what) {
 
 timer_new_form.addEventListener('submit', (e) => {
 	e.preventDefault();
+	/**
+	 * @type {FormData} - Data input of the New Timer form
+	 */
 	var data = new FormData(timer_new_form);
 	timerFormSubmit(data);
 });
 
+/**
+ * @param {FormData} data - data input of the New Timer form
+ */
 function timerFormSubmit(data) {
 	// change some default settings first
 	if (data.get('timer_intervalUnit') !== settings.intervalUnit) {
@@ -286,6 +301,10 @@ function timerFormSubmit(data) {
 	cleanForm();
 }
 
+/**
+ * @param {HTMLElement} afterElement - next to which the feedback will be inserted
+ * @param {string} textKey - translation key present in object translationMap
+ */
 function showFeedback(afterElement, textKey) {
 	let aftertext = document.createElement('div');
 	aftertext.innerText = tl(getSettings().language, textKey);
@@ -310,6 +329,11 @@ function addQuickTimer() {
 	addTimer(settings.quickTimerName, settings.quickTimerDescr, settings.quickTimerInterval);
 }
 
+/**
+ * @param {string} name - Name for the new timer
+ * @param {string} description - (optional) Description for the new timer
+ * @param {number} interval - Number of seconds or minutes for the new timer
+ */
 function addTimer(name, description, interval) {
 	let settings = getSettings();
 	arr = [];
@@ -338,9 +362,12 @@ function addTimer(name, description, interval) {
 function pauseTimerToggle(key) {
 	arr = getTimers();
 	var newarr = [];
+	var refresh = false; // TODO: the refresh-variable is just a hotfix for issue TOOMANYLOADS
+	// caused by toggling pause/resume
 	for (let i = 0; i < arr.length; i++) {
 		if (i === key) {
 			arr[i].paused = !arr[i].paused;
+			if (arr[i].paused === false) refresh = true;
 		}
 		newarr.push({
 			name: arr[i].name,
@@ -356,7 +383,8 @@ function pauseTimerToggle(key) {
 	}
 
 	updateTimers(newarr);
-	renderTimers(newarr);
+	renderTimers(newarr, false); // TODO: false isnt doing anything useful here, but somewhere here should be the proper bugfix for issue TOOMANYLOADS
+	if (refresh === true) location.reload();
 
 	delete arr;
 	delete newarr;
@@ -403,20 +431,24 @@ function clearLocalStorage() {
 }
 
 // ----------------------------- RENDER TASKS - MAIN
-function renderTimers(arr) {
+function renderTimers(arr, paused = false) {
 	timer_container.innerHTML = '';
 	for (let i = 0; i < arr.length; i++) {
-		timer_container.appendChild(renderTimer(arr[i], i));
+		if (paused === false) timer_container.appendChild(renderTimer(arr[i], i));
 	}
 }
 renderTimers(getTimers());
 
 function getCurrentTime() {
-	var current_time = d.createElement('div');
-	current_time.classList.add('current_time');
+	const el = d.createElement('div');
+	el.classList.add('current_time');
+	const showtime = (el) => {
+		el.innerHTML = getCurrentTimeSimple(true);
+		timer_container.appendChild(el);
+	};
+	showtime(el);
 	setInterval(() => {
-		current_time.innerHTML = getCurrentTimeSimple(true);
-		timer_container.appendChild(current_time);
+		showtime(el);
 	}, 1000);
 }
 getCurrentTime();
@@ -504,41 +536,61 @@ function renderTimerElement(
 }
 
 // ----------------------------- RENDER TASKS - DETAILS
+/**
+ * @param { number } key - key in timer in localStorage.timerTimers
+ * @param { number } id - id of timer HTMLelement
+ */
 function countdownTimer(key, id) {
 	// individual per timer
-	var lb = setInterval(() => {
-		timer = getTimers()[key];
-		if (timer.paused === true) stopit();
-		else {
-			if (d.getElementById(id)) {
-				let settings = getSettings();
-				if (settings.countDown)
-					cPrefix =
-						'<span class="time_left_text">' + tl(settings.language, 'Time_left') + '</span>: ';
-				else
-					cPrefix =
-						'<span class="time_passed_text">' + tl(settings.language, 'Time_passed') + '</span>: ';
-				let c = d.getElementById(id);
+	let testvar = 0;
+	const tmpinterval = setInterval(() => {
+		/*
+		TODO: there is still a bug that makes this run the amount of running timers for the only active timer, added by the amount of used pause/resume-toggles, every second (i.e. timer #0 can run 6 times per second) , this is hotfixed for now, by refreshing the page after resuming a timer, providing a clean array of timers, this issue in short is TOOMANYLOADS
+		*/
 
-				if (timer.timepast === timer.interval) {
-					stopit();
-				}
-				if (timer.paused === true) {
-					//console.log('arr paused');
-				} else {
-					if (settings.countDown) {
-						timeleft = Math.round((timer.interval - timer.timepast) / timer.intervalUnit);
-						c.innerHTML = cPrefix + timeleft;
+		if (timerspersec[key] === undefined) {
+			clearInterval(tmpinterval);
+			stopit();
+			console.log('HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEELP');
+		} else {
+			// console.log('timerspersec[key]:', timerspersec[key]);
+			if (timerspersec[key].paused === true || timerspersec[key].paused === undefined) stopit();
+			else {
+				if (d.getElementById(id)) {
+					let settings = getSettings();
+					if (settings.countDown)
+						cPrefix =
+							'<span class="time_left_text">' + tl(settings.language, 'Time_left') + '</span>: ';
+					else
+						cPrefix =
+							'<span class="time_passed_text">' +
+							tl(settings.language, 'Time_passed') +
+							'</span>: ';
+					let c = d.getElementById(id);
+
+					if (timerspersec[key].timepast === timerspersec[key].interval) {
+						stopit();
+					}
+					if (timerspersec[key].paused === true) {
+						// console.log('arr paused');
 					} else {
-						timepast = Math.round(timer.timepast / timer.intervalUnit);
-						c.innerHTML = cPrefix + timepast;
+						if (settings.countDown) {
+							timeleft = Math.round(
+								(timerspersec[key].interval - timerspersec[key].timepast) /
+									timerspersec[key].intervalUnit
+							);
+							c.innerHTML = cPrefix + timeleft;
+						} else {
+							timepast = Math.round(timerspersec[key].timepast / timerspersec[key].intervalUnit);
+							c.innerHTML = cPrefix + timepast;
+						}
 					}
 				}
 			}
 		}
 	}, 1000);
 	function stopit() {
-		clearInterval(lb);
+		clearInterval(tmpinterval);
 	}
 }
 
@@ -594,6 +646,9 @@ function resetTimer(key) {
 }
 
 // ----------------------------- DETECTIONS
+/**
+ * @param { Object } arr - array of localstorage.timerTimers
+ */
 function detectAnyFinished(arr = getTimers()) {
 	for (i of arr) {
 		if (i.finished === true) return true;
@@ -622,10 +677,12 @@ function countdownAll() {
 	let bufferTitle = '';
 	let finishedTimer;
 	let blinkFinishedOn = false;
-	const lb = setInterval(() => {
-		let arr = getTimers();
+	let arr;
+	var countdownAllPerSecond = setInterval(() => {
+		arr = timerspersec;
 		for (let i = 0; i < arr.length; i++) {
 			if (arr[i].paused === true) continue;
+			// re-render timers that are not paused
 			if (arr[i].timepast < arr[i].interval && arr[i].paused === false) {
 				arr[i].timepast++;
 			}
@@ -662,7 +719,7 @@ function countdownAll() {
 	}, 1000); // run every second/1000ms
 
 	function stopit() {
-		clearInterval(lb);
+		clearInterval(countdownAllPerSecond);
 		localStorage.setItem('countDownAllStatus', 'stopped');
 	}
 }
@@ -706,6 +763,10 @@ function setBgStatus(status = 'normal') {
 }
 
 // ----------------------------- LANGUAGE DETECTION & SELECTION
+/**
+ * @param {string} langkey - key used in object translationMap, key for language, either 'en' or 'pt'
+ * @param {string} stringkey - value used in object translationMap, text that needs to be translated
+ */
 function tl(langkey, stringkey) {
 	return translationMap[langkey][stringkey];
 }
