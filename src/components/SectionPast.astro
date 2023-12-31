@@ -1,0 +1,24 @@
+---
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+import SectionPastArticle from "./SectionPastArticle.astro";
+import SectionPastItem from "./SectionPastItem.astro";
+---
+
+<section id="section-past">
+	<span id={t("nav.Past")} class="section-anchor"></span>
+	<div class="intro">
+		<div class="container">
+			<h2>{t("past.head")}</h2>
+			<p>{t("past.p")}</p>
+		</div>
+	</div>
+
+	<SectionPastArticle pastId="1" lang={lang} extraClass="reverse" />
+	<SectionPastArticle pastId="2" lang={lang} extraClass="" />
+	<SectionPastArticle pastId="3" lang={lang} extraClass="reverse" />
+	<SectionPastArticle pastId="4" lang={lang} extraClass="" />
+	<SectionPastArticle pastId="5" lang={lang} extraClass="reverse" />
+</section>

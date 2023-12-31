@@ -1,0 +1,77 @@
+.clr:after,
+.portfolio:after,
+.portfolio-item:after {
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+.clr,
+.portfolio,
+.portfolio-item {
+  zoom: 1;
+}
+.clear {
+  clear: both;
+}
+.smallfont {
+  font-size: 9em;
+}
+.grid-container {
+  display: grid;
+  max-width: 100%;
+}
+
+.flex-container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.clear {
+  clear: both;
+}
+.dnone {
+  display: none;
+}
+.dblock {
+  display: block;
+}
+
+.badge {
+  font-size: 0.9em;
+  display: inline-block;
+  margin-right: 0.2rem;
+  margin-bottom: 0.2rem;
+  padding: 0.15rem 0.3rem;
+  border-radius: 0.3rem;
+  background: #123456;
+  color: white;
+  line-height: 1.3em;
+}
+.t-0 {
+  top: 0;
+}
+.sr-only {
+  position: absolute;
+  overflow: hidden;
+  width: 0;
+  height: 0;
+}
+.container {
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  min-width: 320px;
+  @media (--viewport-m) {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}

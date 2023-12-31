@@ -1,0 +1,11 @@
+---
+/* TODO: use or remove */
+import supabase from "../supabase";
+// const currentUrl: string = Astro.request.url;
+const currentUrl: string = 'adasdaaaa';
+await supabase
+	.rpc("count_visits", {
+		url: currentUrl,
+	})
+	.single();
+---

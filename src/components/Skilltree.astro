@@ -1,0 +1,208 @@
+---
+import SkilltreeCat from "./SkilltreeCat.astro";
+import SkilltreeItem from "./SkilltreeItem.astro";
+
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+import Tools from "./Tools.astro";
+---
+
+<div class="intro">
+	<div class="container">
+		<h2>Skill stack</h2>
+		{
+			lang == "en" ? (
+				<p>
+					Over the years, many skills have come and partially gone, these are
+					the ones that stayed.
+				</p>
+			) : (
+				<p>
+					Door de jaren heen zijn vele technieken gekomen en gegaan, deze zijn
+					gebleven.
+				</p>
+			)
+		}
+	</div>
+</div>
+<div id="skilltree-wrapper" class="skills-container">
+	<ul id="skilltree" class="grid-item">
+		<li id="st-html" class="li-level-1 active">
+			<h3 class="tool-item-wrapper">
+				<div class="tool-item">
+					<img
+						src="../img/html5-shield.svg"
+						alt="HTML 5"
+						width="102"
+						height="115"
+					/>
+				</div>
+			</h3>
+			<ul class="ul-level-2">
+				<li class="fundamentals li-level-2">
+					<h4>Fundamentals</h4>
+					<ul class="ul-level-3">
+						<SkilltreeItem skill="Semantic HTML" />
+						<SkilltreeItem skill="Accessibility" />
+						<SkilltreeItem skill="Organic SEO" />
+					</ul>
+				</li>
+				<li class="preprocessors li-level-2">
+					<h4>Processors</h4>
+					<ul class="ul-level-3">
+						<SkilltreeItem skill="htmx" />
+						<SkilltreeItem skill="PHP" />
+					</ul>
+				</li>
+				<li class="email li-level-2">
+					<h4>E-mail</h4>
+					<ul class="ul-level-3">
+						<SkilltreeItem skill="Responsive" />
+						<SkilltreeItem skill="Deliverability" />
+						<SkilltreeItem skill="Journeys" />
+					</ul>
+				</li>
+			</ul>
+			<svg version="1.1" xmlns="http://www.w3.org/2000/svg" class="arrow-guide">
+				<path d="M 0 0 L 0 12 L 9 6 z" stroke="colourname" fill="url(#fill)"
+				></path>
+			</svg>
+		</li>
+		<li id="st-css" class="li-level-1">
+			<SkilltreeCat
+				img="../img/css3-shield.svg"
+				heading="CSS"
+				name="CSS 3"
+				classname="large"
+				w="89"
+				h="100"
+			/>
+			<ul class="ul-level-2">
+				<li class="fundamentals li-level-2">
+					<h4>Fundamentals</h4>
+					<ul class="ul-level-3">
+						<SkilltreeItem skill="CSS 3" className="pg-95" />
+						<SkilltreeItem skill="Responsive" />
+					</ul>
+				</li>
+				<li class="preprocessors li-level-2">
+					<h4>Processors</h4>
+					<ul class="ul-level-3">
+						<SkilltreeItem skill="SASS" />
+						<SkilltreeItem skill="PostCSS" />
+					</ul>
+				</li>
+				<li class="frameworks li-level-2">
+					<h4>Frameworks</h4>
+					<ul class="ul-level-3">
+						<SkilltreeItem skill="Bootstrap" />
+						<SkilltreeItem skill="Semantic-UI" />
+						<SkilltreeItem skill="Tailwind" />
+					</ul>
+				</li>
+			</ul>
+			<svg version="1.1" xmlns="http://www.w3.org/2000/svg" class="arrow-guide">
+				<path d="M 0 0 L 0 12 L 9 6 z" stroke="colourname" fill="url(#fill)"
+				></path>
+			</svg>
+		</li>
+		<li id="st-javascript" class="li-level-1">
+			<SkilltreeCat
+				img="../img/javascript-logo.svg"
+				heading="JavaScript"
+				name="JavaScript"
+				classname="large"
+				w="89"
+				h="100"
+			/>
+			<ul class="ul-level-2">
+				<li class="fundamentals li-level-2">
+					<h4>Fundamentals</h4>
+					<ul class="ul-level-3">
+						<SkilltreeItem skill="EcmaScript" />
+						<SkilltreeItem skill="TypeScript" />
+					</ul>
+				</li>
+				<li class="task-runners li-level-2">
+					<h4>Bundlers</h4>
+					<ul class="ul-level-3">
+						<SkilltreeItem skill="Vite" />
+						<SkilltreeItem skill="WebPack" />
+						<SkilltreeItem skill="Gulp" />
+					</ul>
+				</li>
+				<li class="framework li-level-2">
+					<h4>Frameworks</h4>
+					<ul class="ul-level-3">
+						<SkilltreeItem skill="Astro" />
+						<SkilltreeItem skill="Vue" />
+						<SkilltreeItem skill="React" />
+					</ul>
+				</li>
+			</ul>
+			<svg version="1.1" xmlns="http://www.w3.org/2000/svg" class="arrow-guide">
+				<path d="M 0 0 L 0 12 L 9 6 z" stroke="colourname" fill="url(#fill)"
+				></path>
+			</svg>
+		</li>
+		<!-- <li id="st-workflow" class="li-level-1"> -->
+		<!-- 	<SkilltreeCat -->
+		<!-- 		img="" -->
+		<!-- 		heading="Workflow" -->
+		<!-- 		name="Workflow" -->
+		<!-- 		classname="large" -->
+		<!-- 		w="89" -->
+		<!-- 		h="100" -->
+		<!-- 	/> -->
+		<!-- 	<ul class="ul-level-2"> -->
+		<!-- 		<li class="task-runners li-level-2"></li> -->
+		<!-- 		<li class="framework li-level-2"> -->
+		<!-- 			<h4>Back end platforms</h4> -->
+		<!-- 			<ul class="ul-level-3"> -->
+		<!-- 				<SkilltreeItem skill="Supabase" /> -->
+		<!-- 				<SkilltreeItem skill="Firebase" /> -->
+		<!-- 			</ul> -->
+		<!-- 		</li> -->
+		<!-- 	</ul> -->
+		<!-- 	<svg version="1.1" xmlns="http://www.w3.org/2000/svg" class="arrow-guide"> -->
+		<!-- 		<path d="M 0 0 L 0 12 L 9 6 z" stroke="colourname" fill="url(#fill)" -->
+		<!-- 		></path> -->
+		<!-- 	</svg> -->
+		<!-- </li> -->
+	</ul>
+	<div class="grid-item tools">
+		<Tools lang={lang} />
+	</div>
+</div>
+
+<script>
+	document.addEventListener("DOMContentLoaded", function (event) {
+		document.querySelector("#st-html")?.addEventListener("mouseover", () => {
+			document.querySelector("#st-html")?.classList.add("active");
+			document.querySelector("#st-css")?.classList.remove("active");
+			document.querySelector("#st-javascript")?.classList.remove("active");
+			document.querySelector("#tools-html")?.classList.remove("hidden");
+			document.querySelector("#tools-css")?.classList.add("hidden");
+			document.querySelector("#tools-javascript")?.classList.add("hidden");
+		});
+		document.querySelector("#st-css")?.addEventListener("mouseover", () => {
+			document.querySelector("#st-html")?.classList.remove("active");
+			document.querySelector("#st-css")?.classList.add("active");
+			document.querySelector("#st-javascript")?.classList.remove("active");
+			document.querySelector("#tools-css")?.classList.remove("hidden");
+			document.querySelector("#tools-html")?.classList.add("hidden");
+			document.querySelector("#tools-javascript")?.classList.add("hidden");
+		});
+		document
+			.querySelector("#st-javascript")
+			?.addEventListener("mouseover", () => {
+				document.querySelector("#st-html")?.classList.remove("active");
+				document.querySelector("#st-css")?.classList.remove("active");
+				document.querySelector("#st-javascript")?.classList.add("active");
+				document.querySelector("#tools-javascript")?.classList.remove("hidden");
+				document.querySelector("#tools-html")?.classList.add("hidden");
+				document.querySelector("#tools-css")?.classList.add("hidden");
+			});
+	});
+</script>

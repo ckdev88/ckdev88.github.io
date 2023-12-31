@@ -1,0 +1,30 @@
+---
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<section id="section-contact">
+	<span id={t("nav.Contact")} class="section-anchor"></span>
+	<div class="container">
+		{
+			lang == "en" ? (
+				<>
+					<h2>Get in touch?</h2>
+					<p>
+						You can e-mail me at:
+						<a href="mailto:ckdev88@outlook.com">ckdev88@outlook.com</a>.
+					</p>
+				</>
+			) : (
+				<>
+					<h2>Contact opnemen?</h2>
+					<p>
+						Je kan me een mailtje sturen op:
+						<a href="mailto:ckdev88@outlook.com">ckdev88@outlook.com</a>.
+					</p>
+				</>
+			)
+		}
+	</div>
+</section>

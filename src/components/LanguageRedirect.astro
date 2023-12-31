@@ -1,0 +1,16 @@
+---
+const { lang } = Astro.props;
+
+let metatag;
+// console.log("---", typeof lang);
+// TODO: dit kan veel dynamischer, maar voor nu even niet
+if (lang === "nl") {
+	metatag = "0;url=/nl/";
+} else if (lang === "pt") {
+	metatag = "0;url=/pt/";
+} else {
+	metatag = "0;url=/en/";
+}
+---
+
+<meta http-equiv="refresh" content={metatag} />

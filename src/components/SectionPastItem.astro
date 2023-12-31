@@ -1,0 +1,20 @@
+---
+const { name, img, w, h, skills, link } = Astro.props;
+const skillsArr = skills.split(",");
+import BadgeItem from "./BadgeItem.astro";
+---
+<div class="grid-item" >
+	<img src={img} class="thumbIMG" alt={name} width={w} height={h} />
+	<ul class="overlay-badges">
+		<!-- {skills} -->
+		{
+			skillsArr.map((s) => {
+				return <BadgeItem title={s} />;
+			})
+		}
+	</ul>
+	<a class="griditemlink" href={link} target="blank">
+		</a>
+</div>
+
+<style></style>

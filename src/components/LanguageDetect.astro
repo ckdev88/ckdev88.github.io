@@ -1,0 +1,88 @@
+---
+import LanguageRedirect from "./LanguageRedirect.astro";
+
+var timeZoneCityToCountry = {
+	Brussels: "Belgium",
+	Noronha: "Brazil",
+	Belem: "Brazil",
+	Fortaleza: "Brazil",
+	Recife: "Brazil",
+	Araguaina: "Brazil",
+	Maceio: "Brazil",
+	Bahia: "Brazil",
+	Sao_Paulo: "Brazil",
+	Campo_Grande: "Brazil",
+	Cuiaba: "Brazil",
+	Santarem: "Brazil",
+	Porto_Velho: "Brazil",
+	Boa_Vista: "Brazil",
+	Manaus: "Brazil",
+	Eirunepe: "Brazil",
+	Rio_Branco: "Brazil",
+	Cape_Verde: "Cape Verde",
+	Bissau: "Guinea-Bissau",
+	Maputo: "Mozambique",
+	Windhoek: "Namibia",
+	Amsterdam: "Netherlands",
+	Paramaribo: "Suriname",
+	Sao_Tome: "Sao Tome & Principe",
+	Dili: "East Timor",
+	Johannesburg: "South Africa",
+	Luanda: "Angola",
+	Aruba: "Aruba",
+	Curacao: "Curaçao",
+	Malabo: "Equatorial Guinea",
+	Lower_Princes: "St Maarten (Dutch)",
+};
+
+var userRegion;
+var userCity;
+var userCountry;
+var userTimeZone;
+var userLanguageCodeShort;
+
+if (Intl) {
+	userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+	var tzArr = userTimeZone.split("/");
+	userRegion = tzArr[0];
+	userCity = tzArr[tzArr.length - 1];
+	userCountry = timeZoneCityToCountry[userCity]; // geeft undefined by irrelevante steden/landen, die zijn uit object timeZoneCityToCountry verwijderd, voor fallback op "en"
+}
+
+// if (userCountry !== undefined) console.log("Country:", userCountry);
+if (userCountry === undefined) userLanguageCodeShort = "en";
+// else if (
+// 	userCountry === "Angola" ||
+// 	userCountry === "Brazil" ||
+// 	userCountry === "Cape Verde" ||
+// 	userCountry === "East Timor" ||
+// 	userCountry === "Equatorial Guinea" ||
+// 	userCountry === "Guinea-Bissau" ||
+// 	userCountry === "Mozambique" ||
+// 	userCountry === "Sao Tome & Principe"
+// )
+// 	userLanguageCodeShort = "pt";
+// TODO: Portugees aanzetten zodra de vertalingen verwerkt zijn
+else if (
+	userCountry === "Aruba" ||
+	userCountry === "Belgium" ||
+	userCountry === "Curaçao" ||
+	userCountry === "Namibia" ||
+	userCountry === "Netherlands" ||
+	userCountry === "South Africa" ||
+	userCountry === "St Maarten (Dutch)" ||
+	userCountry === "Suriname"
+) {
+	userLanguageCodeShort = "nl";
+} else {
+	// redundante fallback to English
+	userLanguageCodeShort = "en";
+}
+---
+
+<html>
+	<head>
+		<LanguageRedirect lang={userLanguageCodeShort} />
+	</head>
+	<body></body>
+</html>

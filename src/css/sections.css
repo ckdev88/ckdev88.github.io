@@ -1,0 +1,159 @@
+section {
+  border-bottom-width: 2px;
+  border-bottom-style: dashed;
+  border-bottom-color: #302623;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+section,
+footer,
+#nav-container {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  @media (--viewport-m) {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+}
+.section-anchor {
+  position: absolute;
+  margin-top: -2rem;
+  @media (--viewport-m) {
+    margin-top: 0;
+  }
+  @media (--viewport-s) {
+    margin-top: 1rem;
+  }
+}
+
+#section-hi {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+  @media (--viewport-m) {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+  @media (--viewport-xs) {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+  & .container {
+    display: grid;
+    grid-template-columns: 5fr 3fr;
+    @media (--viewport-l) {
+      grid-template-columns: 2fr 1fr;
+    }
+    @media (--viewport-s) {
+      display: block;
+      height: auto;
+    }
+  }
+
+  & .intro {
+    align-self: center;
+    text-wrap: balance;
+    & p {
+      text-wrap: balance;
+    }
+    @media (--viewport-s) {
+      position: relative;
+      z-index: 2;
+    }
+  }
+  & .logo {
+    align-self: center;
+    text-align: center;
+    opacity: 0.1;
+    margin-left: 2rem;
+    @media (--viewport-s) {
+      position: absolute;
+      opacity: 0.2;
+      top: 6.5rem;
+      z-index: 1;
+      margin-left: 0;
+      width: calc(var(--container-width) - 1rem);
+      min-width: 320px;
+    }
+    @media (--viewport-xs) {
+      top: 8rem;
+    }
+    & #logo-ck-big {
+      max-width: 100%;
+      @media (--viewport-xl) {
+        width: 244px;
+        height: 313px;
+      }
+      @media (--viewport-l) {
+        width: 244px;
+        height: 313px;
+      }
+      @media (--viewport-m) {
+        width: 263px;
+      }
+      @media (--viewport-s) {
+        width: 236px;
+        height: 303px;
+        opacity: 0.7;
+      }
+      @media (--viewport-xs) {
+        min-width: auto;
+        max-width: unset;
+      }
+    }
+  }
+}
+
+#section-past {
+  padding-bottom: 5rem;
+  & .container {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+  & > div + div {
+    margin-left: -1rem;
+    margin-right: -1rem;
+    & .container {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+  }
+  & h3 {
+    justify-content: space-between;
+    @media (--viewport-m) {
+      padding-bottom: 0.5em;
+    }
+    @media (--viewport-s) {
+      padding-bottom: 0;
+    }
+    & sub {
+      opacity: 0.3;
+      vertical-align: baseline;
+      font-size: 1rem;
+      display: flex;
+      align-self: right;
+    }
+  }
+}
+#section-skills {
+  & .intro {
+    margin-left: -0.5rem;
+    margin-right: -0.5rem;
+    @media (--viewport-s) {
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+}
+#Vaardigheden .intro .container {
+  padding-left: 0;
+  padding-right: 0;
+}
+.skills-container {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  @media (--viewport-m) {
+    grid-template-columns: 3fr;
+  }
+}

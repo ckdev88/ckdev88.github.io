@@ -1,0 +1,25 @@
+@custom-media --viewport-xl (min-width: 1199.99px);
+@custom-media --viewport-l (max-width: 1199.98px);
+@custom-media --viewport-m (max-width: 991.98px);
+@custom-media --viewport-s (max-width: 767.98px);
+@custom-media --viewport-xs (max-width: 575.98px);
+
+:root {
+  @media (--viewport-xl) {
+    --container-width: 1128px;
+  }
+  @media (--viewport-l) {
+    --container-width: 960px;
+  }
+  @media (--viewport-m) {
+    --container-width: 548px;
+  }
+  @media (--viewport-s) {
+    --container-width: 540px;
+  }
+  @media (--viewport-xs) {
+    --container-width: 100%;
+  }
+  --container-half-l: calc(var(--container-width) / 2);
+  --container-half-l--: calc(var(--container-half-l) * -1);
+}

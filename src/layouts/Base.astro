@@ -1,0 +1,67 @@
+---
+import VisitorsBlegh from "../components/VisitorsBlegh.astro";
+// import Vs from "../components/VisitorsSupabase.astro";
+export interface Props {
+	title: string;
+	lang: string;
+}
+const { title, lang } = Astro.props;
+
+const logoSrc = "/img/ckdev-logo-light.svg";
+---
+
+<html id="html" lang={lang} data-theme="dark">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href={logoSrc} />
+		<link rel="stylesheet" href="../style.css" />
+		<meta name="viewport" content="width=device-width" />
+		<meta
+			name="description"
+			content="The portfolio of Cors, Front-end web developer."
+		/>
+		<title>{title}</title>
+		<link rel="manifest" href="/manifest.json" />
+		<meta name="theme-color" content="#3367D6" />
+		<meta
+			property="og:site_name"
+			content="Cors, Front-end web developer."
+		/>
+		<meta property="og:url" content="https://ckdev88.github.io" />
+		<meta property="og:type" content="website" />
+		<meta
+			property="og:title"
+			content="Cors | Senior Web Developer & Accessibility specialist"
+		/>
+		<meta
+			property="og:description"
+			content="I believe the web should be as inclusive as possible, which means performance, ease of use and readability should always be prioritized."
+		/>
+		<meta
+			property="og:image"
+			content="https://ckdev88.github.io/img/ckdev-logo-bright.webp"
+		/>
+		<meta property="og:url" content="https://ckdev88.github.io" />
+	</head>
+	<body>
+		<div id="theme-backdrop"></div>
+		<slot lang={lang} />
+		<script>
+			function fillscrollline() {
+				const scrolled = window.scrollY;
+				const percentScrolled =
+					(scrolled /
+						(document.getElementById(
+							"container",
+						).clientHeight -
+							window.innerHeight)) *
+					100;
+				document.querySelector(
+					".scroll-line",
+				).style.width = percentScrolled + "%";
+			}
+			window.addEventListener("scroll", fillscrollline);
+		</script>
+		<VisitorsBlegh />
+	</body>
+</html>
