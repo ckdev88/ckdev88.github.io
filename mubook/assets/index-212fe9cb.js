@@ -6062,7 +6062,7 @@ const Bh = (t) => (Vo('data-v-d0619b34'), (t = t()), Ko(), t),
 					component: () =>
 						se(
 							() => import('./LoginPage-5ac980db.js'),
-							['./assets/LoginPage-5ac980db.js', '.assets/LoginPage-dad777e6.css']
+							['./assets/LoginPage-5ac980db.js', './assets/LoginPage-dad777e6.css']
 						),
 					meta: { requiresAuth: !1, requiresNoAuth: !0, includeNav: !0 },
 				},
