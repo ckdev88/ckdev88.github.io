@@ -1,0 +1,1 @@
+import{o as u,c as n,a as e,t as r,F as o}from"./index-6f969f6e.js";const s=e("h1",null,"$router",-1),i={__name:"RouteinfoPage",props:{userid:{required:!1,type:Number},username:{required:!1,type:String}},setup(a){return(t,l)=>(u(),n(o,null,[e("h1",null,"$route "+r(a.username),1),e("pre",null,r(t.$route),1),s,e("pre",null,r(t.$router),1)],64))}};export{i as default};
