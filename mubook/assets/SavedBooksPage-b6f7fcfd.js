@@ -1,0 +1,1 @@
+import{B as e}from"./MuBooksOverview-bd083889.js";import{o,c as a,e as s,F as t,a as r}from"./index-845f346b.js";import"./MuBooksStore-ad5d9193.js";const c=r("h1",null,"My Saved Books",-1),d={__name:"SavedBooksPage",setup(n){return(_,m)=>(o(),a(t,null,[c,s(e)],64))}};export{d as default};
