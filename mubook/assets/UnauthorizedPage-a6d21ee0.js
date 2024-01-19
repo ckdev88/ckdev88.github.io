@@ -1,0 +1,1 @@
+import{o as e,c as a,e as t,w as o,u as r,F as n,a as s,d as c,R as u}from"./index-2da4cfda.js";const l=s("h1",null,"ProfileUnauthorizedPage",-1),h={__name:"UnauthorizedPage",setup(_){return(i,d)=>(e(),a(n,null,[l,t(r(u),{to:"login"},{default:o(()=>[c("Log in")]),_:1})],64))}};export{h as default};
