@@ -1,0 +1,1 @@
+import{r as t}from"./index-53d5c4d6.js";const o=t(0),e=()=>{o.value+=1},u=()=>{o.value=0};function a(){const n=t(0);return{incrementLocalCount:()=>{n.value+=1},incrementGlobalCount:e,resetGlobalCount:u,globalCount:o,localCount:n}}export{a as u};
