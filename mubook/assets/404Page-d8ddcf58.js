@@ -1,0 +1,1 @@
+import{f as t,s,o as n,c as a,e as c,w as r,F as _,a as e,d as l}from"./index-9a117e3d.js";const d={},i=e("h1",null,"404 - Nope",-1),m=e("p",null,"Try something else",-1);function u(f,p){const o=s("RouterLink");return n(),a(_,null,[i,m,c(o,{to:"/"},{default:r(()=>[l("Go back home")]),_:1})],64)}const k=t(d,[["render",u]]);export{k as default};
