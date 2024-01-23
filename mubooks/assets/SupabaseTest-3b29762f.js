@@ -1,0 +1,1 @@
+import{r as o,D as u,o as e,c as a,F as c,m as l,I as i,t as m}from"./index-03548584.js";const d={__name:"SupabaseTest",setup(p){const t=o([]);async function r(){const{data:s}=await i.from("countries").select();t.value=s}return u(()=>{r()}),(s,_)=>(e(),a("ul",null,[(e(!0),a(c,null,l(t.value,n=>(e(),a("li",{key:n.id},m(n.name),1))),128))]))}};export{d as default};
