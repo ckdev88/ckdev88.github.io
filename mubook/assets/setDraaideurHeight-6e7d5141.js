@@ -1,1 +1,0 @@
-function l(){const a=document.getElementsByClassName("axis")[0],i=document.getElementsByClassName("axis")[0].parentNode,t=a.getElementsByClassName("card");let s=t[0].offsetHeight;for(let e=0;e<t.length;e++)t[e].offsetHeight>s&&(s=t[e].offsetHeight);for(let e=0;e<t.length;e++)t[e].style.height=s+"px";i.style.height=s+"px",a.style.height=s+"px"}export{l as s};
