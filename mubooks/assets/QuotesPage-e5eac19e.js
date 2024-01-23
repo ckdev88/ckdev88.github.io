@@ -1,0 +1,1 @@
+import{o as e,c as s,b as t,w as a,S as o,F as c,a as n,d as l,e as r,_}from"./index-a7424499.js";const u=n("h1",null,"Quotes",-1),i={__name:"QuotesPage",setup(d){return(m,p)=>(e(),s(c,null,[u,(e(),t(o,null,{fallback:a(()=>[l("Loading...")]),default:a(()=>[r(_)]),_:1}))],64))}};export{i as default};
