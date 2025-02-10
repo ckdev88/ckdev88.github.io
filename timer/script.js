@@ -1,6 +1,3 @@
-// TODO FIXME: sometimes, on a timing mismatch, removing a timer causes more than one to be "removed",
-// which probably means the new array isnt completely built, see fn def pauseTimerToggle &
-// fn def removeTimer
 // ----------------------------- GLOBAL CONSTANTS
 
 /** @type {boolean} pageInit starts with true value, is set to false after first run */
@@ -233,13 +230,13 @@ settings_form.addEventListener('submit', (e) => {
 })
 
 /**
- * @param {number} num
- * @returns {string}
+ * Takes in either 1 or 60, returns s(econd) for 1, m(inute) for 60. Can further be handled by getTranslation
+ * @param num {number}
+ * @returns {'s'|'m'}
  */
 function getIntervalUnitName(num) {
-	// 1 stands for 1 second, 60 is 1 minute
-	if (num === 1) return getTranslation(language, 's')
-	return getTranslation(language, 'm')
+	if (num === 1) return 's'
+	return 'm'
 }
 
 // TODO apply proper Interface of data parameter in JSDoc
@@ -250,7 +247,6 @@ function settingsFormSubmit(data) {
 	// TODO apply proper Interface of settings const in JSDoc
 	const settings = {
 		intervalUnit: Number(data.get('settings_form_intervalUnit')),
-		intervalUnitName: getIntervalUnitName(Number(data.get('settings_form_intervalUnit'))),
 		countDown: Boolean(data.get('settings_form_countDown')),
 		quickTimerInterval:
 			Number(data.get('settings_form_quickTimerInterval')) *
@@ -337,7 +333,7 @@ function timerFormSubmit(data) {
 	// change some default settings first
 	if (data.get('timer_intervalUnit') !== settings.intervalUnit) {
 		settings.intervalUnit = Number(data.get('timer_intervalUnit'))
-		settings.intervalUnitName = String(getIntervalUnitName(settings.intervalUnit))
+		settings.intervalUnitName = getIntervalUnitName(settings.intervalUnit, getSettings().language)
 		settings.language = getSettings().language
 	}
 	updateSettings(settings)
@@ -406,7 +402,6 @@ function addTimer(name, description, interval) {
 		descr: description,
 		interval: interval,
 		intervalUnit: settings.intervalUnit,
-		intervalUnitName: settings.intervalUnitName,
 		timepast: 0,
 		paused: false,
 		finished: false,
@@ -426,12 +421,9 @@ function addTimer(name, description, interval) {
 function pauseTimerToggle(key) {
 	arr = getTimers()
 	const newarr = []
-	let refresh = false // TODO: the refresh-variable is just a hotfix for issue TOOMANYLOADS
-	// caused by toggling pause/resume
 	for (let i = 0; i < arr.length; i++) {
 		if (i === key) {
 			arr[i].paused = !arr[i].paused
-			if (arr[i].paused === false) refresh = true
 		}
 		newarr.push({
 			name: arr[i].name,
@@ -439,7 +431,6 @@ function pauseTimerToggle(key) {
 			interval: arr[i].interval,
 			timepast: arr[i].timepast,
 			intervalUnit: arr[i].intervalUnit,
-			intervalUnitName: arr[i].intervalUnitName,
 			paused: arr[i].paused,
 			finished: arr[i].finished,
 			starttime: arr[i].starttime,
@@ -448,11 +439,7 @@ function pauseTimerToggle(key) {
 	}
 
 	updateTimers(newarr)
-	renderTimers(newarr, false) // TODO: false isnt doing anything useful here, but somewhere here should be the proper bugfix for issue TOOMANYLOADS
-	if (refresh === true) location.reload()
-
-	delete arr
-	delete newarr
+	renderTimers(newarr, false) // TODO: false isnt doing anything useful here, or is it?
 }
 
 // ----------------------------- REMOVE TASKS
@@ -463,23 +450,7 @@ function pauseTimerToggle(key) {
  */
 function removeTimer(key) {
 	arr = getTimers()
-	/**
-	 * @type {string|number[]} compose all timers except the one to be removed, to compose a new array of  timers */
-	const newarr = []
-	for (let i = 0; i < arr.length; i++) {
-		if (i === key) continue // rebuild with all timers, but skip the specified one
-		newarr.push({
-			name: arr[i].name,
-			descr: arr[i].descr,
-			interval: arr[i].interval,
-			timepast: arr[i].timepast,
-			intervalUnit: arr[i].intervalUnit,
-			intervalUnitName: arr[i].intervalUnitName,
-			paused: arr[i].paused,
-			finished: arr[i].finished,
-			starttime: arr[i].starttime,
-		})
-	}
+	const newarr = arr.filter((i, index) => index !== key)
 
 	updateTimers(newarr)
 	renderTimers(newarr)
@@ -537,7 +508,7 @@ const setCurrentDate = (lang = getSettings().language) => {
 setCurrentDate()
 
 /**
- * Creates the rendering of the timer
+ * Creates the rendering of the timer, serves as a base for showing in renders: first, paused
  * @param i {string} -- timer item
  * @param key {number}
  * @returns {HTMLElement}
@@ -551,7 +522,6 @@ function renderTimer(i, key) {
 	el.appendChild(renderTimerElement('h3', 'timer-name', i.name))
 	el.appendChild(renderTimerElement('div', 'timer-descr', i.descr))
 	el.appendChild(
-		// first part of visual countdown: Time left/passed: xxx ...
 		renderTimerElement(
 			(node = 'div'),
 			(className = 'timer-countdown-current'),
@@ -561,39 +531,25 @@ function renderTimer(i, key) {
 			(content_prefix =
 				settings.countDown === true
 					? '<span class="time_left_text">' +
-					  getTranslation(getSettings().language, 'Time_left') +
+					  getTranslation(settings.language, 'Time_left') +
 					  '</span>: '
 					: '<span class="time_passed_text">' +
-					  getTranslation(getSettings().language, 'Time_passed') +
+					  getTranslation(settings.language, 'Time_passed') +
 					  '</span>: '),
 			(content_suffix =
 				'&nbsp;/ ' +
 				i.interval / i.intervalUnit +
 				' ' +
-				getTranslation(getSettings().language, i.intervalUnitName))
+				getTranslation(settings.language, getIntervalUnitName(i.intervalUnit)))
 		)
 	)
 
-	// NOTE commented because this will load every second so make translation of second/minute simpler
-	// el.appendChild(
-	// 	// second part of visual countdown: ... / xxx seconds/minutes
-	// 	// FIXME: intervalUnitName doesnt change when language changes
-	// 	renderTimerElement(
-	// 		(node = 'div'),
-	// 		(className = 'timer-countdown-total'),
-	// 		(content = i.interval / i.intervalUnit),
-	// 		(id = ''),
-	// 		(key = ''),
-	// 		(content_prefix = '&nbsp;/ '),
-	// 		(content_suffix = getTranslation(getSettings().language, i.intervalUnitName))
-	// 	)
-	// )
 	el.appendChild(
 		renderTimerElement(
 			'div',
 			'starttime',
 			'<span class="starting_time_text">' +
-				getTranslation(getSettings().language, 'Starting_time') +
+				getTranslation(settings.language, 'Starting_time') +
 				'</span>: ' +
 				i.starttime
 		)
@@ -603,7 +559,7 @@ function renderTimer(i, key) {
 			'div',
 			'endtime',
 			'<span class="ending_time_text">' +
-				getTranslation(getSettings().language, 'Ending_time') +
+				getTranslation(settings.language, 'Ending_time') +
 				'</span>: ' +
 				i.endtime
 		)
@@ -620,11 +576,9 @@ function renderTimer(i, key) {
 
 /**
  * Render the timer element, meaning 1 per timer.
- *
  * @param {string} node - HTML node
  * @param {string} className
  * @returns {void}
- *
  */
 function renderTimerElement(
 	node = 'div',
@@ -635,7 +589,6 @@ function renderTimerElement(
 	contentPrefix = '',
 	contentSuffix = ''
 ) {
-	// TODO refactor to remove contentSuffix (and rename contentPrefix to content or something, is not useful anymore since data previously in suffix is now loaded as "prefix", reloaded every second
 	let timerEl = d.createElement(node)
 	timerEl.className = className
 
@@ -648,7 +601,7 @@ function renderTimerElement(
 				: Math.round(i.timepast / i.intervalUnit)
 	}
 
-	timerEl.innerHTML = contentPrefix + content
+	timerEl.innerHTML = contentPrefix + content + contentSuffix
 	id !== undefined ? (timerEl.id = id) : ''
 	return timerEl
 }
@@ -663,55 +616,51 @@ function renderTimerElement(
 function countdownTimer(key, id) {
 	// individual per timer
 	const tmpinterval = setInterval(() => {
-		/*
-		TODO: TOOMANYLOADS: there is still a bug that makes this run the amount of running timers for the only active timer, added by the amount of used pause/resume-toggles, every second (i.e. timer #0 can run 6 times per second) , this is hotfixed for now, by refreshing the page after resuming a timer, providing a clean array of timers, this issue in short is TOOMANYLOADS
-		*/
-
-		if (timerspersec[key] === undefined) {
-			clearInterval(tmpinterval)
+		if (
+			timerspersec[key] === undefined ||
+			timerspersec[key].paused === true ||
+			timerspersec[key].paused === undefined
+		) {
 			stopit()
 		} else {
-			if (timerspersec[key].paused === true || timerspersec[key].paused === undefined) stopit()
-			else {
-				if (d.getElementById(id)) {
-					let settings = getSettings()
+			if (d.getElementById(id)) {
+				let settings = getSettings()
+				if (settings.countDown) {
+					cPrefix =
+						'<span class="time_left_text">' +
+						getTranslation(settings.language, 'Time_left') +
+						'</span>: '
+				} else {
+					cPrefix =
+						'<span class="time_passed_text">' +
+						getTranslation(settings.language, 'Time_passed') +
+						'</span>: '
+				}
+				var cSuffix =
+					' ' +
+					getTranslation(settings.language, getIntervalUnitName(timerspersec[key].intervalUnit))
+				let c = d.getElementById(id)
+
+				if (timerspersec[key].timepast === timerspersec[key].interval) {
+					stopit()
+				}
+				if (timerspersec[key].paused === true) {
+					// console.log('arr paused');
+				} else {
 					if (settings.countDown) {
-						cPrefix =
-							'<span class="time_left_text">' +
-							getTranslation(settings.language, 'Time_left') +
-							'</span>: '
+						timeleft = Math.round(
+							(timerspersec[key].interval - timerspersec[key].timepast) /
+								timerspersec[key].intervalUnit
+						)
+						c.innerHTML =
+							cPrefix +
+							timeleft +
+							' / ' +
+							timerspersec[key].interval / timerspersec[key].intervalUnit +
+							cSuffix
 					} else {
-						cPrefix =
-							'<span class="time_passed_text">' +
-							getTranslation(settings.language, 'Time_passed') +
-							'</span>: '
-					}
-					let c = d.getElementById(id)
-
-					if (timerspersec[key].timepast === timerspersec[key].interval) {
-						stopit()
-					}
-					if (timerspersec[key].paused === true) {
-						// console.log('arr paused');
-					} else {
-						if (settings.countDown) {
-							timeleft = Math.round(
-								(timerspersec[key].interval - timerspersec[key].timepast) /
-									timerspersec[key].intervalUnit
-							)
-							c.innerHTML = cPrefix + timeleft
-						} else {
-							timepast = Math.round(timerspersec[key].timepast / timerspersec[key].intervalUnit)
-							c.innerHTML = cPrefix + timepast
-						}
-
-						c.innerHTML += ' / ' + timerspersec[key].interval / timerspersec[key].intervalUnit
-						c.innerHTML +=
-							' ' +
-							getTranslation(
-								getSettings().language,
-								getIntervalUnitName(timerspersec[key].intervalUnit)
-							)
+						timepast = Math.round(timerspersec[key].timepast / timerspersec[key].intervalUnit)
+						c.innerHTML = cPrefix + timepast + cSuffix
 					}
 				}
 			}
@@ -723,8 +672,10 @@ function countdownTimer(key, id) {
 }
 
 /**
+ * Creates the pause/resume toggle button per timer
  * @param key {number}
  * @param paused {boolean}
+ * @returns {HTMLButtonElement}
  */
 function pauseTimerToggleLink(key, paused = false) {
 	let el = d.createElement('button')
@@ -744,6 +695,7 @@ function pauseTimerToggleLink(key, paused = false) {
 }
 
 /**
+ * Creates the remove button per timer
  * @param {number} key
  * @returns {HTMLButtonElement}
  */
@@ -759,6 +711,11 @@ function removeTimerLink(key) {
 	return el
 }
 
+/**
+ * Creates the remove button per timer
+ * @param {number} key
+ * @returns {HTMLButtonElement}
+ */
 function resetTimerLink(key) {
 	let el = d.createElement('button')
 	el.innerText = getTranslation(getSettings().language, 'reset')
@@ -809,6 +766,15 @@ function detectAnyActive(arr = getTimers()) {
 	return false
 }
 
+function detectAllPaused(arr = getTimers()) {
+	let count = 0
+	for (i = 0; i < arr.length; i++) {
+		if (arr[i].paused === true) count++
+	}
+	if (count === arr.length) return true
+	return false
+}
+
 // ----------------------------- ALWAYS RUNNING & WHEN DONE...
 function countdownAll() {
 	let blinkRunningOn = false
@@ -819,9 +785,11 @@ function countdownAll() {
 	var countdownAllPerSecond = setInterval(() => {
 		if (timerspersec) {
 			arr = timerspersec
+			// console.log('arr:', arr)
+
 			for (let i = 0; i < arr.length; i++) {
-				if (arr[i].paused === true) continue
-				// re-render timers that are not paused
+				if (arr[i].paused === true || arr[i].finished) continue
+				// re-render timers that are not paused or finished
 				if (arr[i].timepast < arr[i].interval && arr[i].paused === false) {
 					arr[i].timepast++
 				}
@@ -836,7 +804,7 @@ function countdownAll() {
 				updateTimers(arr)
 			}
 		}
-		if (!detectAnyActive()) {
+		if (detectAllPaused() === true || !detectAnyActive()) {
 			stopit()
 		}
 
@@ -869,7 +837,6 @@ function playSound() {
 }
 
 // ----------------------------- MISC METHODS
-
 /**
  * Returns a simplified time in HH:MM:SS .
  * @param {boolean} seconds - optional: to activate seconds display
@@ -938,13 +905,16 @@ function setBgStatus(status = 'normal') {
 /**
  * @param {'en'|'pt'} langkey - key used in object translationMap, key for language, either 'en' or 'pt'
  * @param {string} stringkey - value used in object translationMap, text that needs to be translated
- * @returns {{[string]:{[string]:string}}}
+ * @returns {string}
  */
 function getTranslation(langkey, stringkey) {
 	return translationMap[langkey][stringkey]
 }
 
-/** @param {string} lang */
+/**
+ * @param lang {'en'|'pt'}
+ * @returns void
+ */
 function setHtmlLang(lang) {
 	document.documentElement.lang = lang
 }
