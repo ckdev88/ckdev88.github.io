@@ -230,20 +230,50 @@ audio.btn_pause.innerText = getTranslation(settings.language, 'Pause_audio')
  * @property {LanguageOptions} language
  */
 
+const timers = [
+    {
+        0: {
+            descr: 'Eat, walk, push-up, drink, some or all.',
+            endtime: '23:41',
+            endtime_timestamp: null,
+            finished: false,
+            interval: 3000,
+            intervalUnit: 60,
+            name: 'stretch'
+        },
+        1: {
+            descr: 'Eat, walk, push-up, drink, some or all.',
+            endtime: '23:41',
+            endtime_timestamp: null,
+            finished: false,
+            interval: 3000,
+            intervalUnit: 60,
+            name: 'stretch'
+        }
+    }
+]
+
 /**
- * @typedef {[]} Timer
- * @property {string} name
- * @property {string} descr
- * @property {number} interval
+ * @typedef {Object} Timer
+ * @property {string} name - Timer name
+ * @property {string} descr - Timer description
+ * @property {number} interval - Interval value
  * @property {number} [intervalUnit=60]
  * @property {number} timepast
  * @property {boolean} [paused=false]
- * @property {boolean} finished
+ * @property {boolean} finished - Whether the timer is finished
  * @property {string} starttime
- * @property {string} endtime
+ * @property {string} endtime - End time in HH:MM format
+ * @property {number|null} endtime_timestamp - End time as timestamp (null if not set)
  */
 
-/** @typedef {Timer[]} Timers */
+/**
+ * @typedef {Object.<number, Timer>} Timers - Object with numeric keys mapping to Timer objects
+ */
+
+/**
+ * @type {Timers[]}
+ */
 
 /**
  * Turn localstorage-string containing timers into an array and return it.
@@ -543,6 +573,7 @@ function pauseTimerToggle(key) {
         if (i === key) {
             timersArray[i].paused = !timersArray[i].paused
             !timersArray[i].paused && settings.autoplay === true && audioPlayer('play')
+            if (detectAllPaused()) audioPlayer('pause')
         }
     }
     updateTimers(timersArray)
@@ -557,7 +588,6 @@ function pauseTimerToggle(key) {
  */
 function removeTimer(key) {
     const newTimers = timersArray.filter((_i, index) => index !== key)
-    console.log('remove timer:', key)
     if (detectAnyActive() && settings.autoplay) audioPlayer()
     updateTimers(newTimers)
 }
@@ -862,12 +892,19 @@ function resetTimerLink(key) {
 }
 
 function resetTimer(key) {
+    // TODO apply proper types, Timer typedef is a bit murky
     timersArray[key].timepast = 0
     timersArray[key].starttime = getCurrentTimeSimple()
     timersArray[key].endtime = getTimeSimple(false, timersArray[key].interval)
     timersArray[key].finished = false
     document.title = 'Timer'
-    console.log('reset timer', key)
+    if (
+        localStorage.getItem('audioPlay') === 'false' &&
+        settings.autoplay === true &&
+        timersArray[key].paused === false
+    ) {
+        audioPlayer('play')
+    }
     updateTimers(timersArray)
 }
 
@@ -977,18 +1014,54 @@ function countdownAll() {
  * @returns {void}
  */
 function audioPlayer(state = 'play') {
-    console.log('herrro')
-    if (state === 'play') {
-        audio.background.loop = true
-        audio.background.play()
-        audio.btn_play.classList.add('dnone')
-        audio.btn_pause.classList.remove('dnone')
-    } else {
-        audio.btn_play.classList.remove('dnone')
-        audio.btn_pause.classList.add('dnone')
-        audio.background.pause()
+    switch (state) {
+        case 'play':
+            audio.background.loop = true
+            audio.background.play()
+            audio.btn_play.classList.add('dnone')
+            audio.btn_pause.classList.remove('dnone')
+            localStorage.setItem('audioPlay', true)
+            break
+        case 'pause':
+            audio.btn_play.classList.remove('dnone')
+            audio.btn_pause.classList.add('dnone')
+            audio.background.pause()
+            localStorage.setItem('audioPlay', false)
+            break
+        case 'volume_up':
+            if (audio.background.volume < 1) audio.background.volume += 0.2
+            break
+        case 'volume_down':
+            if (audio.background.volume < 0.21) {
+                audioPlayer('pause')
+                console.log('do pause')
+                break
+            }
+            audio.background.volume -= 0.2
+            break
     }
+    // loop volumes 0.2 to 1, sometimes value is a bit off, like 0.200001, so using 1.9 (0.19*10) as base and buffer
+    for (let i = 1.9; i < 11; i += 2) {
+        const rounded = i + 0.1
+        document.getElementById(`audio_volume_${rounded}`).classList.value =
+            Math.round(audio.background.volume * 10) > i ? 'active' : 'inactive'
+    }
+
+    if (!audio.background.paused)
+        document.getElementById('audio_volume_container').style.display = 'flex'
+    else document.getElementById('audio_volume_container').style.display = 'none'
+    if (audio.background.volume > 0.99)
+        document.getElementById('audio_volume_up').style.visibility = 'hidden'
+    else document.getElementById('audio_volume_up').style.visibility = 'visible'
+    console.log('audio.background.volume:', audio.background.volume)
 }
+
+// function audioVolAdjust(increaseVolume=true){
+//     let currentAudioVolume = audio.background.volume
+//     console.log('currentAudioVolume:',current)
+//     // if(increaseVolume)audio.background.volume = currentAudioVolume
+
+// }
 
 function playAlert() {
     audio.alert.play().catch((e) => console.log('Audio play failed:', e))
