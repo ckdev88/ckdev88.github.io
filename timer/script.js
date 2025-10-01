@@ -13,6 +13,10 @@ const LANGUAGE_DEFAULT = 'en'
 /** @type [LanguageOptions] */
 const LANGUAGE_SUPPORTED = ['en', 'nl', 'pt']
 
+// define a default mood, this will refer to the subdirecty of ./audio/ with the same name.
+/** @type {"creativity"|"learning"|"deepwork"|"rain"} MOOD_DEFAULT - Moods for the audio */
+const MOOD_DEFAULT = 'rain' // TODO low prio, voor later
+
 /** @type {Settings} settings */
 let settings = {}
 
@@ -93,8 +97,8 @@ const trl = {
         Settings_updated: 'Instellingen bijgewerkt',
         Select_time_unit: 'Selecteer tijdseenheid',
         now: 'nu',
-        Play_audio: 'Audio afspelen',
-        Pause_audio: 'Audio pauzeren'
+        Play_audio: 'Speel audio',
+        Pause_audio: 'Pauzeer audio'
     },
     pt: {
         localeString: 'pt-BR',
@@ -157,7 +161,8 @@ if (settings === null) {
         quickTimerInterval: INTERVALAMOUNT_DEFAULT * INTERVALUNIT_DEFAULT,
         quickTimerName: getTranslation(LANGUAGE_DEFAULT, 'Quick_timer_default_name'),
         quickTimerDescr: getTranslation(LANGUAGE_DEFAULT, 'Quick_timer_default_description'),
-        language: LANGUAGE_DEFAULT
+        language: LANGUAGE_DEFAULT,
+        mood: MOOD_DEFAULT
     }
     localStorage.setItem('settings', JSON.stringify(settings))
 }
@@ -198,23 +203,26 @@ const statusbar = d.getElementById('statusbar')
 const current_time = d.getElementById('current_time')
 const current_date = d.getElementById('current_date')
 
-const backgroundAudioFilesAmount = 7
+/** @type {number} backgroundAudioFilesAmount - the amount of audio files is current "mood" directory */
+const backgroundAudioFilesAmount = 42 // TODO make dynamic via Settings, at the same time of mood/moods
 const audioDir = './audio/'
 
 function getRandomBackgroundAudio(max = backgroundAudioFilesAmount) {
     const randomNumber = Math.ceil(Math.random() * max)
-    return audioDir + 'bg' + randomNumber + '.opus'
+    return audioDir + settings.mood + '/' + randomNumber + '.mp3' // TODO file extension should be dynamic via settings
 }
 
+console.log('getRandomBackgroundAudio():', getRandomBackgroundAudio())
 const audio = {
-    dir: './audio',
+    dir: audioDir,
     background: new Audio(getRandomBackgroundAudio()),
     alert: new Audio(audioDir + 'alert.wav'),
     btn_play: d.getElementById('audio_play'),
-    btn_pause: d.getElementById('audio_pause')
+    btn_pause: d.getElementById('audio_pause'),
+    btn_next: d.getElementById('audio_next') // FIXME to use or not to use.. not really used right now
 }
 audio.btn_play.innerText = getTranslation(settings.language, 'Play_audio')
-audio.btn_pause.innerText = getTranslation(settings.language, 'Pause_audio')
+audio.btn_pause.innerText = settings.mood
 
 /** @typedef {string} SimpleTime - Simple time in string format, like '12:59' */
 
@@ -228,6 +236,7 @@ audio.btn_pause.innerText = getTranslation(settings.language, 'Pause_audio')
  * @property {string} quickTimerName
  * @property {string} quickTimerDescr
  * @property {LanguageOptions} language
+ * @property {string} mood
  */
 
 const timers = [
@@ -237,6 +246,7 @@ const timers = [
             endtime: '23:41',
             endtime_timestamp: null,
             finished: false,
+            done: false,
             interval: 3000,
             intervalUnit: 60,
             name: 'stretch'
@@ -246,6 +256,7 @@ const timers = [
             endtime: '23:41',
             endtime_timestamp: null,
             finished: false,
+            done: false,
             interval: 3000,
             intervalUnit: 60,
             name: 'stretch'
@@ -262,6 +273,7 @@ const timers = [
  * @property {number} timepast
  * @property {boolean} [paused=false]
  * @property {boolean} finished - Whether the timer is finished
+ * @property {boolean} done - Finished, but in green and without blinking alerts
  * @property {string} starttime
  * @property {string} endtime - End time in HH:MM format
  * @property {number|null} endtime_timestamp - End time as timestamp (null if not set)
@@ -274,13 +286,13 @@ const timers = [
 /**
  * @type {Timers[]}
  */
-
+let timersArray = []
 /**
  * Turn localstorage-string containing timers into an array and return it.
  * @var {String} timers
  * @returns {Timers} timers
  */
-function getTimers() {
+const getTimers = () => {
     /** @type {[]} timers */
     const timers = JSON.parse(localStorage.getItem('timerTimers'))
     if (!timers) updateTimers([])
@@ -290,10 +302,10 @@ function getTimers() {
 
 /** @type {Timers} timersArray - Array of timers, refreshed every second */
 // TODO should do nothing when anyActive is false
-let timersArray = getTimers()
-setInterval(() => {
-    timersArray = getTimers()
-}, 1000)
+timersArray = getTimers()
+// setInterval(() => {
+//     timersArray = getTimers()
+// }, 1000)
 
 /** @param {Timers} arr - state of localStorage.timerTimers */
 function updateTimers(arr) {
@@ -543,6 +555,7 @@ function addTimer(name, description, interval) {
         timepast: 0,
         paused: false,
         finished: false,
+        done: false,
         starttime: starttime,
         starttime_timestamp: starttime_timestamp,
         endtime: endtime,
@@ -583,12 +596,12 @@ function pauseTimerToggle(key) {
 
 /**
  * Remove a timer block
- * @param key {number} key of block containing a single timer
+ * @param key {number} - key of block containing a single timer
  * @returns {void}
  */
 function removeTimer(key) {
     const newTimers = timersArray.filter((_i, index) => index !== key)
-    if (detectAnyActive() && settings.autoplay) audioPlayer()
+    // if (detectAnyActive() && settings.autoplay) audioPlayer() // TODO to keep or to remove?
     updateTimers(newTimers)
 }
 
@@ -675,6 +688,7 @@ function renderTimer(i, key, paused = false) {
     el.className = 'timer'
     if (i.paused) el.classList.add('paused')
     if (i.finished) el.classList.add('finished')
+    if (i.done) el.classList.add('done')
     el.id = 'timer-' + key
     el.appendChild(renderTimerElement('h3', 'timer-name', i.name))
     el.appendChild(renderTimerElement('div', 'timer-descr', i.descr))
@@ -734,6 +748,7 @@ function renderTimer(i, key, paused = false) {
 
     if (!i.finished) timerActionsWrapper.appendChild(pauseTimerToggleLink(key, !i.paused))
     timerActionsWrapper.appendChild(resetTimerLink(key))
+    if (i.finished) timerActionsWrapper.appendChild(doneTimerLink(key))
     timerActionsWrapper.appendChild(removeTimerLink(key))
     startEndTimeActionsWrapper.appendChild(timerActionsWrapper)
 
@@ -877,6 +892,36 @@ function removeTimerLink(key) {
 }
 
 /**
+ * Creates the done button per timer
+ * @param {number} key
+ * @returns {HTMLButtonElement}
+ */
+function doneTimerLink(key) {
+    const el = d.createElement('button')
+    el.innerHTML = '<span>' + getTranslation(getSettings().language, 'done') + '</span>'
+    el.className = 'control-btn done'
+    el.id = 'done-' + key
+    el.setAttribute('onClick', `doneTimer(${key})`)
+    return el
+}
+function doneTimer(key) {
+    // TODO apply proper types, Timer typedef is a bit murky
+    timersArray[key].finished = true
+    timersArray[key].done = true
+    document.title = 'Timer' // TODO this should become (in order) the first running timer, or the previous finished-without-done timer
+    console.log('doneit')
+    if (
+        localStorage.getItem('audioPlay') === 'false' &&
+        settings.autoplay === true &&
+        detectAnyActive() &&
+        audio.background.paused
+    ) {
+        audioPlayer('play')
+    }
+    updateTimers(timersArray)
+}
+
+/**
  * Creates the reset button per timer
  * @param {number} key
  * @returns {HTMLButtonElement}
@@ -897,6 +942,7 @@ function resetTimer(key) {
     timersArray[key].starttime = getCurrentTimeSimple()
     timersArray[key].endtime = getTimeSimple(false, timersArray[key].interval)
     timersArray[key].finished = false
+    timersArray[key].done = false
     document.title = 'Timer'
     if (
         localStorage.getItem('audioPlay') === 'false' &&
@@ -912,11 +958,18 @@ function resetTimer(key) {
 // TODO these should be replaced by webworker messages:
 
 /**
- * @param {Object} arr - array of localstorage.timerTimers
+ * @param {Timers} arr - array of localstorage.timerTimers
  */
 function detectAnyFinished(arr = timersArray) {
     for (i of arr) {
         if (i.finished === true) return true
+    }
+    return false
+}
+
+function detectAnyDone(arr = timersArray) {
+    for (i of arr) {
+        if (i.done === true) return true
     }
     return false
 }
@@ -941,7 +994,10 @@ function detectAllPaused(arr = timersArray) {
     for (i = 0; i < arr.length; i++) {
         if (arr[i].paused === true) count++
     }
-    if (count === arr.length) return true
+    if (count === arr.length) {
+        console.log('all paused')
+        return true
+    }
     return false
 }
 
@@ -952,8 +1008,13 @@ function countdownAll() {
     let finishedTimer
     let blinkFinishedOn = false
 
+    if (detectAllPaused()) {
+        console.log('alle pauserr')
+        return
+    }
     const countdownAllPerSecond = setInterval(() => {
         if (timersArray) {
+            console.log('asdfasdfas')
             for (let i = 0; i < timersArray.length; i++) {
                 if (timersArray[i].paused === true || timersArray[i].finished) continue
                 // re-render timers that are not paused or finished
@@ -977,6 +1038,8 @@ function countdownAll() {
                 if (timersArray[i].finished === true) {
                     finishedTimer = timersArray[i].name
                     d.getElementById('timer-' + i).classList.add('finished')
+                    if (timersArray[i].done === true)
+                        d.getElementById('timer-' + i).classList.add('done')
                 }
             }
 
@@ -1014,9 +1077,11 @@ function countdownAll() {
  * @returns {void}
  */
 function audioPlayer(state = 'play') {
+    const wasPaused = audio.background.paused
     switch (state) {
         case 'play':
             audio.background.loop = true
+            console.log(audio.background)
             audio.background.play()
             audio.btn_play.classList.add('dnone')
             audio.btn_pause.classList.remove('dnone')
@@ -1027,6 +1092,13 @@ function audioPlayer(state = 'play') {
             audio.btn_pause.classList.add('dnone')
             audio.background.pause()
             localStorage.setItem('audioPlay', false)
+            break
+        case 'next':
+            audio.background.pause()
+            audio.background.currentTime = 0 // Reset position
+            audio.background.src = getRandomBackgroundAudio() // Clear source
+            audio.background.load() // Force browser to release resources
+            if (!wasPaused) audioPlayer('play')
             break
         case 'volume_up':
             if (audio.background.volume < 1) audio.background.volume += 0.2
@@ -1120,7 +1192,8 @@ function getTimeSimple(seconds = false, secondsToAdd = 0) {
  * @returns {void}
  */
 function bgStatus(arr) {
-    if (detectAnyFinished(arr)) setBgStatus('alert')
+    if (!detectAnyActive() || detectAnyDone()) setBgStatus('normal')
+    else if (detectAnyFinished(arr)) setBgStatus('alert')
     else if (detectAllPaused(arr)) setBgStatus('paused')
     else if (detectAnyActive(arr)) setBgStatus('running')
     else setBgStatus('normal')
@@ -1132,6 +1205,7 @@ function bgStatus(arr) {
  * @returns {void}
  */
 function setBgStatus(status = 'normal') {
+    console.log('status', status)
     if (status === 'alert') statusbar.className = 'statusbar-alert'
     else if (status === 'paused') statusbar.className = 'statusbar-pause'
     else if (status === 'running') statusbar.className = 'statusbar-running'
@@ -1180,7 +1254,7 @@ function translateElements(lang = getSettings().language) {
     newTextInElements('time_passed_text', getTranslation(lang, 'Time_passed'))
 
     audio.btn_play.innerText = getTranslation(lang, 'Play_audio')
-    audio.btn_pause.innerText = getTranslation(lang, 'Pause_audio')
+    audio.btn_pause.innerText = settings.mood
 
     settings_form.intervalUnit.setAttribute('aria-label', getTranslation(lang, 'Select_time_unit'))
     new_timer_intervalUnit.setAttribute('aria-label', getTranslation(lang, 'Select_time_unit'))
