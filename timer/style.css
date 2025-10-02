@@ -590,6 +590,8 @@ button {
     width: 49%;
     padding-top: 1rem;
     display: flex;
+    flex-wrap: wrap;
+    /* #audio_change_mood{break-before: column;} */
 
     .text-btn {
         color: var(--fg-color);
