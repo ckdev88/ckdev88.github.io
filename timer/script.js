@@ -28,7 +28,9 @@ const LANGUAGE_SUPPORTED = ['en', 'nl', 'pt']
 const moods = [
     { mood: 'rain', amount: 42, ext: 'mp3' },
     { mood: 'creativity', amount: 156, ext: 'mp3' },
-    { mood: 'recharge', amount: 112, ext: 'mp3' }
+    { mood: 'recharge', amount: 112, ext: 'mp3' },
+    { mood: 'meditate', amount: 67, ext: 'mp3' },
+    { mood: 'deepwork', amount: 222, ext: 'mp3' }
 ]
 
 const MOOD_DEFAULT = 'rain' // TODO low prio, voor later
@@ -767,7 +769,7 @@ function renderTimer(i, key, paused = false) {
 
     if (!i.finished) timerActionsWrapper.appendChild(pauseTimerToggleLink(key, !i.paused))
     timerActionsWrapper.appendChild(resetTimerLink(key))
-    if (i.finished) timerActionsWrapper.appendChild(doneTimerLink(key))
+    if (i.finished && !i.done) timerActionsWrapper.appendChild(doneTimerLink(key))
     timerActionsWrapper.appendChild(removeTimerLink(key))
     startEndTimeActionsWrapper.appendChild(timerActionsWrapper)
 
@@ -917,6 +919,7 @@ function removeTimerLink(key) {
  */
 function doneTimerLink(key) {
     const el = d.createElement('button')
+    // if(timersArray[key].done === true)return
     el.innerHTML = '<span>' + getTranslation(getSettings().language, 'done') + '</span>'
     el.className = 'control-btn done'
     el.id = 'done-' + key
@@ -928,15 +931,15 @@ function doneTimer(key) {
     timersArray[key].finished = true
     timersArray[key].done = true
     document.title = 'Timer' // TODO this should become (in order) the first running timer, or the previous finished-without-done timer
-    console.log('doneit')
-    if (
-        localStorage.getItem('audioPlay') === 'false' &&
-        settings.autoplay === true &&
-        detectAnyActive() &&
-        audio.background.paused
-    ) {
-        audioPlayer('play')
-    }
+    // Commented, bacause i forgot why this is useful
+    // if (
+    //     localStorage.getItem('audioPlay') === 'false' &&
+    //     settings.autoplay === true &&
+    //     detectAnyActive() &&
+    //     audio.background.paused
+    // ) {
+    //     audioPlayer('play')
+    // }
     updateTimers(timersArray)
 }
 
@@ -1098,8 +1101,7 @@ function audioPlayer(state = 'play') {
     const wasPaused = audio.background.paused
     switch (state) {
         case 'play':
-            audio.background.loop = true
-            console.log(audio.background)
+            audio.background.loop = false // TODO make this a setting
             audio.background.play()
             audio.btn_play.classList.add('dnone')
             audio.btn_pause.classList.remove('dnone')
