@@ -1124,9 +1124,9 @@ function audioPlayer(state = 'play') {
             if (audio.background.volume < 1) audio.background.volume += 0.2
             break
         case 'volume_down':
-            if (audio.background.volume < 0.21) {
+            if (audio.background.volume < 0.25) {
                 // audioPlayer('pause')
-                audio.background.volume = .05
+                audio.background.volume = .01
                 console.log('do pause')
                 break
             }
