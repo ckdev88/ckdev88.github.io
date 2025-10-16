@@ -26,11 +26,11 @@ const LANGUAGE_SUPPORTED = ['en', 'nl', 'pt']
  * @constant
  */
 const moods = [
-    { mood: 'rain', amount: 42, ext: 'mp3' },
-    { mood: 'creativity', amount: 156, ext: 'mp3' },
-    { mood: 'recharge', amount: 112, ext: 'mp3' },
-    { mood: 'meditate', amount: 67, ext: 'mp3' },
-    { mood: 'deepwork', amount: 222, ext: 'mp3' }
+    {mood: 'rain', amount: 42, ext: 'mp3'},
+    {mood: 'creativity', amount: 156, ext: 'mp3'},
+    {mood: 'recharge', amount: 112, ext: 'mp3'},
+    {mood: 'meditate', amount: 67, ext: 'mp3'},
+    {mood: 'deepwork', amount: 222, ext: 'mp3'}
 ]
 
 const MOOD_DEFAULT = 'rain' // TODO low prio, voor later
@@ -723,16 +723,16 @@ function renderTimer(i, key, paused = false) {
 
             settings.countDown === true
                 ? '<span class="time_left_text">' +
-                      getTranslation(settings.language, 'Time_left') +
-                      '</span>: '
+                getTranslation(settings.language, 'Time_left') +
+                '</span>: '
                 : '<span class="time_passed_text">' +
-                      getTranslation(settings.language, 'Time_passed') +
-                      '</span>: ',
+                getTranslation(settings.language, 'Time_passed') +
+                '</span>: ',
 
             '&nbsp;/ ' +
-                i.interval / i.intervalUnit +
-                ' ' +
-                getTranslation(settings.language, getIntervalUnitName(i.intervalUnit))
+            i.interval / i.intervalUnit +
+            ' ' +
+            getTranslation(settings.language, getIntervalUnitName(i.intervalUnit))
         )
     )
 
@@ -749,9 +749,9 @@ function renderTimer(i, key, paused = false) {
             'div',
             'starttime',
             '<span class="starting_time_text">' +
-                getTranslation(settings.language, 'Starting_time') +
-                '</span>: ' +
-                i.starttime
+            getTranslation(settings.language, 'Starting_time') +
+            '</span>: ' +
+            i.starttime
         )
     )
     startTimeEndTimeWrapper.appendChild(
@@ -759,9 +759,9 @@ function renderTimer(i, key, paused = false) {
             'div',
             'endtime',
             '<span class="ending_time_text">' +
-                getTranslation(settings.language, 'Ending_time') +
-                '</span>: ' +
-                i.endtime
+            getTranslation(settings.language, 'Ending_time') +
+            '</span>: ' +
+            i.endtime
         )
     )
     const timerActionsWrapper = document.createElement('div')
@@ -851,7 +851,7 @@ function countdownTimer(key, id) {
                     if (settings.countDown) {
                         timeleft = Math.round(
                             (timersArray[key].interval - timersArray[key].timepast) /
-                                timersArray[key].intervalUnit
+                            timersArray[key].intervalUnit
                         )
                         c.innerHTML =
                             cPrefix +
@@ -1125,7 +1125,8 @@ function audioPlayer(state = 'play') {
             break
         case 'volume_down':
             if (audio.background.volume < 0.21) {
-                audioPlayer('pause')
+                // audioPlayer('pause')
+                audio.background.volume = .05
                 console.log('do pause')
                 break
             }
