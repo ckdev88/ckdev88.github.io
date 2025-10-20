@@ -6,7 +6,7 @@
 let pageInit = true
 let isUpdatingTimers = false // global flag to prevent recursion / infinite loop
 
-const RUN_ONLINE = window.location.href.contains('http')
+const RUN_ONLINE = window.location.href.includes('http')
 const INTERVALAMOUNT_DEFAULT = 50 // in minutes, if INTERVALUNIT_DEFAULT is 60
 const INTERVALUNIT_DEFAULT = 60 // in seconds
 /** @typedef {'en'|'pt'|'nl'} LanguageOptions */
@@ -29,13 +29,14 @@ const SHOW_STARTING_TIME = false
  * @constant
  */
 let moods = []
-if (RUN_ONLINE){ // demo-audio files online
+if (RUN_ONLINE) {
+    // demo-audio files online
     moods = [
         { mood: 'rain', amount: 2, ext: 'opus' },
         { mood: 'deepwork', amount: 2, ext: 'opus' }
     ]
-}
-else { // locally stored audio
+} else {
+    // locally stored audio
     moods = [
         { mood: 'rain', amount: 42, ext: 'mp3' },
         { mood: 'creativity', amount: 156, ext: 'mp3' },
