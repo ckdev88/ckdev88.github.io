@@ -6,6 +6,7 @@
 let pageInit = true
 let isUpdatingTimers = false // global flag to prevent recursion / infinite loop
 
+const RUN_ONLINE = window.location.href.contains('http')
 const INTERVALAMOUNT_DEFAULT = 50 // in minutes, if INTERVALUNIT_DEFAULT is 60
 const INTERVALUNIT_DEFAULT = 60 // in seconds
 /** @typedef {'en'|'pt'|'nl'} LanguageOptions */
@@ -27,13 +28,22 @@ const SHOW_STARTING_TIME = false
  * @type {Array<Mood>}
  * @constant
  */
-const moods = [
-    { mood: 'rain', amount: 42, ext: 'mp3' },
-    { mood: 'creativity', amount: 156, ext: 'mp3' },
-    { mood: 'recharge', amount: 112, ext: 'mp3' },
-    { mood: 'meditate', amount: 67, ext: 'mp3' },
-    { mood: 'deepwork', amount: 222, ext: 'mp3' }
-]
+let moods = []
+if (RUN_ONLINE){ // demo-audio files online
+    moods = [
+        { mood: 'rain', amount: 2, ext: 'opus' },
+        { mood: 'deepwork', amount: 2, ext: 'opus' }
+    ]
+}
+else { // locally stored audio
+    moods = [
+        { mood: 'rain', amount: 42, ext: 'mp3' },
+        { mood: 'creativity', amount: 156, ext: 'mp3' },
+        { mood: 'recharge', amount: 112, ext: 'mp3' },
+        { mood: 'meditate', amount: 67, ext: 'mp3' },
+        { mood: 'deepwork', amount: 222, ext: 'mp3' }
+    ]
+}
 
 const MOOD_DEFAULT = 'rain' // TODO low prio, voor later
 
@@ -1210,7 +1220,7 @@ function countdownAll() {
     console.log('Starting countdown interval with running timers')
 
     countdownAllInterval = setInterval(() => {
-        console.log('url?',window.location.pathname);
+        console.log('url?', window.location.pathname)
         const currentTime = Date.now()
         const elapsedSeconds = Math.floor((currentTime - lastUpdateTime) / 1000)
         lastUpdateTime = currentTime
@@ -1320,8 +1330,6 @@ function countdownAll() {
         localStorage.setItem('countDownAllStatus', 'stopped')
         document.title = 'Timer' // Reset title when stopped
     }
-
-
 }
 
 /**
