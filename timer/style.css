@@ -1,3 +1,4 @@
+
 @font-face {
     font-family: "Outfit";
     src: url("./Outfit.woff2") format("woff2");
@@ -121,7 +122,7 @@ body {
     background-color: var(--bg-color);
 }
 
-.statusbar-pause {
+.statusbar-paused {
     background-color: var(--pause-color);
 }
 
@@ -260,6 +261,7 @@ input[type="number"] {
     color: #222;
 }
 
+/* biome-ignore lint/correctness/noUnknownMediaFeatureName: <TODO: check this out> */
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
     select {
         padding-left: 0.4rem;
@@ -317,9 +319,9 @@ form.dblock {
 a,
 button.text-btn,
 /* TODO still relevant? */
-    .btn.text-btn,
+.btn.text-btn,
 /* TODO still relevant? */
-    button.icon {
+button.icon {
     color: var(--text-button-fg);
     background: transparent;
     border: 0;
@@ -327,7 +329,7 @@ button.text-btn,
 
 button.text-btn,
 /* TODO still relevant? */
-    .btn.text-btn {
+.btn.text-btn {
     display: inline-block;
 }
 
@@ -414,7 +416,7 @@ button {
 .start_end_time_actions_wrapper {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-end;
 }
 
 .timer {
@@ -434,8 +436,7 @@ button {
         .control-btn {
             padding: 0;
             margin-left: 0;
-            transition: opacity var(--transition-time-short) ease-in-out, background-size
-                var(--transition-time-long) ease-in-out;
+            transition: opacity var(--transition-time-short) ease-in-out, background-size var(--transition-time-long) ease-in-out;
             font-size: 2em;
             width: 2em;
             height: 2em;
@@ -546,9 +547,11 @@ button {
         background-image: var(--timer-icon-reset);
         background-size: 0.85em auto;
     }
+
     &.done {
         background-image: var(--timer-icon-done);
         filter: invert(100%) saturate(0);
+
         /* color:red; */
         /* background-color: lime; */
         /* TODO apply an icon */
@@ -561,6 +564,7 @@ button {
         background-image: var(--timer-icon-remove);
         filter: invert(100%) saturate(0);
         background-size: 1.35em auto;
+        /* biome-ignore lint/complexity/noImportantStyles: <TODO check if necessary> */
         background-position: 63% 50% !important;
 
         &:hover {
@@ -612,6 +616,7 @@ button {
             background-image: var(--timer-icon-pause);
             text-transform: capitalize;
         }
+
         &.next {
             background-size: .6em;
             margin-left: .35rem;
@@ -636,6 +641,7 @@ button {
         padding-left: 0;
         opacity: var(--opacity-dimmed);
         cursor: pointer;
+
         &:hover {
             opacity: 1;
         }
@@ -655,7 +661,6 @@ button {
 
     span {
         display: flex;
-        width: auto;
         align-content: center;
         width: .2rem;
         height: .75rem;
@@ -691,6 +696,7 @@ button {
         height: .75rem;
     }
 }
+
 .top-buttons {
     justify-content: right;
 
@@ -705,8 +711,7 @@ button {
             white-space: nowrap;
             display: inline-flex;
             overflow: hidden;
-            transition: width var(--transition-time-long) linear, overflow
-                var(--transition-time-long);
+            transition: width var(--transition-time-long) linear, overflow var(--transition-time-long);
 
             &::after {
                 content: " ";
@@ -722,6 +727,7 @@ button {
 
 html[lang="en"] .top-buttons {
     .text-btn {
+
         &#new_timer_btn:hover,
         &#new_timer_btn.expanded {
             span {
@@ -740,6 +746,7 @@ html[lang="en"] .top-buttons {
 
 html[lang="nl"] .top-buttons {
     .text-btn {
+
         &#new_timer_btn:hover,
         &#new_timer_btn.expanded {
             span {
@@ -758,6 +765,7 @@ html[lang="nl"] .top-buttons {
 
 html[lang="pt"] .top-buttons {
     .text-btn {
+
         &#new_timer_btn:hover,
         &#new_timer_btn.expanded {
             span {
@@ -781,7 +789,7 @@ button.text-btn.white,
     color: var(--fg-color);
 }
 
-.statusbar-alert + #wrapper .text-btn.remove {
+.statusbar-alert+#wrapper .text-btn.remove {
     color: var(--fg-color);
 }
 
@@ -807,16 +815,23 @@ button.text-btn.white,
     padding-bottom: 1rem;
 }
 
+.timer_actions_wrapper {
+    position: absolute;
+    right: 0;
+}
+
 /* miniclasses */
 .dnone.shown {
-    height: 0; /* FIXME hack for when dnone and shown are both loaded */
+    height: 0;
+    /* FIXME hack for when dnone and shown are both loaded */
 }
+
 .dnone,
 button.control-btn.dnone,
 .control-btn.dnone,
 /* TODO redundant? */
 
-    .dimmed {
+.dimmed {
     opacity: var(--opacity-dimmed);
 
     &:hover {
