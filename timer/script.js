@@ -366,7 +366,7 @@ function updateTimers(arr) {
 
     // Only start countdown if needed - use detectAnyRunning instead of detectAnyActive
     const currentStatus = localStorage.getItem('countDownAllStatus')
-    const anyRunning = detectAnyRunning(arr)
+    const anyRunning = getTimerState().anyRunning
 
     if (anyRunning && (currentStatus === 'stopped' || !countdownAllInterval)) {
         console.log('Starting countdown from updateTimers')
@@ -507,7 +507,10 @@ function updateSettings(arr) {
     localStorage.setItem('settings', JSON.stringify(arr))
     selectOption(new_timer_intervalUnit, getSettings().intervalUnit)
 
-    if (detectAnyActive() === true && localStorage.getItem('countDownAllStatus') === 'stopped') {
+    if (
+        getTimerState().anyActive === true &&
+        localStorage.getItem('countDownAllStatus') === 'stopped'
+    ) {
         countdownAll()
         localStorage.setItem('countDownAllStatus', 'active')
     }
@@ -638,17 +641,15 @@ function addTimer(name, description, interval) {
  * @returns {void}
  */
 function pauseTimerToggle(key) {
+    const state = getTimerState()
+
     for (let i = 0; i < timersArray.length; i++) {
         if (i === key) {
             timersArray[i].paused = !timersArray[i].paused
 
             // Update audio based on state
-            if (!timersArray[i].paused && settings.autoplay === true) {
-                audioPlayer('play')
-            }
-            if (detectAllPaused()) {
-                audioPlayer('pause')
-            }
+            if (!timersArray[i].paused && settings.autoplay === true) audioPlayer('play')
+            if (state.allPaused) audioPlayer('pause')
         }
     }
 
@@ -1164,70 +1165,14 @@ function resetTimer(key) {
 }
 
 // ----------------------------- DETECTIONS
-function detectAnyRunning(arr = timersArray) {
-    if (!arr || arr.length === 0) return false
-    for (const timer of arr) {
-        if (!timer.finished && !timer.paused && !timer.done) return true
-    }
-    console.log('No running timers found')
-    return false
-}
+function getTimerState() {
+    const anyRunning = timersArray.some((t) => !t.finished && !t.paused && !t.done)
+    const anyFinished = timersArray.some((t) => t.finished && !t.done)
+    const allPaused =
+        timersArray.length > 0 && timersArray.every((t) => t.paused || t.finished || t.done)
+    const anyActive = timersArray.some((t) => !t.finished)
 
-/**
- * @param {Timers} arr - array of localstorage.timerTimers
- */
-function detectAnyFinished(arr = timersArray) {
-    for (const i of arr) {
-        if (i.finished === true) return true
-    }
-    console.log('No finished timers found')
-    return false
-}
-
-function detectAnyDone(arr = timersArray) {
-    if (!arr || arr.length === 0) return false
-    for (const i of arr) {
-        if (i.done === true) return true
-    }
-    console.log('no DONE timers found')
-    return false
-}
-
-// FIXME currently unused: use or toss
-function detectAnyPaused(arr = timersArray) {
-    if (!arr || arr.length === 0) return false
-    for (const i of arr) {
-        if (i.paused === true) return true
-    }
-    console.log('No paused timers found')
-    return false
-}
-
-// Detect any still running timers
-function detectAnyActive(arr = timersArray) {
-    if (!arr || arr.length === 0) return false
-    for (const i of arr) {
-        if (i.finished === false) {
-            console.log('YES! at least one is active, returning true')
-            return true
-        }
-    }
-    console.log('no active timers found')
-    return false
-}
-
-function detectAllPaused(arr = timersArray) {
-    if (!arr || arr.length === 0) return false
-    let count = 0
-    for (let i = 0; i < arr.length; i++) {
-        if (arr[i].paused === true) count++
-    }
-    if (count === arr.length) {
-        console.log('all paused')
-        return true
-    }
-    console.log('detecting all paused...')
-    return false
+    return { anyRunning, anyFinished, allPaused, anyActive }
 }
 
 // ----------------------------- ALWAYS RUNNING & WHEN DONE...
@@ -1241,8 +1186,9 @@ function countdownAll() {
     }
 
     // Don't start if no active timers or all are paused
-    const anyRunning = detectAnyRunning()
-    const allPaused = detectAllPaused()
+    const state = getTimerState()
+    const anyRunning = state.anyRunning // detectAnyRunning()
+    const allPaused = state.allPaused //  detectAllPaused()
 
     if (!anyRunning || allPaused) {
         console.log('No running timers or all paused, stopping countdown')
@@ -1264,6 +1210,7 @@ function countdownAll() {
     console.log('Starting countdown interval with running timers')
 
     countdownAllInterval = setInterval(() => {
+        console.log('url?',window.location.pathname);
         const currentTime = Date.now()
         const elapsedSeconds = Math.floor((currentTime - lastUpdateTime) / 1000)
         lastUpdateTime = currentTime
@@ -1299,6 +1246,8 @@ function countdownAll() {
                     needsFullRender = true
                     currentFinishedTimer = timer.name
                     console.log(`Timer ${i} finished: ${timer.name}`)
+
+                    bgStatus(timersArray)
 
                     // Play alert when timer finishes
                     setTimeout(() => {
@@ -1342,7 +1291,7 @@ function countdownAll() {
         }
 
         // Check if we should stop the interval
-        const shouldStop = !detectAnyRunning() || detectAllPaused()
+        const shouldStop = !state.anyRunning || state.allPaused
         if (shouldStop) {
             console.log('Stopping countdown - no running timers or all paused')
             audioPlayer('pause')
@@ -1351,7 +1300,8 @@ function countdownAll() {
         }
 
         // Tab/title manipulation for user feedback
-        if (finishedTimer !== null && detectAnyFinished() === true) {
+        // if (finishedTimer !== null && detectAnyFinished() === true) {
+        if (finishedTimer !== null && state.anyFinished) {
             blinkFinishedOn = !blinkFinishedOn
             document.title = blinkFinishedOn ? finishedTimer + '!' : finishedTimer
         } else {
@@ -1370,6 +1320,8 @@ function countdownAll() {
         localStorage.setItem('countDownAllStatus', 'stopped')
         document.title = 'Timer' // Reset title when stopped
     }
+
+
 }
 
 /**
@@ -1502,11 +1454,20 @@ function getTimeSimple(seconds = false, secondsToAdd = 0) {
  * @returns {void}
  */
 function bgStatus(arr) {
-    if (!detectAnyActive() || detectAnyDone()) setBgStatus('normal')
-    else if (detectAnyFinished(arr)) setBgStatus('alert')
-    else if (detectAllPaused(arr)) setBgStatus('paused')
-    else if (detectAnyActive(arr)) setBgStatus('running')
+    if (!arr || arr.length === 0) {
+        setBgStatus('normal')
+        return
+    }
+    const state = getTimerState()
+    if (state.anyFinished) setBgStatus('alert')
+    else if (state.allPaused) setBgStatus('paused')
+    else if (state.anyRunning) setBgStatus('running')
     else setBgStatus('normal')
+    // if (!detectAnyActive() || detectAnyDone()) setBgStatus('normal')
+    // else if (detectAnyFinished(arr)) setBgStatus('alert')
+    // else if (detectAllPaused(arr)) setBgStatus('paused')
+    // else if (detectAnyActive(arr)) setBgStatus('running')
+    // else setBgStatus('normal')
 }
 
 /**
