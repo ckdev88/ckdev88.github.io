@@ -1620,7 +1620,7 @@ new_timer_quick.addEventListener('click', () => addQuickTimer())
 // register service worker for PWA - does not work with static site like github.io
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('sw.js')
+    navigator.serviceWorker.register('/timer/sw.js')
       .then((registration) => {
         console.log('SW registered: ', registration);
       })
