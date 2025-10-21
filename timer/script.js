@@ -1618,14 +1618,14 @@ new_timer_form.addEventListener('submit', (e) => {
 new_timer_quick.addEventListener('click', () => addQuickTimer())
 
 // register service worker for PWA - does not work with static site like github.io
-// if ('serviceWorker' in navigator) {
-//   window.addEventListener('load', () => {
-//     navigator.serviceWorker.register('/sw.js')
-//       .then((registration) => {
-//         console.log('SW registered: ', registration);
-//       })
-//       .catch((registrationError) => {
-//         console.log('SW registration failed: ', registrationError);
-//       });
-//   });
-// }
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then((registration) => {
+        console.log('SW registered: ', registration);
+      })
+      .catch((registrationError) => {
+        console.log('SW registration failed: ', registrationError);
+      });
+  });
+}
