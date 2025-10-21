@@ -259,7 +259,7 @@ function getRandomBackgroundAudio() {
     return audioDir + settings.mood + '/' + randomNumber + ext
 }
 
-// console.log('getRandomBackgroundAudio():', getRandomBackgroundAudio())
+// log('getRandomBackgroundAudio():', getRandomBackgroundAudio())
 const audio = {
     dir: audioDir,
     background: new Audio(getRandomBackgroundAudio()),
@@ -361,7 +361,7 @@ function updateTimers(arr) {
     if (isUpdatingTimers) return false
     isUpdatingTimers = true
 
-    // console.log('Updating timers, count:', arr.length)
+    // log('Updating timers, count:', arr.length)
     localStorage.setItem('timerTimers', JSON.stringify(arr))
 
     // Update status bar based on timer states
@@ -372,10 +372,10 @@ function updateTimers(arr) {
         arr.length !== timersArray.length || JSON.stringify(arr) !== JSON.stringify(timersArray)
 
     if (shouldRender) {
-        // console.log('Rendering timers due to changes')
+        // log('Rendering timers due to changes')
         renderTimers(arr)
     } else {
-        // console.log('No render needed - timers unchanged')
+        // log('No render needed - timers unchanged')
     }
 
     // Update the global reference
@@ -386,7 +386,7 @@ function updateTimers(arr) {
     const anyRunning = getTimerState().anyRunning
 
     if (anyRunning && (currentStatus === 'stopped' || !countdownAllInterval)) {
-        // console.log('Starting countdown from updateTimers')
+        // log('Starting countdown from updateTimers')
         countdownAll()
     }
 
@@ -493,7 +493,7 @@ function settingsFormSubmit(data) {
         quickTimerDescr: data.get('settings_form_quickTimerDescr'),
         language: data.get('settings_form_language')
     }
-    // console.log('settings:', settings)
+    // log('settings:', settings)
     if (settings.language !== getSettings().language) setLanguage(settings.language)
 
     updateSettings(settings)
@@ -649,7 +649,7 @@ function addTimer(name, description, interval) {
     showFeedback(btn_create_timer, 'Timer_created')
 
     // Debug log
-    // console.log('Added timer, total timers:', timersArray.length)
+    // log('Added timer, total timers:', timersArray.length)
 }
 
 // ----------------------------- PAUSE/RESUME TASK
@@ -688,7 +688,7 @@ function pauseTimerToggle(key) {
     if (!timersArray[key].paused) {
         const currentStatus = localStorage.getItem('countDownAllStatus')
         if (currentStatus === 'stopped' || !countdownAllInterval) {
-            // console.log('Resuming timer, restarting countdown...')
+            // log('Resuming timer, restarting countdown...')
             countdownAll()
         }
     }
@@ -832,13 +832,13 @@ function updateTimerDisplay(key) {
  * @returns {void}
  */
 function renderTimers(arr) {
-    // console.log('Rendering timers:', arr.length)
+    // log('Rendering timers:', arr.length)
 
     // Clear the container completely for simplicity
     timer_container.innerHTML = ''
 
     if (!arr || arr.length === 0) {
-        // console.log('No timers to render')
+        // log('No timers to render')
         return
     }
 
@@ -846,7 +846,7 @@ function renderTimers(arr) {
     for (let i = 0; i < arr.length; i++) {
         const timerEl = renderTimer(arr[i], i)
         timer_container.appendChild(timerEl)
-        // console.log('Rendered timer:', arr[i].name)
+        // log('Rendered timer:', arr[i].name)
     }
 
     log('Finished rendering all timers')
@@ -858,8 +858,8 @@ function renderTimers(arr) {
  */
 function log(str, val) {
     if (RUN_ONLINE) return
-    if (val) console.log(str, val)
-    else console.log(str)
+    if (val) log(str, val)
+    else log(str)
 }
 
 function runCurrentTime() {
@@ -1234,10 +1234,10 @@ function countdownAll() {
     let blinkFinishedOn = false
     const timerTitleBasic = 'Timer'
 
-    console.log('Starting countdown interval with running timers')
+    log('Starting countdown interval with running timers')
 
     countdownAllInterval = setInterval(() => {
-        console.log('url?', window.location.pathname)
+        log('url?', window.location.pathname)
         const currentTime = Date.now()
         const elapsedSeconds = Math.floor((currentTime - lastUpdateTime) / 1000)
         lastUpdateTime = currentTime
@@ -1253,7 +1253,7 @@ function countdownAll() {
                 // Skip paused or finished timers
                 if (timer.paused === true || timer.finished || timer.done) continue
 
-                console.log(`Updating timer ${i}: ${timer.name}, timepast: ${timer.timepast}`)
+                log(`Updating timer ${i}: ${timer.name}, timepast: ${timer.timepast}`)
 
                 // Store previous state to detect changes
                 const previousTimepast = timer.timepast
@@ -1263,7 +1263,7 @@ function countdownAll() {
                 if (timer.timepast < timer.interval && timer.paused === false) {
                     timer.timepast = Math.min(timer.timepast + elapsedSeconds, timer.interval)
                     anyTimerChanged = true
-                    console.log(`Timer ${i} updated: ${timer.timepast}/${timer.interval}`)
+                    log(`Timer ${i} updated: ${timer.timepast}/${timer.interval}`)
                 }
 
                 // Check if timer finished
@@ -1272,7 +1272,7 @@ function countdownAll() {
                     timer.timepast = timer.interval // Ensure we don't exceed the interval
                     needsFullRender = true
                     currentFinishedTimer = timer.name
-                    console.log(`Timer ${i} finished: ${timer.name}`)
+                    log(`Timer ${i} finished: ${timer.name}`)
 
                     bgStatus(timersArray)
 
@@ -1302,11 +1302,11 @@ function countdownAll() {
 
             // Update storage and render if something important changed
             if (anyTimerChanged || needsFullRender) {
-                console.log('Updating timers storage due to changes')
+                log('Updating timers storage due to changes')
                 localStorage.setItem('timerTimers', JSON.stringify(timersArray))
 
                 if (needsFullRender) {
-                    console.log('Full render needed, updating...')
+                    log('Full render needed, updating...')
                     renderTimers(timersArray)
                 }
             }
@@ -1320,7 +1320,7 @@ function countdownAll() {
         // Check if we should stop the interval
         const shouldStop = !state.anyRunning || state.allPaused
         if (shouldStop) {
-            console.log('Stopping countdown - no running timers or all paused')
+            log('Stopping countdown - no running timers or all paused')
             audioPlayer('pause')
             stopTimer()
             return
@@ -1359,7 +1359,7 @@ function audioPlayer(state = 'play') {
     switch (state) {
         case 'play':
             audio.background.loop = false // TODO apply `loop` property in `mood` object
-            console.log('audio.background:', audio.background)
+            log('audio.background:', audio.background)
             audio.background.play()
             audio.btn_play.classList.add('dnone')
             audio.btn_pause.classList.remove('dnone')
@@ -1375,7 +1375,7 @@ function audioPlayer(state = 'play') {
             audio.background.pause()
             audio.background.currentTime = 0 // Reset position
             audio.background.src = getRandomBackgroundAudio() // Clear source
-            console.log('audio.background.src:', audio.background.src)
+            log('audio.background.src:', audio.background.src)
             audio.background.load() // Force browser to release resources
             if (!wasPaused) audioPlayer('play')
             break
@@ -1386,7 +1386,7 @@ function audioPlayer(state = 'play') {
             if (audio.background.volume < 0.25) {
                 // audioPlayer('pause')
                 audio.background.volume = 0.01 // temporary hack to prevent need for webworker (for now), just keep te music going on, just very soft
-                console.log('do pause')
+                log('do pause')
                 break
             }
             audio.background.volume -= 0.2
@@ -1414,18 +1414,18 @@ function audioPlayer(state = 'play') {
     if (audio.background.volume > 0.99)
         document.getElementById('audio_volume_up').style.visibility = 'hidden'
     else document.getElementById('audio_volume_up').style.visibility = 'visible'
-    console.log('audio.background.volume:', audio.background.volume)
+    log('audio.background.volume:', audio.background.volume)
 }
 
 // function audioVolAdjust(increaseVolume=true){
 //     let currentAudioVolume = audio.background.volume
-//     console.log('currentAudioVolume:',current)
+//     log('currentAudioVolume:',current)
 //     // if(increaseVolume)audio.background.volume = currentAudioVolume
 
 // }
 
 function playAlert() {
-    audio.alert.play().catch((e) => console.log('Audio play failed:', e))
+    audio.alert.play().catch((e) => log('Audio play failed:', e))
 }
 
 // ----------------------------- MISC METHODS
@@ -1616,3 +1616,16 @@ new_timer_form.addEventListener('submit', (e) => {
 })
 
 new_timer_quick.addEventListener('click', () => addQuickTimer())
+
+// register service worker for PWA
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then((registration) => {
+        console.log('SW registered: ', registration);
+      })
+      .catch((registrationError) => {
+        console.log('SW registration failed: ', registrationError);
+      });
+  });
+}
