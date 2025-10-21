@@ -14,7 +14,8 @@ const INTERVALUNIT_DEFAULT = 60 // in seconds
 const LANGUAGE_DEFAULT = 'en'
 /** @type [LanguageOptions] */
 const LANGUAGE_SUPPORTED = ['en', 'nl', 'pt']
-const SHOW_STARTING_TIME = false
+// const SHOW_STARTING_TIME = false
+
 
 /**
  * @typedef {Object} Mood
@@ -858,8 +859,8 @@ function renderTimers(arr) {
  */
 function log(str, val) {
     if (RUN_ONLINE) return
-    if (val) log(str, val)
-    else log(str)
+    if (val) console.log(str, val)
+    else console.log(str)
 }
 
 function runCurrentTime() {
