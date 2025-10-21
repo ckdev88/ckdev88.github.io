@@ -35,7 +35,6 @@ if (RUN_ONLINE) {
     audioDir += 'demo/'
     moods = [
         { mood: 'brownnoise', amount: 2, ext: 'opus', loop: true },
-        { mood: 'gnaural', amount: 1, ext: 'opus', loop: true },
         { mood: 'lofi', amount: 4, ext: 'opus', loop: false },
         { mood: 'rain', amount: 4, ext: 'opus', loop: true }
     ]
@@ -44,7 +43,6 @@ if (RUN_ONLINE) {
     moods = [
         { mood: 'creativity', amount: 156, ext: 'mp3', loop: false },
         { mood: 'deepwork', amount: 222, ext: 'mp3', loop: false },
-        { mood: 'gnaural', amount: 1, ext: 'opus', loop: true },
         { mood: 'lofi', amount: 4, ext: 'opus', loop: false },
         { mood: 'meditate', amount: 67, ext: 'mp3', loop: true },
         { mood: 'rain', amount: 42, ext: 'mp3', loop: true },
