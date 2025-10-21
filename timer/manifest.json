@@ -2,13 +2,12 @@
     "name": "Timer App",
     "short_name": "Timer",
     "description": "A simple and customizable timer application with audio features",
-    "start_url": "https://ckdev.github.io/timer",
+    "start_url": "https://ckdev88.github.io/timer/",
     "display": "standalone",
     "background_color": "#f2f2f2",
     "theme_color": "#000000",
     "orientation": "portrait-primary",
     "scope": "/",
-    "lang": "en",
     "categories": [
         "productivity",
         "utilities"
