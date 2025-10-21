@@ -1623,7 +1623,7 @@ function registerServiceWorker() {
         navigator.serviceWorker
             .register('./sw.js')
             .then((registration) => {
-                console.log('SW registered: ', registration)
+                console.log('SWWwww registered: ', registration)
 
                 // Check if PWA is installable
                 if (registration.installing) {

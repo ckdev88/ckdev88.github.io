@@ -4,7 +4,7 @@ const urlsToCache = [
   './index.html',
   './style.css',
   './script.js',
-  './img/favicon-96.png',
+  './img/favicon-64.png',
   './img/manifest.json',
   './audio/demo/alert.wav',
   './audio/demo/brownnoise/1.opus',
@@ -51,3 +51,5 @@ self.addEventListener('fetch', (event) => {
       .then((response) => response || fetch(event.request))
   );
 });
+
+console.log('swjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj');
