@@ -16,7 +16,6 @@ const LANGUAGE_DEFAULT = 'en'
 const LANGUAGE_SUPPORTED = ['en', 'nl', 'pt']
 // const SHOW_STARTING_TIME = false
 
-
 /**
  * @typedef {Object} Mood
  * @property {string} mood - name of the mood (rain, creativity, recharge)
@@ -1618,15 +1617,28 @@ new_timer_form.addEventListener('submit', (e) => {
 
 new_timer_quick.addEventListener('click', () => addQuickTimer())
 
-// register service worker for PWA - does not work with static site like github.io
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/timer/sw.js')
-      .then((registration) => {
-        console.log('SW registered: ', registration);
-      })
-      .catch((registrationError) => {
-        console.log('SW registration failed: ', registrationError);
-      });
-  });
+// Add this at the end of your script.js file, before the closing braces
+function registerServiceWorker() {
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker
+            .register('./sw.js')
+            .then((registration) => {
+                console.log('SW registered: ', registration)
+
+                // Check if PWA is installable
+                if (registration.installing) {
+                    console.log('Service worker installing')
+                } else if (registration.waiting) {
+                    console.log('Service worker installed')
+                } else if (registration.active) {
+                    console.log('Service worker active')
+                }
+            })
+            .catch((registrationError) => {
+                console.log('SW registration failed: ', registrationError)
+            })
+    }
 }
+
+// Call this function when your app loads
+registerServiceWorker()
