@@ -1408,9 +1408,11 @@ function audioPlayer(state = 'play') {
             Math.round(audio.background.volume * 10) > i ? 'active' : 'inactive'
     }
 
-    if (!audio.background.paused)
-        document.getElementById('audio_volume_container').style.display = 'flex'
-    else document.getElementById('audio_volume_container').style.display = 'none'
+    if (!audio.background.paused) {
+        document.getElementById('audio_volume_container').style.visibility = 'visible'
+    } else {
+        document.getElementById('audio_volume_container').style.visibility = 'hidden'
+    }
     if (audio.background.volume > 0.99)
         document.getElementById('audio_volume_up').style.visibility = 'hidden'
     else document.getElementById('audio_volume_up').style.visibility = 'visible'

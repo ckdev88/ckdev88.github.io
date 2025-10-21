@@ -1,4 +1,3 @@
-
 @font-face {
     font-family: "Outfit";
     src: url("./Outfit.woff2") format("woff2");
@@ -319,9 +318,9 @@ form.dblock {
 a,
 button.text-btn,
 /* TODO still relevant? */
-.btn.text-btn,
+    .btn.text-btn,
 /* TODO still relevant? */
-button.icon {
+    button.icon {
     color: var(--text-button-fg);
     background: transparent;
     border: 0;
@@ -329,7 +328,7 @@ button.icon {
 
 button.text-btn,
 /* TODO still relevant? */
-.btn.text-btn {
+    .btn.text-btn {
     display: inline-block;
 }
 
@@ -372,11 +371,16 @@ button {
 
 /* --------------------------- general class definitions */
 #wrapper {
-    max-width: 320px;
-    min-width: 300px;
-    padding: 0.5rem;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 0.5rem 1rem;
     margin: 0 auto;
     position: relative;
+    overflow-x:hidden ;
+    @media screen and (min-width: 470px) {
+        /* background: red; */
+        max-width: 420px;
+    }
 }
 
 .submit-buttons {
@@ -436,7 +440,9 @@ button {
         .control-btn {
             padding: 0;
             margin-left: 0;
-            transition: opacity var(--transition-time-short) ease-in-out, background-size var(--transition-time-long) ease-in-out;
+            transition:
+                opacity var(--transition-time-short) ease-in-out,
+                background-size var(--transition-time-long) ease-in-out;
             font-size: 2em;
             width: 2em;
             height: 2em;
@@ -618,8 +624,8 @@ button {
         }
 
         &.next {
-            background-size: .6em;
-            margin-left: .35rem;
+            background-size: 0.6em;
+            margin-left: 0.35rem;
             padding-left: 0.35rem;
             color: var(--remove-fg);
             background-image: var(--timer-icon-next);
@@ -649,8 +655,8 @@ button {
 }
 
 #audio_volume_icon {
-    margin-left: .2rem;
-    margin-right: .2rem;
+    margin-left: 0.2rem;
+    margin-right: 0.2rem;
     display: flex;
     align-self: center;
     justify-content: space-evenly;
@@ -662,8 +668,8 @@ button {
     span {
         display: flex;
         align-content: center;
-        width: .2rem;
-        height: .75rem;
+        width: 0.2rem;
+        height: 0.75rem;
         background: white;
         border-radius: 3px;
 
@@ -677,23 +683,23 @@ button {
     }
 
     #audio_volume_2 {
-        height: .15rem;
+        height: 0.15rem;
     }
 
     #audio_volume_4 {
-        height: .3rem;
+        height: 0.3rem;
     }
 
     #audio_volume_6 {
-        height: .45rem;
+        height: 0.45rem;
     }
 
     #audio_volume_8 {
-        height: .6rem;
+        height: 0.6rem;
     }
 
     #audio_volume_10 {
-        height: .75rem;
+        height: 0.75rem;
     }
 }
 
@@ -703,7 +709,9 @@ button {
     .text-btn {
         color: var(--settings-fg);
         opacity: var(--opacity-dimmed);
-        transition: opacity var(--transition-time-short), width var(--transition-time-long);
+        transition:
+            opacity var(--transition-time-short),
+            width var(--transition-time-long);
         justify-content: right;
 
         span {
@@ -711,7 +719,9 @@ button {
             white-space: nowrap;
             display: inline-flex;
             overflow: hidden;
-            transition: width var(--transition-time-long) linear, overflow var(--transition-time-long);
+            transition:
+                width var(--transition-time-long) linear,
+                overflow var(--transition-time-long);
 
             &::after {
                 content: " ";
@@ -727,7 +737,6 @@ button {
 
 html[lang="en"] .top-buttons {
     .text-btn {
-
         &#new_timer_btn:hover,
         &#new_timer_btn.expanded {
             span {
@@ -746,7 +755,6 @@ html[lang="en"] .top-buttons {
 
 html[lang="nl"] .top-buttons {
     .text-btn {
-
         &#new_timer_btn:hover,
         &#new_timer_btn.expanded {
             span {
@@ -765,7 +773,6 @@ html[lang="nl"] .top-buttons {
 
 html[lang="pt"] .top-buttons {
     .text-btn {
-
         &#new_timer_btn:hover,
         &#new_timer_btn.expanded {
             span {
@@ -789,7 +796,7 @@ button.text-btn.white,
     color: var(--fg-color);
 }
 
-.statusbar-alert+#wrapper .text-btn.remove {
+.statusbar-alert + #wrapper .text-btn.remove {
     color: var(--fg-color);
 }
 
@@ -831,7 +838,7 @@ button.control-btn.dnone,
 .control-btn.dnone,
 /* TODO redundant? */
 
-.dimmed {
+    .dimmed {
     opacity: var(--opacity-dimmed);
 
     &:hover {
