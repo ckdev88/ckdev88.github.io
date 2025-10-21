@@ -29,20 +29,26 @@ const SHOW_STARTING_TIME = false
  * @constant
  */
 let moods = []
+let audioDir = './audio/'
 if (RUN_ONLINE) {
-    // demo-audio files online
+    // demo-audio files for online use
+    audioDir += 'demo/'
     moods = [
-        { mood: 'rain', amount: 2, ext: 'opus' },
-        { mood: 'deepwork', amount: 2, ext: 'opus' }
+        { mood: 'brownnoise', amount: 2, ext: 'opus', loop: true },
+        { mood: 'gnaural', amount: 1, ext: 'opus', loop: true },
+        { mood: 'lofi', amount: 4, ext: 'opus', loop: false },
+        { mood: 'rain', amount: 4, ext: 'opus', loop: true }
     ]
 } else {
     // locally stored audio
     moods = [
-        { mood: 'rain', amount: 42, ext: 'mp3' },
-        { mood: 'creativity', amount: 156, ext: 'mp3' },
-        { mood: 'recharge', amount: 112, ext: 'mp3' },
-        { mood: 'meditate', amount: 67, ext: 'mp3' },
-        { mood: 'deepwork', amount: 222, ext: 'mp3' }
+        { mood: 'creativity', amount: 156, ext: 'mp3', loop: false },
+        { mood: 'deepwork', amount: 222, ext: 'mp3', loop: false },
+        { mood: 'gnaural', amount: 1, ext: 'opus', loop: true },
+        { mood: 'lofi', amount: 4, ext: 'opus', loop: false },
+        { mood: 'meditate', amount: 67, ext: 'mp3', loop: true },
+        { mood: 'rain', amount: 42, ext: 'mp3', loop: true },
+        { mood: 'recharge', amount: 112, ext: 'mp3', loop: false }
     ]
 }
 
@@ -243,10 +249,12 @@ const statusbar = d.getElementById('statusbar')
 const current_time = d.getElementById('current_time')
 const current_date = d.getElementById('current_date')
 
-const audioDir = './audio/'
-
 function getRandomBackgroundAudio() {
-    const themood = moods[moods.findIndex((item) => settings.mood === item.mood)]
+    let themood = moods[moods.findIndex((item) => settings.mood === item.mood)]
+    if (!themood) {
+        themood = moods[0]
+        return audioDir + themood.mood + '/1' + themood.ext
+    }
     const max = themood.amount
     const ext = '.' + themood.ext
     const randomNumber = Math.ceil(Math.random() * max)
@@ -1342,7 +1350,8 @@ function audioPlayer(state = 'play') {
     const wasPaused = audio.background.paused
     switch (state) {
         case 'play':
-            audio.background.loop = false // TODO make this a setting
+            audio.background.loop = false // TODO apply `loop` property in `mood` object
+            console.log('audio.background:', audio.background)
             audio.background.play()
             audio.btn_play.classList.add('dnone')
             audio.btn_pause.classList.remove('dnone')
@@ -1358,6 +1367,7 @@ function audioPlayer(state = 'play') {
             audio.background.pause()
             audio.background.currentTime = 0 // Reset position
             audio.background.src = getRandomBackgroundAudio() // Clear source
+            console.log('audio.background.src:', audio.background.src)
             audio.background.load() // Force browser to release resources
             if (!wasPaused) audioPlayer('play')
             break
