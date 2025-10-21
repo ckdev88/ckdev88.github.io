@@ -48,4 +48,4 @@ self.addEventListener('fetch', (event) => {
     )
 })
 
-console.log('swjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj')
+console.log('SWJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ')
