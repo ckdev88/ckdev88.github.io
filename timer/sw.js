@@ -6,7 +6,6 @@ const urlsToCache = [
     './script.js',
     './img/favicon-48.png',
     './img/favicon-192.png',
-    './img/ckdev-logo.svg',
     './manifest.json',
     './audio/demo/alert.wav',
     './audio/demo/brownnoise/1.opus',
