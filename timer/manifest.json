@@ -24,6 +24,10 @@
             "sizes": "96x96",
             "type": "image/png",
             "purpose": "any maskable"
+        },
+        {
+            "src": "img/ckdev-logo.svg",
+            "type": "image/svg"
         }
     ]
 }

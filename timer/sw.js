@@ -5,6 +5,7 @@ const urlsToCache = [
     './style.css',
     './script.js',
     './img/favicon-48.png',
+    './img/ckdev-logo.svg',
     './manifest.json',
     './audio/demo/alert.wav',
     './audio/demo/brownnoise/1.opus',
