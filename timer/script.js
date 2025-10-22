@@ -1413,16 +1413,26 @@ function audioPlayer(state = 'play') {
             if (!wasPaused) audioPlayer('play')
             break
         case 'volume_up':
-            if (audio.background.volume <= 0.8) audio.background.volume += 0.2
+            if (audio.background.volume < 1) {
+                const increase = 0.2
+                if (audio.background.volume + increase > 1) {
+                    audio.background.volume = 1
+                    break
+                }
+                audio.background.volume += 0.2
+                console.log('volume to',audio.background.volume);
+            }
             break
         case 'volume_down':
-            if (audio.background.volume < 0.25) {
+            if (audio.background.volume < 0.2) {
                 // audioPlayer('pause')
                 audio.background.volume = 0.01 // temporary hack to prevent need for webworker (for now), just keep te music going on, just very soft
                 log('do pause')
+                console.log('volume to',audio.background.volume);
                 break
             }
             audio.background.volume -= 0.2
+                console.log('volume to',audio.background.volume);
             break
         case 'change_mood':
             settings.mood =
