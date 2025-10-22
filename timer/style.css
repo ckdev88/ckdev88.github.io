@@ -376,7 +376,7 @@ button {
     padding: 0.5rem 1rem;
     margin: 0 auto;
     position: relative;
-    overflow-x:hidden ;
+    overflow-x: hidden;
     @media screen and (min-width: 470px) {
         /* background: red; */
         max-width: 420px;
@@ -652,6 +652,13 @@ button {
             opacity: 1;
         }
     }
+}
+#audio_container .text-btn.pause.dnone + #audio_volume_container {
+    visibility: hidden;
+}
+
+#audio_container .text-btn.pause:not(.dnone) + #audio_volume_container {
+    visibility: visible;
 }
 
 #audio_volume_icon {

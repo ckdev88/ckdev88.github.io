@@ -1413,7 +1413,7 @@ function audioPlayer(state = 'play') {
             if (!wasPaused) audioPlayer('play')
             break
         case 'volume_up':
-            console.log('voluming up');
+            console.log('voluming up')
             if (audio.background.volume < 1) {
                 const increase = 0.2
                 if (audio.background.volume + increase > 1) {
@@ -1421,23 +1421,23 @@ function audioPlayer(state = 'play') {
                     break
                 }
                 audio.background.volume += 0.2
-                console.log('volume to',audio.background.volume);
+                console.log('volume to', audio.background.volume)
             }
             break
         case 'volume_down':
-            console.log('voluming down');
+            console.log('voluming down')
             if (audio.background.volume < 0.2) {
                 // audioPlayer('pause')
                 audio.background.volume = 0.01 // temporary hack to prevent need for webworker (for now), just keep te music going on, just very soft
                 log('do pause')
-                console.log('volume to',audio.background.volume);
+                console.log('volume to', audio.background.volume)
                 break
             }
             audio.background.volume -= 0.2
-                console.log('volume to',audio.background.volume);
+            console.log('volume to', audio.background.volume)
             break
         case 'change_mood':
-            console.log('changing mood');
+            console.log('changing mood')
             settings.mood =
                 moods[
                     (moods.findIndex((item) => item.mood === settings.mood) + 1) % moods.length
@@ -1447,6 +1447,14 @@ function audioPlayer(state = 'play') {
             audioPlayer('next')
             break
     }
+
+    // Update volume container visibility based on whether audio is playing
+    if (!audio.background.paused) {
+        document.getElementById('audio_volume_container').style.visibility = 'visible'
+    } else {
+        document.getElementById('audio_volume_container').style.visibility = 'hidden'
+    }
+
     // loop volumes 0.2 to 1, sometimes value is a bit off, like 0.200001, so using 1.9 (0.19*10) as base and buffer
     for (let i = 1.9; i < 11; i += 2) {
         const rounded = i + 0.1
