@@ -1460,10 +1460,15 @@ function audioPlayer(state = 'play') {
 
     log('audio.background.volume:', audio.background.volume)
 
-    // TODO: check if still relevant, see CSS
-    if (!audio.background.paused)
+    // TODO: check if can be improved with pure CSS / disabled html attribute on -/+ volume
+    if (!audio.background.paused) {
         document.getElementById('audio_volume_container').style.visibility = 'visible'
-    else document.getElementById('audio_volume_container').style.visibility = 'hidden'
+    } else {
+        document.getElementById('audio_volume_container').style.visibility = 'hidden'
+        // Reset individual button visibility when hiding container
+        document.getElementById('audio_volume_up').style.visibility = ''
+        document.getElementById('audio_volume_down').style.visibility = ''
+    }
 
     if (audio.background.volume >= 1)
         document.getElementById('audio_volume_up').style.visibility = 'hidden'
