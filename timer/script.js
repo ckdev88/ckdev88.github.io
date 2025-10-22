@@ -287,30 +287,21 @@ audio.btn_pause.innerText = settings.mood
  * @property {string} mood
  */
 
-const timers = [
-    {
-        0: {
-            descr: 'Eat, walk, push-up, drink, some or all.',
-            endtime: '23:41',
-            endtime_timestamp: null,
-            finished: false,
-            done: false,
-            interval: 3000,
-            intervalUnit: 60,
-            name: 'stretch'
-        },
-        1: {
-            descr: 'Eat, walk, push-up, drink, some or all.',
-            endtime: '23:41',
-            endtime_timestamp: null,
-            finished: false,
-            done: false,
-            interval: 3000,
-            intervalUnit: 60,
-            name: 'stretch'
-        }
-    }
-]
+// Below is kept (for now) as an example
+// const timers = [
+//     {
+//         0: {
+//             descr: 'Eat, walk, push-up, drink, some or all.',
+//             endtime: '23:41',
+//             endtime_timestamp: null,
+//             finished: false,
+//             done: false,
+//             interval: 3000,
+//             intervalUnit: 60,
+//             name: 'stretch'
+//         },
+//     }
+// ]
 
 /**
  * @typedef {Object} Timer
@@ -645,6 +636,7 @@ function addTimer(name, description, interval) {
     // Ensure the timer is visible in the DOM
     renderTimers(timersArray)
 
+    log('settings.autoplay', settings.autoplay)
     settings.autoplay === true && audioPlayer('play')
     showFeedback(btn_create_timer, 'Timer_created')
 
@@ -666,7 +658,12 @@ function pauseTimerToggle(key) {
 
             // Update audio based on state
             if (!timersArray[i].paused && settings.autoplay === true) audioPlayer('play')
-            if (state.allPaused) audioPlayer('pause')
+
+            // ADD THIS: If this was the last running timer, pause audio
+            const newState = getTimerState()
+            if (newState.allPaused || !newState.anyRunning) {
+                audioPlayer('pause')
+            }
         }
     }
 
@@ -704,23 +701,23 @@ function pauseTimerToggle(key) {
  * Updates the DOM to reflect the paused state of a specific timer
  * @param {number} key
  */
-function updateTimerPausedState(key) {
-    const timer = timersArray[key]
-    if (!timer) return
+// function updateTimerPausedState(key) {
+//     const timer = timersArray[key]
+//     if (!timer) return
 
-    const timerEl = document.getElementById('timer-' + key)
-    if (!timerEl) return
+//     const timerEl = document.getElementById('timer-' + key)
+//     if (!timerEl) return
 
-    // Update the paused class
-    if (timer.paused) {
-        timerEl.classList.add('paused')
-    } else {
-        timerEl.classList.remove('paused')
-    }
+//     // Update the paused class
+//     if (timer.paused) {
+//         timerEl.classList.add('paused')
+//     } else {
+//         timerEl.classList.remove('paused')
+//     }
 
-    // Also update the pause/resume button
-    updatePauseButton(key)
-}
+//     // Also update the pause/resume button
+//     updatePauseButton(key)
+// }
 
 /**
  * Updates just the pause/resume button for a specific timer without full re-render
@@ -752,6 +749,9 @@ function updatePauseButton(key) {
  * @returns {void}
  */
 function removeTimer(key) {
+    // Store state before removal to check if we're removing the last running timer
+    const stateBeforeRemoval = getTimerState()
+
     //clean up interval for this timer
     if (activeIntervals.has(key)) {
         clearInterval(activeIntervals.get(key))
@@ -759,6 +759,13 @@ function removeTimer(key) {
     }
     const newTimers = timersArray.filter((_i, index) => index !== key)
     // if (detectAnyActive() && settings.autoplay) audioPlayer() // TODO to keep or to remove?
+
+    // If we removed the last running timer, pause audio
+    if (stateBeforeRemoval.anyRunning) {
+        const stateAfterRemoval = getTimerState(newTimers)
+        if (!stateAfterRemoval.anyRunning) audioPlayer('pause')
+    }
+
     updateTimers(newTimers)
 }
 
@@ -1090,6 +1097,12 @@ function doneTimer(key) {
         timersArray[key].done = true
         timersArray[key].paused = true
 
+        // Check if this was the last running timer
+        const newState = getTimerState()
+        if (!newState.anyRunning) {
+            audioPlayer('pause')
+        }
+
         // Remove the old timer element
         const oldTimerEl = document.getElementById('timer-' + key)
         if (oldTimerEl) {
@@ -1169,6 +1182,12 @@ function resetTimer(key) {
         timersArray[key].done = false
         timersArray[key].paused = true // Pause the timer after reset
 
+        // Check if this was the last running timer
+        const newState = getTimerState()
+        if (!newState.anyRunning) {
+            audioPlayer('pause')
+        }
+
         // Remove the old timer element
         const oldTimerEl = document.getElementById('timer-' + key)
         if (oldTimerEl) {
@@ -1192,12 +1211,11 @@ function resetTimer(key) {
 }
 
 // ----------------------------- DETECTIONS
-function getTimerState() {
-    const anyRunning = timersArray.some((t) => !t.finished && !t.paused && !t.done)
-    const anyFinished = timersArray.some((t) => t.finished && !t.done)
-    const allPaused =
-        timersArray.length > 0 && timersArray.every((t) => t.paused || t.finished || t.done)
-    const anyActive = timersArray.some((t) => !t.finished)
+function getTimerState(timers = timersArray) {
+    const anyRunning = timers.some((t) => !t.finished && !t.paused && !t.done)
+    const anyFinished = timers.some((t) => t.finished && !t.done)
+    const allPaused = timers.length > 0 && timers.every((t) => t.paused || t.finished || t.done)
+    const anyActive = timers.some((t) => !t.finished)
 
     return { anyRunning, anyFinished, allPaused, anyActive }
 }
@@ -1621,26 +1639,38 @@ new_timer_quick.addEventListener('click', () => addQuickTimer())
 
 // Add this at the end of your script.js file, before the closing braces
 function registerServiceWorker() {
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker
-            .register('./sw.js')
-            .then((registration) => {
-                log('sw registered: ', registration)
+    const testing = false // toggle when testing
+    if (window.location.protocol === 'https:' || window.location.protocol === 'http:') {
+        const manifestLink = document.createElement('link')
+        manifestLink.rel = 'manifest'
+        manifestLink.href = 'manifest.json'
+        document.head.appendChild(manifestLink)
 
-                // Check if PWA is installable
-                if (registration.installing) {
-                    console.log('Service worker installing')
-                } else if (registration.waiting) {
-                    console.log('Service worker installed')
-                } else if (registration.active) {
-                    console.log('Service worker active')
-                }
-            })
-            .catch((registrationError) => {
-                console.log('SW registration failed: ', registrationError)
-            })
+        if ('serviceWorker' in navigator && window.location.hostname !== 'localhost') {
+            navigator.serviceWorker
+                .register('./sw.js')
+                .then((registration) => {
+                    if (testing) {
+                        console.log('Service worker registered: ', registration)
+                        // Check if PWA is installable
+                        if (registration.installing) {
+                            console.log('Service worker installing')
+                        } else if (registration.waiting) {
+                            console.log('Service worker installed')
+                        } else if (registration.active) {
+                            console.log('Service worker active')
+                        }
+                    }
+                })
+                .catch((registrationError) => {
+                    if (testing) {
+                        console.log('Service worker registration failed: ', registrationError)
+                    }
+                    // TODO something smart to log this error, like a load of a script, that can be "fetched" with stats, like GA
+                })
+        }
     }
 }
 
 // Call this function when your app loads
-registerServiceWorker()
+if (RUN_ONLINE) registerServiceWorker()
