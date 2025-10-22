@@ -252,7 +252,11 @@ function getRandomBackgroundAudio() {
     console.log('xzcvzxcvklasdjfghvnjklweasndfhgvjksd')
     let themood = moods[moods.findIndex((item) => settings.mood === item.mood)]
     console.log('moods:', moods)
+    console.log('moods[0].mood:',moods[0].mood)
+    console.log('moods[0]',moods[0])
+
     if (!themood) themood = moods[0]
+
     console.log('themood:', themood)
     // if (!themood) {
     //     themood = moods[0]
