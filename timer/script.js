@@ -250,8 +250,10 @@ const current_date = d.getElementById('current_date')
 
 function getRandomBackgroundAudio() {
     let themood = moods[moods.findIndex((item) => settings.mood === item.mood)]
+    console.log('weet het?');
     // static first
     if (!themood) {
+        console.log('naaaaaaaaaaaaaaaaaaaaaaaa');
         themood = moods[0]
         const filetype = '.' + themood.filetype
         console.log('filetype:', filetype)
@@ -265,7 +267,8 @@ function getRandomBackgroundAudio() {
 
     // then dynamic
     else {
-        console.log('xzcvzxcvklasdjfghvnjklweasndfhgvjksd')
+
+        console.log('yaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
 
         let themood = moods[moods.findIndex((item) => settings.mood === item.mood)]
         console.log('moods:', moods)
