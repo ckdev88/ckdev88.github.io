@@ -1,7 +1,7 @@
 {
-    "name": "Timer App 2025-10-22 13:44",
+    "name": "Timer App",
     "short_name": "Timer",
-    "description": "A simple and customizable timer application with audio features",
+    "description": "A simple and customizable timer application with audio features. Version 2025-10-22 13:44",
     "start_url": "https://ckdev88.github.io/timer/",
     "display": "standalone",
     "background_color": "#f2f2f2",
