@@ -258,7 +258,10 @@ function getRandomBackgroundAudio() {
     console.log('ext:',ext)
     const max = themood.amount
     const randomNumber = Math.ceil(Math.random() * max)
-    return audioDir + settings.mood + '/' + randomNumber + ext
+    const track = '1.opus'
+
+    // return audioDir + settings.mood + '/' + randomNumber + ext
+    return audioDir + settings.mood + '/' + track
 }
 
 // log('getRandomBackgroundAudio():', getRandomBackgroundAudio())
