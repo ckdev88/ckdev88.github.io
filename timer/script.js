@@ -6,7 +6,7 @@
 let pageInit = true
 let isUpdatingTimers = false // global flag to prevent recursion / infinite loop
 
-const RUN_ONLINE = window.location.href.includes('http')
+const RUN_ONLINE = window.location.protocol === 'https:' || window.location.protocol === 'http:'
 const INTERVALAMOUNT_DEFAULT = 50 // in minutes, if INTERVALUNIT_DEFAULT is 60
 const INTERVALUNIT_DEFAULT = 60 // in seconds
 /** @typedef {'en'|'pt'|'nl'} LanguageOptions */
@@ -248,15 +248,15 @@ const current_time = d.getElementById('current_time')
 const current_date = d.getElementById('current_date')
 
 function getRandomBackgroundAudio() {
-    console.log('xzcvzxcvklasdjfghvnjklweasndfhgvjksd');
+    console.log('xzcvzxcvklasdjfghvnjklweasndfhgvjksd')
     let themood = moods[moods.findIndex((item) => settings.mood === item.mood)]
-    console.log('themood:',themood)
+    console.log('themood:', themood)
     if (!themood) {
         themood = moods[0]
         return audioDir + themood.mood + '/1' + themood.ext
     }
     const ext = '.' + themood.ext
-    console.log('ext:',ext)
+    console.log('ext:', ext)
     const max = themood.amount
     const randomNumber = Math.ceil(Math.random() * max)
     const track = '1.opus'
