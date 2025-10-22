@@ -2,8 +2,6 @@
 //
 // ----------------------------- GLOBAL CONSTANTS
 
-console.log('eyayaya')
-
 /** @type {boolean} pageInit starts with true value, is set to false after first run */
 let pageInit = true
 let isUpdatingTimers = false // global flag to prevent recursion / infinite loop
@@ -1413,18 +1411,17 @@ function audioPlayer(state = 'play') {
             if (!wasPaused) audioPlayer('play')
             break
         case 'volume_up':
-            console.log('voluming up')
-
+            log('voluming up')
             audio.background.volume = Math.min(audio.background.volume + 0.2, 1)
-            console.log('volume to', audio.background.volume)
+            log('volume to', audio.background.volume)
             break
         case 'volume_down':
-            console.log('voluming down')
+            log('voluming down')
             audio.background.volume = Math.max(audio.background.volume - 0.2, 0.01) // 0.01 is temporary hack to prevent need for webworker (for now), just keep te music going on, just very soft
-            console.log('volume to', audio.background.volume)
+            log('volume to', audio.background.volume)
             break
         case 'change_mood':
-            console.log('changing mood')
+            log('changing mood')
             settings.mood =
                 moods[
                     (moods.findIndex((item) => item.mood === settings.mood) + 1) % moods.length
