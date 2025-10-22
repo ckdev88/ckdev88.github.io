@@ -1414,26 +1414,12 @@ function audioPlayer(state = 'play') {
             break
         case 'volume_up':
             console.log('voluming up')
-            if (audio.background.volume < 1) {
-                const increase = 0.2
-                if (audio.background.volume + increase > 1) {
-                    audio.background.volume = 1
-                    break
-                }
-                audio.background.volume += 0.2
-                console.log('volume to', audio.background.volume)
-            }
+            audio.background.volume = Math.min(audio.background.volume + 0.2, 1)
+            console.log('volume to', audio.background.volume)
             break
         case 'volume_down':
             console.log('voluming down')
-            if (audio.background.volume < 0.2) {
-                // audioPlayer('pause')
-                audio.background.volume = 0.01 // temporary hack to prevent need for webworker (for now), just keep te music going on, just very soft
-                log('do pause')
-                console.log('volume to', audio.background.volume)
-                break
-            }
-            audio.background.volume -= 0.2
+            audio.background.volume = Math.max(audio.background.volume - 0.2, 0.01) // 0.01 is temporary hack to prevent need for webworker (for now), just keep te music going on, just very soft
             console.log('volume to', audio.background.volume)
             break
         case 'change_mood':
