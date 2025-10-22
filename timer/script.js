@@ -1414,6 +1414,7 @@ function audioPlayer(state = 'play') {
             break
         case 'volume_up':
             console.log('voluming up')
+
             audio.background.volume = Math.min(audio.background.volume + 0.2, 1)
             console.log('volume to', audio.background.volume)
             break
@@ -1442,11 +1443,22 @@ function audioPlayer(state = 'play') {
     }
 
     // loop volumes 0.2 to 1, sometimes value is a bit off, like 0.200001, so using 1.9 (0.19*10) as base and buffer
+    const currentVolume = audio.background.volume
     for (let i = 1.9; i < 11; i += 2) {
         const rounded = i + 0.1
         document.getElementById(`audio_volume_${rounded}`).classList.value =
-            Math.round(audio.background.volume * 10) > i ? 'active' : 'inactive'
+            Math.round(currentVolume * 10) > i ? 'active' : 'inactive'
     }
+    // Update volume button visibility
+    if (currentVolume >= 0.99)
+        document.getElementById('audio_volume_up').style.visibility = 'hidden'
+    else document.getElementById('audio_volume_up').style.visibility = 'visible'
+
+    if (currentVolume <= 0.01)
+        document.getElementById('audio_volume_down').style.visibility = 'hidden'
+    else document.getElementById('audio_volume_down').style.visibility = 'visible'
+
+    log('audio.background.volume:', audio.background.volume)
 
     // TODO: check if still relevant, see CSS
     if (!audio.background.paused)
