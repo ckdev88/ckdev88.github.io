@@ -207,7 +207,8 @@ if (settings === null) {
         quickTimerInterval: INTERVALAMOUNT_DEFAULT * INTERVALUNIT_DEFAULT,
         quickTimerName: getTranslation(LANGUAGE_DEFAULT, 'Quick_timer_default_name'),
         quickTimerDescr: getTranslation(LANGUAGE_DEFAULT, 'Quick_timer_default_description'),
-        language: LANGUAGE_DEFAULT
+        language: LANGUAGE_DEFAULT,
+        mood: moods[0].mood
     }
     localStorage.setItem('settings', JSON.stringify(settings))
 }
@@ -249,47 +250,27 @@ const current_time = d.getElementById('current_time')
 const current_date = d.getElementById('current_date')
 
 function getRandomBackgroundAudio() {
-    let themood = moods[moods.findIndex((item) => settings.mood === item.mood)]
-    console.log('weet het?');
     // static first
+    if (!settings.mood) {
+        settings.mood = moods[0].mood
+        updateSettings(settings)
+    }
+    // let themood = moods[moods.findIndex((item) => settings.mood === item.mood)]
+    themood = moods.find((item) => settings.mood === item.mood)
+
     if (!themood) {
-        console.log('naaaaaaaaaaaaaaaaaaaaaaaa');
         themood = moods[0]
-        const filetype = '.' + themood.filetype
-        console.log('filetype:', filetype)
-        const max = themood.amount
-        const randomNumber = Math.ceil(Math.random() * max)
-        const track = randomNumber + filetype
-
-        // return audioDir + settings.mood + '/' + randomNumber + filetype
-        return audioDir + settings.mood + '/' + track
+        settings.mood = themood.mood
+        updateSettings(settings)
     }
 
-    // then dynamic
-    else {
+    const filetype = '.' + themood.filetype
+    const max = themood.amount
+    const randomNumber = Math.ceil(Math.random() * max)
+    const track = randomNumber + filetype
 
-        console.log('yaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
-
-        let themood = moods[moods.findIndex((item) => settings.mood === item.mood)]
-        console.log('moods:', moods)
-        console.log('moods[0].mood:', moods[0].mood)
-        console.log('moods[0]', moods[0])
-
-        if (!themood) themood = moods[0]
-        console.log('themood:', themood)
-        // if (!themood) {
-        //     themood = moods[0]
-        //     return audioDir + themood.mood + '/1' + themood.filetype
-        // }
-        const filetype = '.' + themood.filetype
-        console.log('filetype:', filetype)
-        const max = themood.amount
-        const randomNumber = Math.ceil(Math.random() * max)
-        const track = randomNumber + filetype
-
-        // return audioDir + settings.mood + '/' + randomNumber + filetype
-        return audioDir + settings.mood + '/' + track
-    }
+    // return audioDir + settings.mood + '/' + randomNumber + filetype
+    return audioDir + settings.mood + '/' + track
 }
 
 // log('getRandomBackgroundAudio():', getRandomBackgroundAudio())
@@ -303,7 +284,7 @@ const audio = {
     btn_change_mood: d.getElementById('audio_change_mood') // FIXME to use or not to use.. not really used right now
 }
 audio.btn_play.innerText = getTranslation(settings.language, 'Play_audio')
-audio.btn_pause.innerText = settings.mood
+audio.btn_pause.innerText = settings.mood || moods[0].mood
 
 /** @typedef {string} SimpleTime - Simple time in string format, like '12:59' */
 
