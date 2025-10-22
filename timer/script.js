@@ -1448,12 +1448,12 @@ function audioPlayer(state = 'play') {
             Math.round(audio.background.volume * 10) > i ? 'active' : 'inactive'
     }
 
-    if (!audio.background.paused) {
+    // TODO: check if still relevant, see CSS
+    if (!audio.background.paused)
         document.getElementById('audio_volume_container').style.visibility = 'visible'
-    } else {
-        document.getElementById('audio_volume_container').style.visibility = 'hidden'
-    }
-    if (audio.background.volume > 0.99)
+    else document.getElementById('audio_volume_container').style.visibility = 'hidden'
+
+    if (audio.background.volume >= 1)
         document.getElementById('audio_volume_up').style.visibility = 'hidden'
     else document.getElementById('audio_volume_up').style.visibility = 'visible'
     log('audio.background.volume:', audio.background.volume)
