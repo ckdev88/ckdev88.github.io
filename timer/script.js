@@ -249,12 +249,12 @@ const current_date = d.getElementById('current_date')
 
 function getRandomBackgroundAudio() {
     let themood = moods[moods.findIndex((item) => settings.mood === item.mood)]
+    const ext = '.' + themood.ext
     if (!themood) {
         themood = moods[0]
         return audioDir + themood.mood + '/1' + themood.ext
     }
     const max = themood.amount
-    const ext = '.' + themood.ext
     const randomNumber = Math.ceil(Math.random() * max)
     return audioDir + settings.mood + '/' + randomNumber + ext
 }
