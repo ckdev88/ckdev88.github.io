@@ -2,6 +2,8 @@
 //
 // ----------------------------- GLOBAL CONSTANTS
 
+console.log('eyayaya');
+
 /** @type {boolean} pageInit starts with true value, is set to false after first run */
 let pageInit = true
 let isUpdatingTimers = false // global flag to prevent recursion / infinite loop
