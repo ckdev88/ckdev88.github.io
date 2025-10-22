@@ -248,6 +248,7 @@ const current_time = d.getElementById('current_time')
 const current_date = d.getElementById('current_date')
 
 function getRandomBackgroundAudio() {
+    console.log('xzcvzxcvklasdjfghvnjklweasndfhgvjksd');
     let themood = moods[moods.findIndex((item) => settings.mood === item.mood)]
     console.log('themood:',themood)
     if (!themood) {
