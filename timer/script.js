@@ -2,7 +2,7 @@
 //
 // ----------------------------- GLOBAL CONSTANTS
 
-console.log('eyayaya');
+console.log('eyayaya')
 
 /** @type {boolean} pageInit starts with true value, is set to false after first run */
 let pageInit = true
@@ -36,9 +36,9 @@ if (RUN_ONLINE) {
     // demo-audio files for online use
     audioDir += 'demo/'
     moods = [
-        { mood: 'brownnoise', amount: 2, ext: 'opus', loop: true },
+        { mood: 'rain', amount: 4, ext: 'opus', loop: true },
         { mood: 'lofi', amount: 4, ext: 'opus', loop: false },
-        { mood: 'rain', amount: 4, ext: 'opus', loop: true }
+        { mood: 'brownnoise', amount: 2, ext: 'opus', loop: true }
     ]
 } else {
     // locally stored audio
@@ -52,7 +52,7 @@ if (RUN_ONLINE) {
     ]
 }
 
-const MOOD_DEFAULT = 'lofi' // TODO low prio, voor later
+const MOOD_DEFAULT = 'rain' // TODO low prio, voor later
 
 /** @type {Settings} settings */
 let settings = {}
@@ -207,8 +207,7 @@ if (settings === null) {
         quickTimerInterval: INTERVALAMOUNT_DEFAULT * INTERVALUNIT_DEFAULT,
         quickTimerName: getTranslation(LANGUAGE_DEFAULT, 'Quick_timer_default_name'),
         quickTimerDescr: getTranslation(LANGUAGE_DEFAULT, 'Quick_timer_default_description'),
-        language: LANGUAGE_DEFAULT,
-        mood: MOOD_DEFAULT
+        language: LANGUAGE_DEFAULT
     }
     localStorage.setItem('settings', JSON.stringify(settings))
 }
@@ -252,17 +251,18 @@ const current_date = d.getElementById('current_date')
 function getRandomBackgroundAudio() {
     console.log('xzcvzxcvklasdjfghvnjklweasndfhgvjksd')
     let themood = moods[moods.findIndex((item) => settings.mood === item.mood)]
-    console.log('moods:',moods)
+    console.log('moods:', moods)
+    if (!themood) themood = moods[0]
     console.log('themood:', themood)
-    if (!themood) {
-        themood = moods[0]
-        return audioDir + themood.mood + '/1' + themood.ext
-    }
+    // if (!themood) {
+    //     themood = moods[0]
+    //     return audioDir + themood.mood + '/1' + themood.ext
+    // }
     const ext = '.' + themood.ext
     console.log('ext:', ext)
     const max = themood.amount
     const randomNumber = Math.ceil(Math.random() * max)
-    const track = '1.opus'
+    const track = randomNumber + ext
 
     // return audioDir + settings.mood + '/' + randomNumber + ext
     return audioDir + settings.mood + '/' + track
