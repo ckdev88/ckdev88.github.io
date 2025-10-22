@@ -22,7 +22,7 @@ const LANGUAGE_SUPPORTED = ['en', 'nl', 'pt']
  * @typedef {Object} Mood
  * @property {string} mood - name of the mood (rain, creativity, recharge)
  * @property {number} amount - number of audio files for this mood
- * @property {string} ext - file extension for mood-related audio file
+ * @property {string} filetype - file extension for mood-related audio file
  */
 
 /**
@@ -36,23 +36,23 @@ if (RUN_ONLINE) {
     // demo-audio files for online use
     audioDir += 'demo/'
     moods = [
-        { mood: 'rain', amount: 4, ext: 'opus', loop: true },
-        { mood: 'lofi', amount: 4, ext: 'opus', loop: false },
-        { mood: 'brownnoise', amount: 2, ext: 'opus', loop: true }
+        { mood: 'rain', amount: 4, filetype: 'opus', loop: true },
+        { mood: 'lofi', amount: 4, filetype: 'opus', loop: false },
+        { mood: 'brownnoise', amount: 2, filetype: 'opus', loop: true }
     ]
 } else {
     // locally stored audio
     moods = [
-        { mood: 'creativity', amount: 156, ext: 'mp3', loop: false },
-        { mood: 'deepwork', amount: 222, ext: 'mp3', loop: false },
-        { mood: 'lofi', amount: 4, ext: 'opus', loop: false },
-        { mood: 'meditate', amount: 67, ext: 'mp3', loop: true },
-        { mood: 'rain', amount: 42, ext: 'mp3', loop: true },
-        { mood: 'recharge', amount: 112, ext: 'mp3', loop: false }
+        { mood: 'creativity', amount: 156, filetype: 'mp3', loop: false },
+        { mood: 'deepwork', amount: 222, filetype: 'mp3', loop: false },
+        { mood: 'lofi', amount: 4, filetype: 'opus', loop: false },
+        { mood: 'meditate', amount: 67, filetype: 'mp3', loop: true },
+        { mood: 'rain', amount: 42, filetype: 'mp3', loop: true },
+        { mood: 'recharge', amount: 112, filetype: 'mp3', loop: false }
     ]
 }
 
-const MOOD_DEFAULT = 'rain' // TODO low prio, voor later
+const MOOD_DEFAULT = moods[0].mood // TODO low prio, voor later
 
 /** @type {Settings} settings */
 let settings = {}
@@ -249,27 +249,44 @@ const current_time = d.getElementById('current_time')
 const current_date = d.getElementById('current_date')
 
 function getRandomBackgroundAudio() {
-    console.log('xzcvzxcvklasdjfghvnjklweasndfhgvjksd')
     let themood = moods[moods.findIndex((item) => settings.mood === item.mood)]
-    console.log('moods:', moods)
-    console.log('moods[0].mood:',moods[0].mood)
-    console.log('moods[0]',moods[0])
+    // static first
+    if (!themood) {
+        themood = moods[0]
+        const filetype = '.' + themood.filetype
+        console.log('filetype:', filetype)
+        const max = themood.amount
+        const randomNumber = Math.ceil(Math.random() * max)
+        const track = randomNumber + filetype
 
-    if (!themood) themood = moods[0]
+        // return audioDir + settings.mood + '/' + randomNumber + filetype
+        return audioDir + settings.mood + '/' + track
+    }
 
-    console.log('themood:', themood)
-    // if (!themood) {
-    //     themood = moods[0]
-    //     return audioDir + themood.mood + '/1' + themood.ext
-    // }
-    const ext = '.' + themood.ext
-    console.log('ext:', ext)
-    const max = themood.amount
-    const randomNumber = Math.ceil(Math.random() * max)
-    const track = randomNumber + ext
+    // then dynamic
+    else {
+        console.log('xzcvzxcvklasdjfghvnjklweasndfhgvjksd')
 
-    // return audioDir + settings.mood + '/' + randomNumber + ext
-    return audioDir + settings.mood + '/' + track
+        let themood = moods[moods.findIndex((item) => settings.mood === item.mood)]
+        console.log('moods:', moods)
+        console.log('moods[0].mood:', moods[0].mood)
+        console.log('moods[0]', moods[0])
+
+        if (!themood) themood = moods[0]
+        console.log('themood:', themood)
+        // if (!themood) {
+        //     themood = moods[0]
+        //     return audioDir + themood.mood + '/1' + themood.filetype
+        // }
+        const filetype = '.' + themood.filetype
+        console.log('filetype:', filetype)
+        const max = themood.amount
+        const randomNumber = Math.ceil(Math.random() * max)
+        const track = randomNumber + filetype
+
+        // return audioDir + settings.mood + '/' + randomNumber + filetype
+        return audioDir + settings.mood + '/' + track
+    }
 }
 
 // log('getRandomBackgroundAudio():', getRandomBackgroundAudio())
@@ -1225,6 +1242,7 @@ function resetTimer(key) {
 
 // ----------------------------- DETECTIONS
 function getTimerState(timers = timersArray) {
+    if (timers === null) return false
     const anyRunning = timers.some((t) => !t.finished && !t.paused && !t.done)
     const anyFinished = timers.some((t) => t.finished && !t.done)
     const allPaused = timers.length > 0 && timers.every((t) => t.paused || t.finished || t.done)
