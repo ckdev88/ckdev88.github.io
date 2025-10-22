@@ -1413,7 +1413,7 @@ function audioPlayer(state = 'play') {
             if (!wasPaused) audioPlayer('play')
             break
         case 'volume_up':
-            if (audio.background.volume < 1) audio.background.volume += 0.2
+            if (audio.background.volume < 0.8) audio.background.volume += 0.2
             break
         case 'volume_down':
             if (audio.background.volume < 0.25) {
