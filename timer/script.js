@@ -50,7 +50,7 @@ if (RUN_ONLINE) {
     ]
 }
 
-const MOOD_DEFAULT = 'rain' // TODO low prio, voor later
+const MOOD_DEFAULT = 'lofi' // TODO low prio, voor later
 
 /** @type {Settings} settings */
 let settings = {}
@@ -249,7 +249,9 @@ const current_date = d.getElementById('current_date')
 
 function getRandomBackgroundAudio() {
     let themood = moods[moods.findIndex((item) => settings.mood === item.mood)]
+    console.log('themood:',themood)
     const ext = '.' + themood.ext
+    console.log('ext:',ext)
     if (!themood) {
         themood = moods[0]
         return audioDir + themood.mood + '/1' + themood.ext
