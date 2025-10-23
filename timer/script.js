@@ -8,6 +8,7 @@ let pageInit = true
 let isUpdatingTimers = false // global flag to prevent recursion / infinite loop
 
 const RUN_ONLINE = window.location.protocol === 'https:' || window.location.protocol === 'http:'
+const TESTING = false
 const AUDIO_SHUFFLE = !RUN_ONLINE
 const INTERVALAMOUNT_DEFAULT = 50 // in minutes, if INTERVALUNIT_DEFAULT is 60
 const INTERVALUNIT_DEFAULT = 60 // in seconds
@@ -671,7 +672,7 @@ function addTimer(name, description, interval) {
     renderTimers(timersArray)
 
     log('settings.autoplay', settings.autoplay)
-    settings.autoplay === true && audioPlayer('play')
+    if (settings.autoplay === true) audioPlayer('play')
     showFeedback(btn_create_timer, 'Timer_created')
 
     // Debug log
@@ -684,19 +685,14 @@ function addTimer(name, description, interval) {
  * @returns {void}
  */
 function pauseTimerToggle(key) {
-    const state = getTimerState()
-
     for (let i = 0; i < timersArray.length; i++) {
         if (i === key) {
             timersArray[i].paused = !timersArray[i].paused
-
-            // Update audio based on state
             if (!timersArray[i].paused && settings.autoplay === true) audioPlayer('play')
-
-            // ADD THIS: If this was the last running timer, pause audio
-            const newState = state
-            if (newState.allPaused || !newState.anyRunning) {
-                audioPlayer('pause')
+            else if (timersArray[i].paused) {
+                // Timer is being paused - check if this was the last running timer
+                const newState = getTimerState()
+                if (!newState.anyRunning) audioPlayer('pause')
             }
         }
     }
@@ -708,7 +704,6 @@ function pauseTimerToggle(key) {
         if (timersArray[key].paused) timerEl.classList.add('paused')
         else timerEl.classList.remove('paused')
 
-
         // Update the button
         updatePauseButton(key)
     }
@@ -717,7 +712,7 @@ function pauseTimerToggle(key) {
     if (!timersArray[key].paused) {
         const currentStatus = localStorage.getItem('countDownAllStatus')
         if (currentStatus === 'stopped' || !countdownAllInterval) {
-            // log('Resuming timer, restarting countdown...')
+            log('Resuming timer, restarting countdown...')
             countdownAll()
         }
     }
@@ -896,7 +891,7 @@ function renderTimers(arr) {
  * val {unknown|undefined} - second arg: value to test
  */
 function log(str, val) {
-    if (RUN_ONLINE) return
+    if (RUN_ONLINE || !TESTING) return
     if (val) console.log(str, val)
     else console.log(str)
 }
@@ -1206,27 +1201,18 @@ function resetTimer(key) {
     log('Resetting timer:', key)
 
     if (timersArray[key]) {
-        // Reset all timer properties
+        // Reset all timer properties but keep the current paused state
         timersArray[key].timepast = 0
         timersArray[key].starttime = getCurrentTimeSimple()
         timersArray[key].endtime = getTimeSimple(false, timersArray[key].interval)
         timersArray[key].finished = false
         timersArray[key].done = false
-        timersArray[key].paused = true // Pause the timer after reset
-
-        // Check if this was the last running timer
-        const newState = getTimerState()
-        if (!newState.anyRunning) {
-            audioPlayer('pause')
-        }
 
         // Remove the old timer element
         const oldTimerEl = document.getElementById('timer-' + key)
-        if (oldTimerEl) {
-            oldTimerEl.remove()
-        }
+        if (oldTimerEl) oldTimerEl.remove()
 
-        // Re-render the timer in paused state
+        // Re-render the timer
         const newTimerEl = renderTimer(timersArray[key], key)
         timer_container.appendChild(newTimerEl)
 
@@ -1405,7 +1391,6 @@ function countdownAll() {
  * @returns {void}
  */
 function audioPlayer(state = 'play') {
-    const wasPaused = audio.background.paused
     switch (state) {
         case 'play':
             audio.background.loop = false // TODO apply `loop` property in `mood` object
@@ -1421,7 +1406,6 @@ function audioPlayer(state = 'play') {
             localStorage.setItem('audioPlay', false)
             break
         case 'next':
-            console.log('en? doing next?');
             audio.background.pause();
 
             const currentMood = moods.find((item) => settings.mood === item.mood);
