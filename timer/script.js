@@ -681,15 +681,20 @@ function addTimer(name, description, interval) {
  * @returns {void}
  */
 function pauseTimerToggle(key) {
-    for (let i = 0; i < timersArray.length; i++) {
-        if (i === key) {
-            timersArray[i].paused = !timersArray[i].paused
-            if (!timersArray[i].paused && settings.autoplay === true) audioPlayer('play')
-            else if (timersArray[i].paused) {
-                // Timer is being paused - check if this was the last running timer
-                const newState = getTimerState()
-                if (!newState.anyRunning) audioPlayer('pause')
-            }
+    const timer = timersArray[key]
+    if (!timer) return
+
+    timer.paused = !timer.paused
+
+    // Update audio based on state
+    if (!timer.paused && settings.autoplay === true) {
+        // Timer is being resumed/unpaused
+        audioPlayer('play')
+    } else if (timer.paused) {
+        // Timer is being paused - check if this was the last running timer
+        const newState = getTimerState()
+        if (!newState.anyRunning) {
+            audioPlayer('pause')
         }
     }
 
@@ -697,7 +702,7 @@ function pauseTimerToggle(key) {
     const timerEl = document.getElementById('timer-' + key)
     if (timerEl) {
         // Toggle the paused class
-        if (timersArray[key].paused) timerEl.classList.add('paused')
+        if (timer.paused) timerEl.classList.add('paused')
         else timerEl.classList.remove('paused')
 
         // Update the button
@@ -705,7 +710,7 @@ function pauseTimerToggle(key) {
     }
 
     // CRITICAL: Restart countdown if we're resuming a timer and countdown isn't running
-    if (!timersArray[key].paused) {
+    if (!timer.paused) {
         const currentStatus = localStorage.getItem('countDownAllStatus')
         if (currentStatus === 'stopped' || !countdownAllInterval) {
             log('Resuming timer, restarting countdown...')
@@ -713,10 +718,7 @@ function pauseTimerToggle(key) {
         }
     }
 
-    // Update status bar
     bgStatus(timersArray)
-
-    // Update storage
     localStorage.setItem('timerTimers', JSON.stringify(timersArray))
 }
 
