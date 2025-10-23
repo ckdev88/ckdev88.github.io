@@ -428,6 +428,7 @@ button {
     margin: 0 -1rem 0;
     border-bottom: 1px dashed var(--separation-border-color);
     opacity: 1;
+    position:relative;
 
     button {
         margin-bottom: 0;
