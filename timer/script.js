@@ -4,6 +4,10 @@
 
 /** @type {boolean} pageInit starts with true value, is set to false after first run */
 let pageInit = true
+/**
+ * @type {Timers[]}
+ */
+let timersArray = getTimers() || []
 let isUpdatingTimers = false // global flag to prevent recursion / infinite loop
 
 const RUN_ONLINE = window.location.protocol === 'https:' || window.location.protocol === 'http:'
@@ -353,10 +357,6 @@ audio.background.addEventListener('ended', () => {
  * @typedef {Object.<number, Timer>} Timers - Object with numeric keys mapping to Timer objects
  */
 
-/**
- * @type {Timers[]}
- */
-let timersArray = []
 /**
  * Turn localstorage-string containing timers into an array and return it.
  * @var {String} timers
