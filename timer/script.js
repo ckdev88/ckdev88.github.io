@@ -354,21 +354,27 @@ audio.background.addEventListener('ended', () => {
  */
 
 /**
+ * @type {Timers[]}
+ */
+let timersArray = []
+/**
  * Turn localstorage-string containing timers into an array and return it.
- * @var {String} timers
- * @returns {Timers} timers
+ * @returns {Array} timers
  */
 const getTimers = () => {
-    /** @type {[]} timers */
+    /** @type {Array} timers */
     const timers = JSON.parse(localStorage.getItem('timerTimers'))
-    if (!timers) updateTimers([])
-    else bgStatus(timers) // TODO should just trigger whenever state of timer changes
+    if (!timers) {
+        updateTimers([])
+        return []
+    }
+    bgStatus(timers) // TODO should just trigger whenever state of timer changes
     return timers
 }
 
 /** @type {Timers} timersArray - Array of timers, refreshed every second */
-let timersArray = getTimers() || []
-
+// TODO should do nothing when anyActive is false
+timersArray = getTimers()
 // setInterval(() => {
 //     timersArray = getTimers()
 // }, 1000)
@@ -378,9 +384,6 @@ function updateTimers(arr) {
     // prevent recursion
     if (isUpdatingTimers) return false
     isUpdatingTimers = true
-
-    // Ensure arr is always an array
-    if (!arr) arr = []
 
     // log('Updating timers, count:', arr.length)
     localStorage.setItem('timerTimers', JSON.stringify(arr))
