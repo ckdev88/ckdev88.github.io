@@ -356,7 +356,8 @@ audio.background.addEventListener('ended', () => {
 /**
  * @type {Timers[]}
  */
-let timersArray = []
+let timersArray = getTimers() || [] // Fallback to empty array if null
+
 /**
  * Turn localstorage-string containing timers into an array and return it.
  * @returns {Array} timers
