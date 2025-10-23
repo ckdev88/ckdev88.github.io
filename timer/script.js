@@ -4,10 +4,6 @@
 
 /** @type {boolean} pageInit starts with true value, is set to false after first run */
 let pageInit = true
-/**
- * @type {Timers[]}
- */
-let timersArray = getTimers() || []
 let isUpdatingTimers = false // global flag to prevent recursion / infinite loop
 
 const RUN_ONLINE = window.location.protocol === 'https:' || window.location.protocol === 'http:'
@@ -371,8 +367,8 @@ const getTimers = () => {
 }
 
 /** @type {Timers} timersArray - Array of timers, refreshed every second */
-// TODO should do nothing when anyActive is false
-timersArray = getTimers()
+let timersArray = getTimers() || []
+
 // setInterval(() => {
 //     timersArray = getTimers()
 // }, 1000)
@@ -382,6 +378,9 @@ function updateTimers(arr) {
     // prevent recursion
     if (isUpdatingTimers) return false
     isUpdatingTimers = true
+
+    // Ensure arr is always an array
+    if (!arr) arr = []
 
     // log('Updating timers, count:', arr.length)
     localStorage.setItem('timerTimers', JSON.stringify(arr))
