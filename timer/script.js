@@ -2,11 +2,13 @@
 //
 // ----------------------------- GLOBAL CONSTANTS
 
+
 /** @type {boolean} pageInit starts with true value, is set to false after first run */
 let pageInit = true
 let isUpdatingTimers = false // global flag to prevent recursion / infinite loop
 
 const RUN_ONLINE = window.location.protocol === 'https:' || window.location.protocol === 'http:'
+const AUDIO_SHUFFLE = !RUN_ONLINE
 const INTERVALAMOUNT_DEFAULT = 50 // in minutes, if INTERVALUNIT_DEFAULT is 60
 const INTERVALUNIT_DEFAULT = 60 // in seconds
 /** @typedef {'en'|'pt'|'nl'} LanguageOptions */
@@ -34,19 +36,19 @@ if (RUN_ONLINE) {
     // demo-audio files for online use
     audioDir += 'demo/'
     moods = [
-        { mood: 'rain', amount: 4, filetype: 'opus', loop: true },
-        { mood: 'lofi', amount: 4, filetype: 'opus', loop: false },
-        { mood: 'brownnoise', amount: 2, filetype: 'opus', loop: true }
+        {mood: 'brownnoise', amount: 2, filetype: 'opus', loop: true},
+        {mood: 'lofi', amount: 4, filetype: 'opus', loop: false},
+        {mood: 'rain', amount: 4, filetype: 'opus', loop: true}
     ]
 } else {
     // locally stored audio
     moods = [
-        { mood: 'creativity', amount: 156, filetype: 'mp3', loop: false },
-        { mood: 'deepwork', amount: 222, filetype: 'mp3', loop: false },
-        { mood: 'lofi', amount: 4, filetype: 'opus', loop: false },
-        { mood: 'meditate', amount: 67, filetype: 'mp3', loop: true },
-        { mood: 'rain', amount: 42, filetype: 'mp3', loop: true },
-        { mood: 'recharge', amount: 112, filetype: 'mp3', loop: false }
+        {mood: 'lofi', amount: 4, filetype: 'opus', loop: false},
+        {mood: 'creativity', amount: 156, filetype: 'mp3', loop: false},
+        {mood: 'deepwork', amount: 222, filetype: 'mp3', loop: false},
+        {mood: 'meditate', amount: 67, filetype: 'mp3', loop: true},
+        {mood: 'rain', amount: 42, filetype: 'mp3', loop: true},
+        {mood: 'recharge', amount: 112, filetype: 'mp3', loop: false}
     ]
 }
 
@@ -279,10 +281,30 @@ const audio = {
     btn_play: d.getElementById('audio_play'),
     btn_pause: d.getElementById('audio_pause'),
     btn_next: d.getElementById('audio_next'), // FIXME to use or not to use.. not really used right now
-    btn_change_mood: d.getElementById('audio_change_mood') // FIXME to use or not to use.. not really used right now
+    btn_change_mood: d.getElementById('audio_change_mood'), // FIXME to use or not to use.. not really used right now
+    currentTrack: 1 // TODO communicate with localstorage 
+
 }
 audio.btn_play.innerText = getTranslation(settings.language, 'Play_audio')
 audio.btn_pause.innerText = settings.mood || moods[0].mood
+
+audio.background.addEventListener('ended', () => {
+    log('audio ended');
+    const currentMood = moods.find((item) => settings.mood === item.mood);
+    if (!currentMood) return;
+    console.log('currentMood:', currentMood)
+
+    // If loop is true for this mood, replay the same track
+    if (currentMood.loop) {
+        console.log('looping....');
+        // TODO check if `audio.background.loop = true` doesnt just suffice
+        audio.background.currentTime = 0;
+        audio.background.play();
+        return;
+    }
+    console.log('lets do next dan...');
+    audioPlayer('next');
+});
 
 /** @typedef {string} SimpleTime - Simple time in string format, like '12:59' */
 
@@ -672,7 +694,7 @@ function pauseTimerToggle(key) {
             if (!timersArray[i].paused && settings.autoplay === true) audioPlayer('play')
 
             // ADD THIS: If this was the last running timer, pause audio
-            const newState = getTimerState()
+            const newState = state
             if (newState.allPaused || !newState.anyRunning) {
                 audioPlayer('pause')
             }
@@ -683,11 +705,9 @@ function pauseTimerToggle(key) {
     const timerEl = document.getElementById('timer-' + key)
     if (timerEl) {
         // Toggle the paused class
-        if (timersArray[key].paused) {
-            timerEl.classList.add('paused')
-        } else {
-            timerEl.classList.remove('paused')
-        }
+        if (timersArray[key].paused) timerEl.classList.add('paused')
+        else timerEl.classList.remove('paused')
+
 
         // Update the button
         updatePauseButton(key)
@@ -945,11 +965,11 @@ function renderTimer(i, key, paused = false) {
             key,
             settings.countDown === true
                 ? '<span class="time_left_text">' +
-                      getTranslation(settings.language, 'Time_left') +
-                      '</span>: '
+                getTranslation(settings.language, 'Time_left') +
+                '</span>: '
                 : '<span class="time_passed_text">' +
-                      getTranslation(settings.language, 'Time_passed') +
-                      '</span>: ',
+                getTranslation(settings.language, 'Time_passed') +
+                '</span>: ',
             ''
         )
     )
@@ -1102,7 +1122,7 @@ function doneTimerLink(key) {
 }
 
 function doneTimer(key) {
-    log('Marking timer as done:', key)
+    // log('Marking timer as done:', key)
 
     if (timersArray[key]) {
         timersArray[key].finished = true
@@ -1133,7 +1153,7 @@ function doneTimer(key) {
 
         document.title = 'Timer'
 
-        log('Timer re-rendered as done')
+        // log('Timer re-rendered as done')
     }
 }
 
@@ -1230,7 +1250,7 @@ function getTimerState(timers = timersArray) {
     const allPaused = timers.length > 0 && timers.every((t) => t.paused || t.finished || t.done)
     const anyActive = timers.some((t) => !t.finished)
 
-    return { anyRunning, anyFinished, allPaused, anyActive }
+    return {anyRunning, anyFinished, allPaused, anyActive}
 }
 
 // ----------------------------- ALWAYS RUNNING & WHEN DONE...
@@ -1268,7 +1288,6 @@ function countdownAll() {
     log('Starting countdown interval with running timers')
 
     countdownAllInterval = setInterval(() => {
-        log('url?', window.location.pathname)
         const currentTime = Date.now()
         const elapsedSeconds = Math.floor((currentTime - lastUpdateTime) / 1000)
         lastUpdateTime = currentTime
@@ -1284,17 +1303,17 @@ function countdownAll() {
                 // Skip paused or finished timers
                 if (timer.paused === true || timer.finished || timer.done) continue
 
-                log(`Updating timer ${i}: ${timer.name}, timepast: ${timer.timepast}`)
+                // log(`Updating timer ${i}: ${timer.name}, timepast: ${timer.timepast}`)
 
                 // Store previous state to detect changes
                 const previousTimepast = timer.timepast
-                const previousFinished = timer.finished
+                const previousFinished = timer.finished // TODO check if can be removed
 
                 // Update timer progress based on actual elapsed time
                 if (timer.timepast < timer.interval && timer.paused === false) {
                     timer.timepast = Math.min(timer.timepast + elapsedSeconds, timer.interval)
                     anyTimerChanged = true
-                    log(`Timer ${i} updated: ${timer.timepast}/${timer.interval}`)
+                    // log(`Timer ${i} updated: ${timer.timepast}/${timer.interval}`)
                 }
 
                 // Check if timer finished
@@ -1333,11 +1352,11 @@ function countdownAll() {
 
             // Update storage and render if something important changed
             if (anyTimerChanged || needsFullRender) {
-                log('Updating timers storage due to changes')
+                // log('Updating timers storage due to changes')
                 localStorage.setItem('timerTimers', JSON.stringify(timersArray))
 
                 if (needsFullRender) {
-                    log('Full render needed, updating...')
+                    // log('Full render needed, updating...')
                     renderTimers(timersArray)
                 }
             }
@@ -1390,8 +1409,7 @@ function audioPlayer(state = 'play') {
     switch (state) {
         case 'play':
             audio.background.loop = false // TODO apply `loop` property in `mood` object
-            log('audio.background:', audio.background)
-            audio.background.play()
+            audio.background.play().catch(e => log('Audio play failed:', e));
             audio.btn_play.classList.add('dnone')
             audio.btn_pause.classList.remove('dnone')
             localStorage.setItem('audioPlay', true)
@@ -1403,12 +1421,29 @@ function audioPlayer(state = 'play') {
             localStorage.setItem('audioPlay', false)
             break
         case 'next':
-            audio.background.pause()
-            audio.background.currentTime = 0 // Reset position
-            audio.background.src = getRandomBackgroundAudio() // Clear source
-            log('audio.background.src:', audio.background.src)
-            audio.background.load() // Force browser to release resources
-            if (!wasPaused) audioPlayer('play')
+            console.log('en? doing next?');
+            audio.background.pause();
+
+            const currentMood = moods.find((item) => settings.mood === item.mood);
+            if (!currentMood) return;
+
+            let nextTrackNumber;
+
+            if (AUDIO_SHUFFLE) nextTrackNumber = Math.ceil(Math.random() * currentMood.amount);
+            else {
+                audio.currentTrack = (audio.currentTrack % currentMood.amount) + 1;
+                nextTrackNumber = audio.currentTrack;
+            }
+
+            const filetype = '.' + currentMood.filetype;
+            const track = nextTrackNumber + filetype;
+            const newSrc = audioDir + settings.mood + '/' + track;
+
+            audio.background.src = newSrc;
+            audio.background.load();
+
+            audioPlayer('play')
+
             break
         case 'volume_up':
             log('voluming up')
@@ -1454,8 +1489,6 @@ function audioPlayer(state = 'play') {
     if (currentVolume <= 0.01)
         document.getElementById('audio_volume_down').style.visibility = 'hidden'
     else document.getElementById('audio_volume_down').style.visibility = 'visible'
-
-    log('audio.background.volume:', audio.background.volume)
 
     // TODO: check if can be improved with pure CSS / disabled html attribute on -/+ volume
     if (!audio.background.paused) {
@@ -1566,7 +1599,6 @@ function setBgStatus(status = 'normal') {
 }
 
 // ----------------------------- LANGUAGE DETECTION & SELECTION
-
 function translateElements(lang = getSettings().language) {
     newTextInElements('pause', getTranslation(lang, 'pause'))
     newTextInElements('resume', getTranslation(lang, 'resume'))
@@ -1608,6 +1640,7 @@ function translateElements(lang = getSettings().language) {
 
     audio.btn_play.innerText = getTranslation(lang, 'Play_audio')
     audio.btn_pause.innerText = settings.mood
+
 
     settings_form.intervalUnit.setAttribute('aria-label', getTranslation(lang, 'Select_time_unit'))
     new_timer_intervalUnit.setAttribute('aria-label', getTranslation(lang, 'Select_time_unit'))
