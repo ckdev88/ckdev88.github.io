@@ -2,7 +2,6 @@
 //
 // ----------------------------- GLOBAL CONSTANTS
 
-
 /** @type {boolean} pageInit starts with true value, is set to false after first run */
 let pageInit = true
 let isUpdatingTimers = false // global flag to prevent recursion / infinite loop
@@ -295,15 +294,12 @@ audio.background.addEventListener('ended', () => {
     if (!currentMood) return;
     console.log('currentMood:', currentMood)
 
-    // If loop is true for this mood, replay the same track
     if (currentMood.loop) {
-        console.log('looping....');
         // TODO check if `audio.background.loop = true` doesnt just suffice
         audio.background.currentTime = 0;
         audio.background.play();
         return;
     }
-    console.log('lets do next dan...');
     audioPlayer('next');
 });
 
@@ -725,28 +721,6 @@ function pauseTimerToggle(key) {
 }
 
 /**
- * Updates the DOM to reflect the paused state of a specific timer
- * @param {number} key
- */
-// function updateTimerPausedState(key) {
-//     const timer = timersArray[key]
-//     if (!timer) return
-
-//     const timerEl = document.getElementById('timer-' + key)
-//     if (!timerEl) return
-
-//     // Update the paused class
-//     if (timer.paused) {
-//         timerEl.classList.add('paused')
-//     } else {
-//         timerEl.classList.remove('paused')
-//     }
-
-//     // Also update the pause/resume button
-//     updatePauseButton(key)
-// }
-
-/**
  * Updates just the pause/resume button for a specific timer without full re-render
  * @param {number} key
  */
@@ -809,13 +783,8 @@ function cleanupAllIntervals() {
         clearInterval(countdownAllInterval)
         countdownAllInterval = null
     }
-
-    // // clear any other interval
-    // const highestIntervalId = setInterval(() => {}, 0)
-    // for (let i = 0; i < highestIntervalId; i++) {
-    //     clearInterval(i)
-    // }
 }
+
 // add event listener for page unload
 window.addEventListener('beforeunload', cleanupAllIntervals)
 window.addEventListener('unload', cleanupAllIntervals)
@@ -866,23 +835,21 @@ function updateTimerDisplay(key) {
  * @returns {void}
  */
 function renderTimers(arr) {
-    // log('Rendering timers:', arr.length)
+    log('Rendering timers:', arr.length)
 
-    // Clear the container completely for simplicity
+    // clear container completely for simplicity
     timer_container.innerHTML = ''
 
     if (!arr || arr.length === 0) {
         // log('No timers to render')
         return
     }
-
     // Render all timers
     for (let i = 0; i < arr.length; i++) {
         const timerEl = renderTimer(arr[i], i)
         timer_container.appendChild(timerEl)
         // log('Rendered timer:', arr[i].name)
     }
-
     log('Finished rendering all timers')
 }
 
@@ -1173,7 +1140,7 @@ function updateTimerDoneState(key) {
         doneBtn.remove()
     }
 
-    // Also remove pause button if it exists (done timers shouldn't be pausable)
+    // remove pause button if exists on done timer TODO dit kan beter met css
     const pauseBtn = document.getElementById('pause-' + key)
     const resumeBtn = document.getElementById('resume-' + key)
     if (pauseBtn) pauseBtn.remove()
@@ -1201,18 +1168,18 @@ function resetTimer(key) {
     log('Resetting timer:', key)
 
     if (timersArray[key]) {
-        // Reset all timer properties but keep the current paused state
+        // reset all timer properties but keep the current paused state
         timersArray[key].timepast = 0
         timersArray[key].starttime = getCurrentTimeSimple()
         timersArray[key].endtime = getTimeSimple(false, timersArray[key].interval)
         timersArray[key].finished = false
         timersArray[key].done = false
 
-        // Remove the old timer element
+        // remove the old timer element
         const oldTimerEl = document.getElementById('timer-' + key)
         if (oldTimerEl) oldTimerEl.remove()
 
-        // Re-render the timer
+        // re-render the timer
         const newTimerEl = renderTimer(timersArray[key], key)
         timer_container.appendChild(newTimerEl)
 
@@ -1257,11 +1224,7 @@ function countdownAll() {
     if (!anyRunning || allPaused) {
         log('No running timers or all paused, stopping countdown')
         localStorage.setItem('countDownAllStatus', 'stopped')
-
-        // Ensure audio is paused when no timers are running
-        if (allPaused || !anyRunning) {
-            audioPlayer('pause')
-        }
+        if (allPaused || !anyRunning) audioPlayer('pause') // Ensure audio is paused when no timers are running
         return
     }
 
@@ -1293,7 +1256,7 @@ function countdownAll() {
 
                 // Store previous state to detect changes
                 const previousTimepast = timer.timepast
-                const previousFinished = timer.finished // TODO check if can be removed
+                const previousFinished = timer.finished // TODO check if can be removed or used
 
                 // Update timer progress based on actual elapsed time
                 if (timer.timepast < timer.interval && timer.paused === false) {
@@ -1490,13 +1453,6 @@ function audioPlayer(state = 'play') {
     log('audio.background.volume:', audio.background.volume)
 }
 
-// function audioVolAdjust(increaseVolume=true){
-//     let currentAudioVolume = audio.background.volume
-//     log('currentAudioVolume:',current)
-//     // if(increaseVolume)audio.background.volume = currentAudioVolume
-
-// }
-
 function playAlert() {
     audio.alert.play().catch((e) => log('Audio play failed:', e))
 }
@@ -1690,9 +1646,7 @@ new_timer_form.addEventListener('submit', (e) => {
 
 new_timer_quick.addEventListener('click', () => addQuickTimer())
 
-// Add this at the end of your script.js file, before the closing braces
 function registerServiceWorker() {
-    const testing = false // toggle when testing
     if (window.location.protocol === 'https:' || window.location.protocol === 'http:') {
         const manifestLink = document.createElement('link')
         manifestLink.rel = 'manifest'
@@ -1703,7 +1657,7 @@ function registerServiceWorker() {
             navigator.serviceWorker
                 .register('./sw.js')
                 .then((registration) => {
-                    if (testing) {
+                    if (TESTING) {
                         console.log('Service worker registered: ', registration)
                         // Check if PWA is installable
                         if (registration.installing) {
@@ -1716,14 +1670,12 @@ function registerServiceWorker() {
                     }
                 })
                 .catch((registrationError) => {
-                    if (testing) {
-                        console.log('Service worker registration failed: ', registrationError)
-                    }
+                    if (TESTING) console.log('Service worker registration failed: ', registrationError)
                     // TODO something smart to log this error, like a load of a script, that can be "fetched" with stats, like GA
                 })
         }
     }
 }
 
-// Call this function when your app loads
+// run service worker on app load
 if (RUN_ONLINE) registerServiceWorker()
