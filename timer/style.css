@@ -40,7 +40,7 @@
     --transition-time-short: 0.12s;
     --transition-time-long: 0.19s;
     --transition-time-xlong: 1s;
-    --opacity-dimmed: 0.6;
+    --opacity-dimmed: 0.4;
 }
 
 :root[data-theme="dark"] {
@@ -318,9 +318,9 @@ form.dblock {
 a,
 button.text-btn,
 /* TODO still relevant? */
-.btn.text-btn,
+    .btn.text-btn,
 /* TODO still relevant? */
-button.icon {
+    button.icon {
     color: var(--text-button-fg);
     background: transparent;
     border: 0;
@@ -328,7 +328,7 @@ button.icon {
 
 button.text-btn,
 /* TODO still relevant? */
-.btn.text-btn {
+    .btn.text-btn {
     display: inline-block;
 }
 
@@ -423,7 +423,7 @@ button {
     height: 100%;
     min-width: 6rem;
     top: 0;
-    right: .6rem;
+    right: 0.6rem;
 
     .buttons {
         align-self: anchor-center;
@@ -468,7 +468,7 @@ button {
 
     &.paused {
         background-color: var(--timer-pause-color);
-
+        .timer-name,
         .timer-descr,
         .timer-countdown-current,
         .starttime_endtime_wrapper {
@@ -662,11 +662,11 @@ button {
     }
 }
 
-#audio_container .text-btn.pause.dnone+#audio_volume_container {
+#audio_container .text-btn.pause.dnone + #audio_volume_container {
     visibility: hidden;
 }
 
-#audio_container .text-btn.pause:not(.dnone)+#audio_volume_container {
+#audio_container .text-btn.pause:not(.dnone) + #audio_volume_container {
     visibility: visible;
 }
 
@@ -753,7 +753,6 @@ button {
 
 html[lang="en"] .top-buttons {
     .text-btn {
-
         &#new_timer_btn:hover,
         &#new_timer_btn.expanded {
             span {
@@ -772,7 +771,6 @@ html[lang="en"] .top-buttons {
 
 html[lang="nl"] .top-buttons {
     .text-btn {
-
         &#new_timer_btn:hover,
         &#new_timer_btn.expanded {
             span {
@@ -791,7 +789,6 @@ html[lang="nl"] .top-buttons {
 
 html[lang="pt"] .top-buttons {
     .text-btn {
-
         &#new_timer_btn:hover,
         &#new_timer_btn.expanded {
             span {
@@ -815,7 +812,7 @@ button.text-btn.white,
     color: var(--fg-color);
 }
 
-.statusbar-alert+#wrapper .text-btn.remove {
+.statusbar-alert + #wrapper .text-btn.remove {
     color: var(--fg-color);
 }
 
@@ -852,14 +849,12 @@ button.text-btn.white,
     /* FIXME hack for when dnone and shown are both loaded */
 }
 
+/* TODO: check if .dimmed is redundant */
 .dnone,
 button.control-btn.dnone,
 .control-btn.dnone,
-/* TODO redundant? */
-
 .dimmed {
     opacity: var(--opacity-dimmed);
-
     &:hover {
         opacity: 1;
     }

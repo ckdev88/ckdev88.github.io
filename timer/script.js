@@ -48,10 +48,10 @@ if (RUN_ONLINE) {
         { mood: 'creativity', amount: 156, filetype: 'mp3', loop: false },
         { mood: 'deepwork', amount: 222, filetype: 'mp3', loop: false },
         { mood: 'meditate', amount: 67, filetype: 'mp3', loop: true },
-        { mood: 'rain', amount: 42, filetype: 'mp3', loop: true },
+        { mood: 'rain', amount: 41, filetype: 'mp3', loop: true },
         { mood: 'recharge', amount: 112, filetype: 'mp3', loop: false },
         { mood: 'soundtrack', amount: 14, filetype: 'opus', loop: false, shuffle: false }, // TODO shuffle as a feature
-        { mood: 'chiptune', amount: 15, filetype: 'opus', loop: false }
+        { mood: 'chiptune', amount: 16, filetype: 'opus', loop: false }
     ]
 }
 
@@ -698,7 +698,9 @@ function pauseTimerToggle(key) {
     timer.paused = !timer.paused
 
     // Update audio based on state
+    console.log('BLABLA')
     if (!timer.paused && settings.autoplay === true) {
+        console.log('blabla')
         // Timer is being resumed/unpaused
         audioPlayer('play')
     } else if (timer.paused) {
@@ -722,13 +724,13 @@ function pauseTimerToggle(key) {
 
     // CRITICAL: Restart countdown if we're resuming a timer and countdown isn't running
     if (!timer.paused) {
+        console.log('que?')
         const currentStatus = localStorage.getItem('countDownAllStatus')
         if (currentStatus === 'stopped' || !countdownAllInterval) {
             log('Resuming timer, restarting countdown...')
             countdownAll()
         }
     }
-
     bgStatus(timersArray)
     localStorage.setItem('timerTimers', JSON.stringify(timersArray))
 }
@@ -1188,8 +1190,11 @@ function resetTimer(key) {
         timersArray[key].finished = false
         timersArray[key].done = false
 
+        if (settings.autoplay && audio.background.paused && !timersArray[key].paused) audioPlayer('play')
+
         // remove the old timer element
         const oldTimerEl = document.getElementById('timer-' + key)
+        console.log('oldTimerEl:',oldTimerEl)
         if (oldTimerEl) oldTimerEl.remove()
 
         // re-render the timer
@@ -1202,6 +1207,7 @@ function resetTimer(key) {
         // Update status bar
         bgStatus(timersArray)
 
+        
         document.title = 'Timer'
 
         log('Timer reset and re-rendered successfully')
