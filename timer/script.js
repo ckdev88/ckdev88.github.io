@@ -1190,11 +1190,12 @@ function resetTimer(key) {
         timersArray[key].finished = false
         timersArray[key].done = false
 
-        if (settings.autoplay && audio.background.paused && !timersArray[key].paused) audioPlayer('play')
+        if (settings.autoplay && audio.background.paused && !timersArray[key].paused)
+            audioPlayer('play')
 
         // remove the old timer element
         const oldTimerEl = document.getElementById('timer-' + key)
-        console.log('oldTimerEl:',oldTimerEl)
+        console.log('oldTimerEl:', oldTimerEl)
         if (oldTimerEl) oldTimerEl.remove()
 
         // re-render the timer
@@ -1207,7 +1208,6 @@ function resetTimer(key) {
         // Update status bar
         bgStatus(timersArray)
 
-        
         document.title = 'Timer'
 
         log('Timer reset and re-rendered successfully')
@@ -1385,73 +1385,74 @@ function cleanFileName(filename) {
     return Number(filename.slice(0, lastindex))
 }
 
+document.body.addEventListener('keydown', (event) => {
+    if (event.target.nodeName === 'BODY') {
+        if (event.key === '9') audioPlayer('volume_down')
+        else if (event.key === '0') audioPlayer('volume_up')
+        else if (event.key === ' ') {
+            if (audio.background.paused) audioPlayer('play')
+            else audioPlayer('pause')
+        }
+    }
+})
+
 /**
  * Plays audio until an alert is played, signaling a break
  * @param {'play'|'pause'|'next'|'volume_up'|'volume_down'|'change_mood'} state - trigger play or pause, defaults to play
  * @returns {void}
  */
 function audioPlayer(state = 'play') {
-    switch (state) {
-        case 'play':
-            audio.background.loop = false // TODO apply `loop` property in `mood` object
-            audio.background.play().catch((e) => log('Audio play failed:', e))
-            audio.btn_play.classList.add('dnone')
-            audio.btn_pause.classList.remove('dnone')
-            audio.btn_next.classList.remove('dnone')
-            localStorage.setItem('audioPlay', true)
-            audio.btn_pause.innerText = settings.mood + ' ' + cleanFileName(settings.moodTrack)
-            break
-        case 'pause':
-            audio.btn_play.classList.remove('dnone')
-            audio.btn_pause.classList.add('dnone')
-            audio.btn_next.classList.add('dnone')
-            audio.background.pause()
-            localStorage.setItem('audioPlay', false)
-            break
-        case 'next': // just dont show next when none is playing
-            // FIXME switch-case contains conditions, not great, refactor to if-else instead of switch-case
-            audio.background.pause()
+    if (state === 'play') {
+        audio.background.loop = false // TODO apply `loop` property in `mood` object
+        audio.background.play().catch((e) => log('Audio play failed:', e))
+        audio.btn_play.classList.add('dnone')
+        audio.btn_pause.classList.remove('dnone')
+        audio.btn_next.classList.remove('dnone')
+        localStorage.setItem('audioPlay', true)
+        audio.btn_pause.innerText = settings.mood + ' ' + cleanFileName(settings.moodTrack)
+    } else if (state === 'pause') {
+        audio.btn_play.classList.remove('dnone')
+        audio.btn_pause.classList.add('dnone')
+        audio.btn_next.classList.add('dnone')
+        audio.background.pause()
+        localStorage.setItem('audioPlay', false)
+    } else if (state === 'next') {
+        // just dont show next when none is playing
+        audio.background.pause()
 
-            const currentMood = moods.find((item) => settings.mood === item.mood) // TODO simplify, next is not needed when moodTrack is empty anyway
-            if (!currentMood) return
+        const currentMood = moods.find((item) => settings.mood === item.mood) // TODO simplify, next is not needed when moodTrack is empty anyway
+        if (!currentMood) return
 
-            let nextTrackNumber = 1 // default, assuming we change mood or playing none yet
-            if (AUDIO_SHUFFLE) nextTrackNumber = Math.ceil(Math.random() * currentMood.amount)
-            else if (cleanFileName(settings.moodTrack) < currentMood.amount)
-                nextTrackNumber = cleanFileName(settings.moodTrack) + 1
+        let nextTrackNumber = 1 // default, assuming we change mood or playing none yet
+        if (AUDIO_SHUFFLE) nextTrackNumber = Math.ceil(Math.random() * currentMood.amount)
+        else if (cleanFileName(settings.moodTrack) < currentMood.amount)
+            nextTrackNumber = cleanFileName(settings.moodTrack) + 1
 
-            const track = nextTrackNumber + '.' + currentMood.filetype
-            const newSrc = audioDir + settings.mood + '/' + track
+        const track = nextTrackNumber + '.' + currentMood.filetype
+        const newSrc = audioDir + settings.mood + '/' + track
 
-            audio.background.src = newSrc
-            audio.background.load()
+        audio.background.src = newSrc
+        audio.background.load()
 
-            settings.moodTrack = track
-            updateSettings(settings)
+        settings.moodTrack = track
+        updateSettings(settings)
 
-            audioPlayer('play')
-
-            break
-        case 'volume_up':
-            log('voluming up')
-            audio.background.volume = Math.min(audio.background.volume + 0.2, 1)
-            log('volume to', audio.background.volume)
-            break
-        case 'volume_down':
-            log('voluming down')
-            audio.background.volume = Math.max(audio.background.volume - 0.2, 0.01) // 0.01 is temporary hack to prevent need for webworker (for now), just keep te music going on, just very soft
-            log('volume to', audio.background.volume)
-            break
-        case 'change_mood':
-            log('changing mood')
-            settings.mood =
-                moods[
-                    (moods.findIndex((item) => item.mood === settings.mood) + 1) % moods.length
-                ].mood
-            updateSettings(settings)
-            audio.btn_pause.innerText = settings.mood
-            audioPlayer('next')
-            break
+        audioPlayer('play')
+    } else if (state === 'volume_up') {
+        log('voluming up')
+        audio.background.volume = Math.min(audio.background.volume + 0.2, 1)
+        log('volume to', audio.background.volume)
+    } else if (state === 'volume_down') {
+        log('voluming down')
+        audio.background.volume = Math.max(audio.background.volume - 0.2, 0.01) // 0.01 is temporary hack to prevent need for webworker (for now), just keep te music going on, just very soft
+        log('volume to', audio.background.volume)
+    } else if (state === 'change_mood') {
+        log('changing mood')
+        settings.mood =
+            moods[(moods.findIndex((item) => item.mood === settings.mood) + 1) % moods.length].mood
+        updateSettings(settings)
+        audio.btn_pause.innerText = settings.mood
+        audioPlayer('next')
     }
 
     // Update volume container visibility based on whether audio is playing
